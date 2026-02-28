@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Tournament Registration</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .page-wrapper {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Order Summary Box */
+        #orderSummary {
+            background: #f3f2f1;
+            border: 1px solid #e1dfdd;
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            display: none; /* hidden until form loads */
+        }
+
+        #orderSummary .summary-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        #orderSummary .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        #orderSummary .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #056038;
+            color: #056038;
+            font-weight: 700;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+
+        <!-- STEP 1: D365 Form Embed -->
+        <div
+            data-form-id='59a9d805-df14-f111-8342-70a8a50f30e1'
+            data-form-api-url='https://public-can.mkt.dynamics.com/api/v1.0/orgs/58c25681-1c41-4696-b5f7-a548aeb7e111/landingpageforms'
+            data-cached-form-url='https://assets-can.mkt.dynamics.com/58c25681-1c41-4696-b5f7-a548aeb7e111/digitalassets/forms/59a9d805-df14-f111-8342-70a8a50f30e1'>
+        </div>
+        <script src='https://cxppusa1formui01cdnsa01-endpoint.azureedge.net/can/FormLoader/FormLoader.bundle.js'></script>
+
+        <!-- STEP 2: Order Summary Box (injected below the D365 form) -->
+        <div id="orderSummary">
+            <div class="summary-title">Order Summary</div>
+            <div class="summary-row"><span>Sponsorship:</span>        <span id="dispSponsor">$0</span></div>
+            <div class="summary-row"><span>Corporate Foursome:</span> <span id="dispFoursome">$0</span></div>
+            <div class="summary-row"><span>President's Passports:</span><span id="dispPassport">$0</span></div>
+            <div class="total-row"><span>Total Amount:</span>         <span id="dispTotal">$0</span></div>
+        </div>
+
+    </div>
+
+    <!-- STEP 3: Calculation Script -->
+    <script>
+        function waitForForm() {
+            var sponsorEl  = document.querySelector('[name="optionset9110"]');
+            var foursomeEl = document.querySelector('[name="twooptions4993"]');
+            var passportEl = document.querySelector('[name="optionset4098"]');
+
+            // D365 loads the form async — keep checking every 300ms until fields appear
+            if (!sponsorEl || !foursomeEl || !passportEl) {
+                setTimeout(waitForForm, 300);
+                return;
+            }
+
+            // Fields found — show the summary box
+            document.getElementById('orderSummary').style.display = 'block';
+
+            // Attach change listeners
+            sponsorEl.addEventListener('change', calculate);
+            foursomeEl.addEventListener('change', calculate);
+            passportEl.addEventListener('change', calculate);
+
+            // Run immediately to show correct defaults
+            calculate();
+        }
+
+        function calculate() {
+            var sponsorEl  = document.querySelector('[name="optionset9110"]');
+            var foursomeEl = document.querySelector('[name="twooptions4993"]');
+            var passportEl = document.querySelector('[name="optionset4098"]');
+
+            if (!sponsorEl || !foursomeEl || !passportEl) return;
+
+            var sponsorshipValues = { "1":25000,"2":20000,"3":15000,"4":10000,"5":5000,"6":3500,"7":1500,"8":550 };
+            var passportMapping   = { "1":4,"2":8,"3":12,"4":0 };
+
+            var sPrice = sponsorshipValues[sponsorEl.value] || 0;
+            var fPrice = foursomeEl.checked ? 2000 : 0;
+            var pCount = passportMapping[passportEl.value] || 0;
+            var pPrice = pCount * 100;
+            var total  = sPrice + fPrice + pPrice;
+
+            document.getElementById('dispSponsor').innerText  = "$" + sPrice.toLocaleString();
+            document.getElementById('dispFoursome').innerText = "$" + fPrice.toLocaleString();
+            document.getElementById('dispPassport').innerText = "$" + pPrice.toLocaleString();
+            document.getElementById('dispTotal').innerText    = "$" + total.toLocaleString();
+
+            // Write totals back into D365 hidden fields so CRM captures them on submit
+            var hiddenTotal    = document.querySelector('[name="shorttext3661"]');
+            var hiddenPassport = document.querySelector('[name="shorttext9854"]');
+            if (hiddenTotal)    hiddenTotal.value    = total;
+            if (hiddenPassport) hiddenPassport.value = pCount;
+        }
+
+        waitForForm();
+    </script>
+
+</body>
+</html>
