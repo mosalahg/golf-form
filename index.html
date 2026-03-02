@@ -31,9 +31,9 @@
             padding: 44px 40px 36px;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
 
-        /* Decorative golf-ball dot pattern */
         .card-header::before {
             content: '';
             position: absolute;
@@ -78,6 +78,7 @@
         .header-meta {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
         }
@@ -303,7 +304,6 @@
 
 <div class="card">
 
-    <!-- Header stays inside the card — same width as the form -->
     <div class="card-header">
         <div class="header-badge">Registration Open</div>
         <h1>10th Annual President's<br>Scholarship Golf Tournament</h1>
@@ -313,7 +313,6 @@
         </div>
     </div>
 
-    <!-- Form body -->
     <div class="card-body">
 
         <!-- D365 Form Embed -->
@@ -331,7 +330,6 @@
     </div>
 </div>
 
-<!-- JavaScript -->
 <script>
 function waitForForm() {
     var sponsorEl  = document.querySelector('[name="optionset9110"]');
