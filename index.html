@@ -7,55 +7,59 @@
     <style>
         body {
             font-family: "Segoe UI", Arial, sans-serif;
-            background-color: #f8f8f8;
+            background-color: #f4f4f4;
             margin: 0;
-            padding: 20px;
+            padding: 0;
         }
 
+        /* Header */
+        .form-header {
+            background: linear-gradient(135deg, #056038 0%, #078a52 100%);
+            text-align: center;
+            padding: 36px 24px 30px;
+            color: #fff;
+        }
+        .form-header h1 {
+            margin: 0 0 10px;
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        .form-header p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        .header-divider {
+            width: 60px;
+            height: 3px;
+            background: rgba(255,255,255,0.5);
+            margin: 14px auto 16px;
+            border-radius: 2px;
+        }
+
+        /* Page wrapper */
         .page-wrapper {
             max-width: 650px;
             margin: 0 auto;
-        }
-
-        /* Order Summary Box */
-        #orderSummary {
-            background: #f3f2f1;
-            border: 1px solid #e1dfdd;
-            padding: 20px;
-            margin-top: 10px;
-            border-radius: 4px;
-            font-size: 14px;
-            display: none; /* hidden until form loads */
-        }
-
-        #orderSummary .summary-title {
-            font-weight: 700;
-            margin-bottom: 15px;
-            font-size: 15px;
-        }
-
-        #orderSummary .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        #orderSummary .total-row {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid #056038;
-            color: #056038;
-            font-weight: 700;
-            font-size: 18px;
+            background: #fff;
         }
     </style>
 </head>
 <body>
+
+    <!-- Header (only lives here on the website, not in D365) -->
+    <div class="form-header">
+        <h1>10th Annual President's Scholarship<br>Golf Tournament</h1>
+        <div class="header-divider"></div>
+        <p>100% of proceeds fund scholarships for Deaf and hard of hearing students.</p>
+        <p style="margin-top:6px; font-weight:600;">June 22, 2026</p>
+    </div>
+
     <div class="page-wrapper">
 
-        <!-- STEP 1: D365 Form Embed -->
+        <!-- D365 Form Embed (loads the form fields from D365) -->
         <div
             data-form-id='59a9d805-df14-f111-8342-70a8a50f30e1'
             data-form-api-url='https://public-can.mkt.dynamics.com/api/v1.0/orgs/58c25681-1c41-4696-b5f7-a548aeb7e111/landingpageforms'
@@ -63,71 +67,84 @@
         </div>
         <script src='https://cxppusa1formui01cdnsa01-endpoint.azureedge.net/can/FormLoader/FormLoader.bundle.js'></script>
 
-        <!-- STEP 2: Order Summary Box (injected below the D365 form) -->
-        <div id="orderSummary">
-            <div class="summary-title">Order Summary</div>
-            <div class="summary-row"><span>Sponsorship:</span>        <span id="dispSponsor">$0</span></div>
-            <div class="summary-row"><span>Corporate Foursome:</span> <span id="dispFoursome">$0</span></div>
-            <div class="summary-row"><span>President's Passports:</span><span id="dispPassport">$0</span></div>
-            <div class="total-row"><span>Total Amount:</span>         <span id="dispTotal">$0</span></div>
-        </div>
-
     </div>
 
-    <!-- STEP 3: Calculation Script -->
+    <!-- All JavaScript lives here on the website page, NOT in D365 -->
     <script>
-        function waitForForm() {
-            var sponsorEl  = document.querySelector('[name="optionset9110"]');
-            var foursomeEl = document.querySelector('[name="twooptions4993"]');
-            var passportEl = document.querySelector('[name="optionset4098"]');
+    function waitForForm() {
+        var sponsorEl  = document.querySelector('[name="optionset9110"]');
+        var foursomeEl = document.querySelector('[name="twooptions4993"]');
+        var passportEl = document.querySelector('[name="optionset4098"]');
+        var paymentEl  = document.querySelector('[name="new_paymentoption"]');
 
-            // D365 loads the form async — keep checking every 300ms until fields appear
-            if (!sponsorEl || !foursomeEl || !passportEl) {
-                setTimeout(waitForForm, 300);
-                return;
-            }
-
-            // Fields found — show the summary box
-            document.getElementById('orderSummary').style.display = 'block';
-
-            // Attach change listeners
-            sponsorEl.addEventListener('change', calculate);
-            foursomeEl.addEventListener('change', calculate);
-            passportEl.addEventListener('change', calculate);
-
-            // Run immediately to show correct defaults
-            calculate();
+        // Keep waiting until D365 finishes loading all fields
+        if (!sponsorEl || !foursomeEl || !passportEl || !paymentEl) {
+            setTimeout(waitForForm, 300);
+            return;
         }
 
-        function calculate() {
-            var sponsorEl  = document.querySelector('[name="optionset9110"]');
-            var foursomeEl = document.querySelector('[name="twooptions4993"]');
-            var passportEl = document.querySelector('[name="optionset4098"]');
+        // Attach change listeners
+        sponsorEl.addEventListener('change', calculate);
+        foursomeEl.addEventListener('change', calculate);
+        passportEl.addEventListener('change', calculate);
+        paymentEl.addEventListener('change', handlePayment);
 
-            if (!sponsorEl || !foursomeEl || !passportEl) return;
+        // Run both on load to show correct defaults
+        calculate();
+        handlePayment();
+    }
 
-            var sponsorshipValues = { "1":25000,"2":20000,"3":15000,"4":10000,"5":5000,"6":3500,"7":1500,"8":550 };
-            var passportMapping   = { "1":4,"2":8,"3":12,"4":0 };
+    function handlePayment() {
+        var paymentEl = document.querySelector('[name="new_paymentoption"]');
+        var btn       = document.getElementById('mainSubmitButton');
+        var hint      = document.getElementById('paymentHint');
 
-            var sPrice = sponsorshipValues[sponsorEl.value] || 0;
-            var fPrice = foursomeEl.checked ? 2000 : 0;
-            var pCount = passportMapping[passportEl.value] || 0;
-            var pPrice = pCount * 100;
-            var total  = sPrice + fPrice + pPrice;
+        if (!paymentEl || !btn) return;
 
-            document.getElementById('dispSponsor').innerText  = "$" + sPrice.toLocaleString();
-            document.getElementById('dispFoursome').innerText = "$" + fPrice.toLocaleString();
-            document.getElementById('dispPassport').innerText = "$" + pPrice.toLocaleString();
-            document.getElementById('dispTotal').innerText    = "$" + total.toLocaleString();
+        var val = paymentEl.value;
 
-            // Write totals back into D365 hidden fields so CRM captures them on submit
-            var hiddenTotal    = document.querySelector('[name="shorttext3661"]');
-            var hiddenPassport = document.querySelector('[name="shorttext9854"]');
-            if (hiddenTotal)    hiddenTotal.value    = total;
-            if (hiddenPassport) hiddenPassport.value = pCount;
+        if (val === '2') {
+            btn.style.display = 'block';
+            btn.innerText = 'Pay Securely with Credit Card';
+            if (hint) hint.style.display = 'none';
+        } else if (val === '1') {
+            btn.style.display = 'block';
+            btn.innerText = 'Submit Invoice Request';
+            if (hint) hint.style.display = 'none';
+        } else {
+            btn.style.display = 'none';
+            if (hint) hint.style.display = 'block';
         }
+    }
 
-        waitForForm();
+    function calculate() {
+        var sponsorEl  = document.querySelector('[name="optionset9110"]');
+        var foursomeEl = document.querySelector('[name="twooptions4993"]');
+        var passportEl = document.querySelector('[name="optionset4098"]');
+
+        if (!sponsorEl || !foursomeEl || !passportEl) return;
+
+        var sponsorshipValues = { "1":25000,"2":20000,"3":15000,"4":10000,"5":5000,"6":3500,"7":1500,"8":550 };
+        var passportMapping   = { "1":4,"2":8,"3":12,"4":0 };
+
+        var sPrice = sponsorshipValues[sponsorEl.value] || 0;
+        var fPrice = foursomeEl.checked ? 2000 : 0;
+        var pCount = passportMapping[passportEl.value] || 0;
+        var pPrice = pCount * 100;
+        var total  = sPrice + fPrice + pPrice;
+
+        document.getElementById('dispSponsor').innerText  = "$" + sPrice.toLocaleString();
+        document.getElementById('dispFoursome').innerText = "$" + fPrice.toLocaleString();
+        document.getElementById('dispPassport').innerText = "$" + pPrice.toLocaleString();
+        document.getElementById('dispTotal').innerText    = "$" + total.toLocaleString();
+
+        var hiddenTotal    = document.querySelector('[name="shorttext3661"]');
+        var hiddenPassport = document.querySelector('[name="shorttext9854"]');
+        if (hiddenTotal)    hiddenTotal.value    = total;
+        if (hiddenPassport) hiddenPassport.value = pCount;
+    }
+
+    waitForForm();
     </script>
 
 </body>
