@@ -128,7 +128,11 @@
             margin-bottom: 6px;
             letter-spacing: 0.3px;
         }
-        .field input, .field select {
+        .field input[type="text"],
+        .field input[type="email"],
+        .field input[type="tel"],
+        .field input[type="number"],
+        .field select {
             width: 100%;
             padding: 11px 14px;
             border: 1.5px solid #dde6dd;
@@ -140,6 +144,10 @@
             transition: border-color 0.2s, box-shadow 0.2s;
             appearance: none;
             -webkit-appearance: none;
+        }
+        .field input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
         }
         .field select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23056038' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -154,7 +162,70 @@
             background: #fff;
         }
         .field input::placeholder { color: #aab8aa; font-size: 13px; }
+        .field input.error, .field select.error {
+            border-color: #c0392b;
+            box-shadow: 0 0 0 3px rgba(192,57,43,0.10);
+            background: #fff9f9;
+        }
+        .field-error {
+            font-size: 12px;
+            color: #c0392b;
+            margin-top: 4px;
+            display: none;
+            align-items: center;
+            gap: 5px;
+        }
+        .field-error.visible { display: flex; }
+        .field-error::before { content: '⚠'; font-size: 11px; }
+        .field-hint {
+            font-size: 11px;
+            color: #7a9a7a;
+            margin-top: 4px;
+        }
 
+        /* Number stepper */
+        .number-stepper {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border: 1.5px solid #dde6dd;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fafcfa;
+        }
+        .number-stepper button {
+            width: 42px;
+            height: 42px;
+            border: none;
+            background: #f0f5f0;
+            color: #056038;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.15s;
+            line-height: 1;
+        }
+        .number-stepper button:hover { background: #e0eee0; }
+        .number-stepper button:active { background: #d0e8d0; }
+        .number-stepper input[type="number"] {
+            flex: 1;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            padding: 8px 4px;
+            font-family: 'Source Sans 3', sans-serif;
+            -moz-appearance: textfield;
+            appearance: textfield;
+            outline: none;
+        }
+        .number-stepper input[type="number"]::-webkit-inner-spin-button,
+        .number-stepper input[type="number"]::-webkit-outer-spin-button { display: none; }
+
+        /* Order summary */
         #orderSummary {
             background: linear-gradient(135deg, #f0f7f0 0%, #e8f2e8 100%);
             border: 1.5px solid #c8ddc8;
@@ -173,11 +244,17 @@
         .summary-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 5px 0;
+            align-items: flex-start;
+            padding: 6px 0;
             font-size: 14px;
             color: #3a5a3a;
+            border-bottom: 1px dashed #d0e4d0;
         }
+        .summary-row:last-of-type { border-bottom: none; }
+        .summary-row.hidden { display: none; }
+        .summary-row .row-label { flex: 1; padding-right: 12px; }
+        .summary-row .row-amt { font-weight: 700; white-space: nowrap; }
+        .summary-row .row-sub { font-size: 11px; color: #7a9a7a; margin-top: 2px; }
         .summary-total {
             display: flex;
             justify-content: space-between;
@@ -190,21 +267,88 @@
             color: #034a2c;
             font-family: 'Playfair Display', serif;
         }
-
-        #paymentHint {
-            font-size: 12px;
+        .summary-cad {
+            font-size: 11px;
+            font-weight: 600;
             color: #7a9a7a;
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            letter-spacing: 0.5px;
+            font-family: 'Source Sans 3', sans-serif;
+            margin-right: 6px;
         }
 
-        #mainSubmitButton {
+        /* Consent block */
+        .consent-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 1.5px solid #dde6dd;
+            border-radius: 8px;
+            background: #fafcfa;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .consent-block:has(input:checked) { border-color: #056038; background: #f0f7f3; }
+        .consent-block input[type="checkbox"] {
+            width: 18px; height: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #056038;
+        }
+        .consent-block label {
+            font-size: 13px;
+            font-weight: 400;
+            color: #323130;
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        /* Payment radio */
+        .payment-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .payment-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 16px;
+            border: 1.5px solid #dde6dd;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #fafcfa;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .payment-option:has(input:checked) { border-color: #056038; background: #f0f7f3; }
+        .payment-option input[type="radio"] {
+            width: 18px; height: 18px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            cursor: pointer;
+            accent-color: #056038;
+        }
+        .payment-option-label { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+        .payment-option-desc { font-size: 12px; color: #7a9a7a; margin-top: 3px; }
+
+        /* Form-level error banner */
+        #formErrorBanner {
             display: none;
+            background: #fff2f2;
+            border: 1.5px solid #e74c3c;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #c0392b;
+            font-weight: 600;
+            align-items: center;
+            gap: 8px;
+        }
+        #formErrorBanner.visible { display: flex; }
+
+        /* Submit button */
+        #mainSubmitButton {
             width: 100%;
             padding: 16px;
-            margin-top: 20px;
             background: linear-gradient(135deg, #034a2c, #056038);
             color: #fff;
             border: none;
@@ -241,7 +385,6 @@
             flex-direction: column;
         }
         #monerisOverlay.active { display: flex; }
-
         #monerisTopBar {
             background: linear-gradient(135deg, #034a2c, #056038);
             padding: 14px 24px;
@@ -250,11 +393,7 @@
             justify-content: space-between;
             flex-shrink: 0;
         }
-        #monerisTopBar span {
-            color: #fff;
-            font-weight: 700;
-            font-size: 15px;
-        }
+        #monerisTopBar span { color: #fff; font-weight: 700; font-size: 15px; }
         #monerisCloseBtn {
             background: rgba(255,255,255,0.2);
             border: none;
@@ -266,15 +405,10 @@
             font-family: 'Source Sans 3', sans-serif;
         }
         #monerisCloseBtn:hover { background: rgba(255,255,255,0.3); }
+        #monerisCheckoutDiv { flex: 1; width: 100%; overflow-y: auto; }
 
-        #monerisCheckoutDiv {
-            flex: 1;
-            width: 100%;
-            overflow-y: auto;
-        }
-
-        /* ── Thank You screen ── */
-        #thankYouScreen {
+        /* ── Full-screen overlays (Thank You & Invoice) ── */
+        .fs-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0;
@@ -284,47 +418,77 @@
             align-items: center;
             justify-content: center;
         }
-        #thankYouScreen.active { display: flex; }
-
-        .thankyou-card {
+        .fs-overlay.active { display: flex; }
+        .confirm-card {
             background: #fff;
             border-radius: 12px;
             padding: 48px 40px;
-            max-width: 500px;
+            max-width: 520px;
             width: 90%;
             text-align: center;
             box-shadow: 0 4px 32px rgba(0,0,0,0.10);
         }
-        .thankyou-icon {
-            width: 64px; height: 64px;
-            background: #e8f5e8;
+        .confirm-icon {
+            width: 72px; height: 72px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
-            font-size: 28px;
+            font-size: 32px;
         }
-        .thankyou-card h2 {
+        .confirm-icon.success { background: #e8f5e8; }
+        .confirm-icon.invoice { background: #e8f0ff; }
+        .confirm-card h2 {
             font-family: 'Playfair Display', serif;
             font-size: 26px;
             color: #034a2c;
             margin-bottom: 12px;
         }
-        .thankyou-card p {
+        .confirm-card p {
             color: #5a7a5a;
             font-size: 15px;
             line-height: 1.6;
             margin-bottom: 8px;
         }
-        .thankyou-amount {
-            font-size: 28px;
+        .confirm-amount {
+            font-size: 30px;
             font-weight: 700;
             color: #056038;
             font-family: 'Playfair Display', serif;
-            margin: 20px 0;
+            margin: 20px 0 8px;
         }
-        .thankyou-btn {
+        .confirm-amount-label { font-size: 12px; color: #8a9a8a; margin-bottom: 20px; }
+        .confirm-summary-box {
+            background: #f0f7f3;
+            border: 1px solid #c8ddc8;
+            border-radius: 8px;
+            padding: 16px 20px;
+            text-align: left;
+            margin: 16px 0;
+            font-size: 13px;
+            color: #3a5a3a;
+        }
+        .confirm-summary-box .cs-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+        }
+        .confirm-summary-box .cs-row.cs-total {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1.5px solid #056038;
+            font-weight: 700;
+            font-size: 15px;
+            color: #034a2c;
+        }
+        .confirm-contact {
+            font-size: 12px;
+            color: #8a9a8a;
+            margin-top: 12px;
+        }
+        .confirm-contact a { color: #056038; }
+        .confirm-btn {
             display: inline-block;
             margin-top: 24px;
             padding: 12px 32px;
@@ -336,7 +500,6 @@
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            text-decoration: none;
         }
 
         @media (max-width: 520px) {
@@ -363,13 +526,185 @@
     </div>
 
     <div class="card-body">
-        <!-- D365 Form Embed -->
+
+        <!-- Form-level error banner -->
+        <div id="formErrorBanner">⚠ Please fix the highlighted fields before continuing.</div>
+
+        <!-- ── PURCHASE OPTIONS ── -->
+        <div class="section-label">Purchase Options</div>
+
+        <!-- Sponsorship Level -->
+        <div class="field">
+            <label for="sponsorSelect">Sponsorship Level (optional)</label>
+            <select id="sponsorSelect" name="optionset9110">
+                <option value="1" selected>Presenting Sponsorship — $25,000</option>
+                <option value="2">Titanium Sponsorship — $20,000</option>
+                <option value="3">Platinum Sponsorship — $15,000</option>
+                <option value="4">Gold Sponsorship — $10,000</option>
+                <option value="5">Silver Sponsorship — $5,000</option>
+                <option value="6">Bronze Sponsorship — $3,500</option>
+                <option value="7">Brass Sponsorship — $1,500</option>
+                <option value="8">Copper Sponsorship — $550</option>
+                <option value="9">Golf Only — Buy a Foursome(s)</option>
+            </select>
+            <div class="field-hint" id="sponsorFoursomeHint">✦ Includes 3 complimentary foursomes (12 golfers)</div>
+        </div>
+
+        <!-- Additional Foursomes -->
+        <div class="field">
+            <label for="foursomeCount">Select or Add Foursomes <span id="foursomeLabelSuffix" style="font-weight:400; color:#7a9a7a;">(additional, 0 or more)</span></label>
+            <div class="number-stepper">
+                <button type="button" id="foursomeMinus" aria-label="Decrease foursomes">−</button>
+                <input type="number" id="foursomeCount" name="new_additionalfoursomes" min="0" max="20" value="0" step="1" aria-label="Number of additional foursomes">
+                <button type="button" id="foursomePlus" aria-label="Increase foursomes">+</button>
+            </div>
+            <div class="field-hint">$2,000 per additional foursome (4 golfers)</div>
+            <div class="field-error" id="err_foursome">Enter a whole number 0 or greater.</div>
+        </div>
+
+        <!-- President's Passports -->
+        <div class="field">
+            <label for="passportCount">President's Passports (0 or more)</label>
+            <div class="number-stepper">
+                <button type="button" id="passportMinus" aria-label="Decrease passports">−</button>
+                <input type="number" id="passportCount" name="new_passportcount" min="0" max="100" value="0" step="1" aria-label="Number of President's Passports">
+                <button type="button" id="passportPlus" aria-label="Increase passports">+</button>
+            </div>
+            <div class="field-hint">$100 per passport — exclusive event benefits per golfer</div>
+            <div class="field-error" id="err_passport">Enter a whole number 0 or greater.</div>
+        </div>
+
+        <!-- ── ORDER SUMMARY ── -->
+        <div id="orderSummary">
+            <div class="summary-title">Order Summary</div>
+
+            <div class="summary-row" id="rowSponsor">
+                <div class="row-label">
+                    <div id="labelSponsor">Presenting Sponsorship</div>
+                    <div class="row-sub" id="subSponsor">3 complimentary foursomes included</div>
+                </div>
+                <div class="row-amt" id="dispSponsor">$25,000</div>
+            </div>
+
+            <div class="summary-row hidden" id="rowFoursome">
+                <div class="row-label">
+                    <div id="labelFoursome">Additional Foursomes</div>
+                    <div class="row-sub" id="subFoursome"></div>
+                </div>
+                <div class="row-amt" id="dispFoursome">$0</div>
+            </div>
+
+            <div class="summary-row hidden" id="rowPassport">
+                <div class="row-label">
+                    <div id="labelPassport">President's Passports</div>
+                    <div class="row-sub" id="subPassport"></div>
+                </div>
+                <div class="row-amt" id="dispPassport">$0</div>
+            </div>
+
+            <div class="summary-total">
+                <span>Total Amount</span>
+                <span><span class="summary-cad">CAD</span><span id="dispTotal">$25,000.00</span></span>
+            </div>
+        </div>
+
+        <!-- ── BUYER INFORMATION ── -->
+        <div class="section-label">Buyer Information</div>
+
+        <div class="field-row">
+            <div class="field">
+                <label for="firstname">First Name *</label>
+                <input type="text" id="firstname" name="firstname" maxlength="100" autocomplete="given-name">
+                <div class="field-error" id="err_firstname">First name is required.</div>
+            </div>
+            <div class="field">
+                <label for="lastname">Last Name *</label>
+                <input type="text" id="lastname" name="lastname" maxlength="100" autocomplete="family-name">
+                <div class="field-error" id="err_lastname">Last name is required.</div>
+            </div>
+        </div>
+
+        <div class="field-row">
+            <div class="field">
+                <label for="emailaddress1">Email *</label>
+                <input type="email" id="emailaddress1" name="emailaddress1" autocomplete="email">
+                <div class="field-error" id="err_emailaddress1">Enter a valid email address.</div>
+            </div>
+            <div class="field">
+                <label for="telephone1">Phone Number *</label>
+                <input type="tel" id="telephone1" name="telephone1" placeholder="(416) 555-0100" autocomplete="tel">
+                <div class="field-error" id="err_telephone1">Enter a valid phone number.</div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="companyname">Organization Name *</label>
+            <input type="text" id="companyname" name="companyname" maxlength="100"
+                   placeholder="Your company or organization" autocomplete="organization">
+            <div class="field-error" id="err_companyname">Enter a valid organization name.</div>
+        </div>
+
+        <div class="field">
+            <label for="address1_line1">Billing Address *</label>
+            <input type="text" id="address1_line1" name="address1_line1" placeholder="Street address"
+                   maxlength="200" autocomplete="street-address">
+            <div class="field-error" id="err_address1_line1">Billing address is required.</div>
+        </div>
+
+        <div class="field-row">
+            <div class="field">
+                <label for="address1_city">City *</label>
+                <input type="text" id="address1_city" name="address1_city" maxlength="100" autocomplete="address-level2">
+                <div class="field-error" id="err_address1_city">City is required.</div>
+            </div>
+            <div class="field">
+                <label for="address1_postalcode">Postal Code *</label>
+                <input type="text" id="address1_postalcode" name="address1_postalcode"
+                       placeholder="A1A 1A1" maxlength="7" autocomplete="postal-code">
+                <div class="field-error" id="err_address1_postalcode">Enter a valid Postal Code (e.g., A1A 1A1).</div>
+            </div>
+        </div>
+
+        <!-- ── COMMUNICATIONS CONSENT ── -->
+        <div class="section-label">Communications Consent</div>
+
+        <div class="consent-block">
+            <input type="checkbox" id="marketingConsent" name="new_marketingconsent" value="true">
+            <label for="marketingConsent">
+                I agree to receive future communications and notifications on Golf event news and updates.
+            </label>
+        </div>
+
+        <!-- ── PAYMENT METHOD ── -->
+        <div class="section-label">Payment Method</div>
+
+        <div class="payment-options">
+            <label class="payment-option">
+                <input type="radio" name="new_paymentoption" id="payInvoice" value="1" checked>
+                <div>
+                    <div class="payment-option-label">📄 Invoice Requested</div>
+                    <div class="payment-option-desc">We'll email the invoice to your address on file</div>
+                </div>
+            </label>
+            <label class="payment-option">
+                <input type="radio" name="new_paymentoption" id="payCard" value="2">
+                <div>
+                    <div class="payment-option-label">🔒 Credit Card via Moneris Checkout</div>
+                    <div class="payment-option-desc">Secure hosted payment — no card data stored on our servers</div>
+                </div>
+            </label>
+        </div>
+        <div class="field-error" id="err_payment" style="margin-bottom:10px;">Please select a payment method.</div>
+
+        <!-- D365 Form Embed (handles CRM submission) -->
         <div
             data-form-id='59a9d805-df14-f111-8342-70a8a50f30e1'
             data-form-api-url='https://public-can.mkt.dynamics.com/api/v1.0/orgs/58c25681-1c41-4696-b5f7-a548aeb7e111/landingpageforms'
             data-cached-form-url='https://assets-can.mkt.dynamics.com/58c25681-1c41-4696-b5f7-a548aeb7e111/digitalassets/forms/59a9d805-df14-f111-8342-70a8a50f30e1'>
         </div>
         <script src='https://cxppusa1formui01cdnsa01-endpoint.azureedge.net/can/FormLoader/FormLoader.bundle.js'></script>
+
+        <button type="button" id="mainSubmitButton">📄 Submit Invoice Request</button>
 
         <div class="footer-note">
             🔒 Your information is secure and will only be used for tournament registration.
@@ -386,88 +721,426 @@
     <div id="monerisCheckoutDiv"></div>
 </div>
 
-<!-- ── Thank You Screen (shown after payment_complete) ── -->
-<div id="thankYouScreen">
-    <div class="thankyou-card">
-        <div class="thankyou-icon">✅</div>
+<!-- ── Thank You Screen (Credit Card) ── -->
+<div id="thankYouScreen" class="fs-overlay">
+    <div class="confirm-card">
+        <div class="confirm-icon success">✅</div>
         <h2>Payment Successful!</h2>
         <p>Thank you for supporting the</p>
         <p><strong>10th Annual President's Scholarship Golf Tournament</strong></p>
-        <div class="thankyou-amount" id="thankYouAmount"></div>
-        <p style="font-size:13px; color:#8a9a8a;">A confirmation will be sent to your email address.</p>
-        <button class="thankyou-btn" onclick="window.location.reload()">Register Another</button>
+        <div class="confirm-amount" id="thankYouAmount"></div>
+        <div class="confirm-amount-label">CAD — Payment Confirmed</div>
+        <p style="font-size:13px; color:#8a9a8a;">A confirmation receipt will be sent to your email address.</p>
+        <button class="confirm-btn" onclick="window.location.reload()">Register Another</button>
+    </div>
+</div>
+
+<!-- ── Invoice Confirmation Screen ── -->
+<div id="invoiceConfirmScreen" class="fs-overlay">
+    <div class="confirm-card">
+        <div class="confirm-icon invoice">📄</div>
+        <h2>Invoice Request Submitted!</h2>
+        <p>Thank you! Your registration has been received.</p>
+
+        <div class="confirm-summary-box" id="invoiceSummaryBox">
+            <!-- populated by JS -->
+        </div>
+
+        <p style="font-size:14px; color:#3a5a3a;">
+            An invoice will be emailed to <strong id="invoiceEmail"></strong>.<br>
+            Please allow 1–2 business days for processing.
+        </p>
+        <div class="confirm-contact">
+            Questions? Contact Dawne Gordon at <a href="mailto:dgordon@chs.ca">dgordon@chs.ca</a>
+        </div>
+        <button class="confirm-btn" onclick="window.location.reload()">Submit Another Registration</button>
     </div>
 </div>
 
 <script>
-    var flowUrl = 'https://c5420bc382c8418ea7f8b39138ce18.0f.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/3ac94b8f7b1c4d13a47288aaa5352aab/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CPBG-n9A99_pMYl5MQsDMLNAYd5n0ybmRd93h77iKLM';
+    // ══════════════════════════════════════════
+    // CONFIG
+    // ══════════════════════════════════════════
+    var FLOW_URL = 'https://c5420bc382c8418ea7f8b39138ce18.0f.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/3ac94b8f7b1c4d13a47288aaa5352aab/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CPBG-n9A99_pMYl5MQsDMLNAYd5n0ybmRd93h77iKLM';
+
+    var SPONSORS = {
+        "1": { name: "Presenting Sponsorship",  price: 25000, foursomes: 3 },
+        "2": { name: "Titanium Sponsorship",     price: 20000, foursomes: 2 },
+        "3": { name: "Platinum Sponsorship",     price: 15000, foursomes: 2 },
+        "4": { name: "Gold Sponsorship",         price: 10000, foursomes: 1 },
+        "5": { name: "Silver Sponsorship",       price:  5000, foursomes: 0 },
+        "6": { name: "Bronze Sponsorship",       price:  3500, foursomes: 0 },
+        "7": { name: "Brass Sponsorship",        price:  1500, foursomes: 0 },
+        "8": { name: "Copper Sponsorship",       price:   550, foursomes: 0 },
+        "9": { name: "Golf Only",                price:     0, foursomes: 0 }
+    };
+    var FOURSOME_PRICE = 2000;
+    var PASSPORT_PRICE = 100;
 
     var currentTotal = 0;
-    var currentPaymentType = '';
+    var currentPaymentType = '1'; // default invoice
 
-    function waitForForm() {
-        var sponsorEl  = document.querySelector('[name="optionset9110"]');
-        var foursomeEl = document.querySelector('[name="twooptions4993"]');
-        var passportEl = document.querySelector('[name="optionset4098"]');
-        var paymentEl  = document.querySelector('[name="new_paymentoption"]');
-        var submitBtn  = document.getElementById('mainSubmitButton');
+    // ══════════════════════════════════════════
+    // INIT — wire up page-level controls
+    // (these exist in index.html, not the embedded form)
+    // ══════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', function() {
+        setupSteppers();
+        setupPaymentRadios();
+        document.getElementById('mainSubmitButton').addEventListener('click', handleSubmitClick);
 
-        if (!sponsorEl || !foursomeEl || !passportEl || !paymentEl || !submitBtn) {
-            setTimeout(waitForForm, 300);
-            return;
-        }
+        // Wire up sponsor select and number inputs
+        var sponsorEl   = document.getElementById('sponsorSelect');
+        var foursomeEl  = document.getElementById('foursomeCount');
+        var passportEl  = document.getElementById('passportCount');
 
-        sponsorEl.addEventListener('change', calculate);
-        foursomeEl.addEventListener('change', calculate);
-        passportEl.addEventListener('change', calculate);
-        paymentEl.addEventListener('change', handlePayment);
-        submitBtn.addEventListener('click', handleSubmitClick);
+        if (sponsorEl)  sponsorEl.addEventListener('change', calculate);
+        if (foursomeEl) foursomeEl.addEventListener('input', calculate);
+        if (passportEl) passportEl.addEventListener('input', calculate);
 
         calculate();
-        handlePayment();
+    });
+
+    // ══════════════════════════════════════════
+    // STEPPER BUTTONS
+    // ══════════════════════════════════════════
+    function setupSteppers() {
+        document.getElementById('foursomeMinus').addEventListener('click', function() {
+            var el = document.getElementById('foursomeCount');
+            el.value = Math.max(0, (parseInt(el.value) || 0) - 1);
+            calculate();
+        });
+        document.getElementById('foursomePlus').addEventListener('click', function() {
+            var el = document.getElementById('foursomeCount');
+            el.value = Math.min(20, (parseInt(el.value) || 0) + 1);
+            calculate();
+        });
+        document.getElementById('passportMinus').addEventListener('click', function() {
+            var el = document.getElementById('passportCount');
+            el.value = Math.max(0, (parseInt(el.value) || 0) - 1);
+            calculate();
+        });
+        document.getElementById('passportPlus').addEventListener('click', function() {
+            var el = document.getElementById('passportCount');
+            el.value = Math.min(100, (parseInt(el.value) || 0) + 1);
+            calculate();
+        });
     }
 
-    function handlePayment() {
-        var paymentEl = document.querySelector('[name="new_paymentoption"]');
-        var btn       = document.getElementById('mainSubmitButton');
-        var hint      = document.getElementById('paymentHint');
+    // ══════════════════════════════════════════
+    // PAYMENT RADIO
+    // ══════════════════════════════════════════
+    function setupPaymentRadios() {
+        var radios = document.querySelectorAll('[name="new_paymentoption"]');
+        radios.forEach(function(r) {
+            r.addEventListener('change', function() {
+                currentPaymentType = this.value;
+                updateSubmitButton();
+            });
+        });
+        updateSubmitButton();
+    }
 
-        if (!paymentEl || !btn) return;
-
-        currentPaymentType = paymentEl.value;
-
+    function updateSubmitButton() {
+        var btn = document.getElementById('mainSubmitButton');
         if (currentPaymentType === '2') {
-            btn.style.display = 'block';
-            btn.innerText = '🔒 Pay Securely with Credit Card';
-            if (hint) hint.style.display = 'none';
-        } else if (currentPaymentType === '1') {
-            btn.style.display = 'block';
-            btn.innerText = '📄 Submit Invoice Request';
-            if (hint) hint.style.display = 'none';
+            btn.textContent = '🔒 Pay Securely with Credit Card';
         } else {
-            btn.style.display = 'none';
-            if (hint) hint.style.display = 'flex';
+            btn.textContent = '📄 Submit Invoice Request';
         }
     }
 
+    // ══════════════════════════════════════════
+    // CALCULATE ORDER SUMMARY
+    // ══════════════════════════════════════════
+    function calculate() {
+        var sponsorEl  = document.getElementById('sponsorSelect');
+        var foursomeEl = document.getElementById('foursomeCount');
+        var passportEl = document.getElementById('passportCount');
+        if (!sponsorEl || !foursomeEl || !passportEl) return;
+
+        var sponsorKey  = sponsorEl.value;
+        var sponsor     = SPONSORS[sponsorKey] || { name: "", price: 0, foursomes: 0 };
+        var addlFours   = Math.max(0, Math.min(20, parseInt(foursomeEl.value) || 0));
+        var passportCnt = Math.max(0, Math.min(100, parseInt(passportEl.value) || 0));
+
+        var sPrice = sponsor.price;
+        var fPrice = addlFours * FOURSOME_PRICE;
+        var pPrice = passportCnt * PASSPORT_PRICE;
+        currentTotal = sPrice + fPrice + pPrice;
+
+        // --- Sponsor line ---
+        var rowSponsor = document.getElementById('rowSponsor');
+        var labelSponsor = document.getElementById('labelSponsor');
+        var subSponsor   = document.getElementById('subSponsor');
+        var dispSponsor  = document.getElementById('dispSponsor');
+
+        if (sponsorKey === '9') {
+            rowSponsor.classList.add('hidden');
+        } else {
+            rowSponsor.classList.remove('hidden');
+            labelSponsor.textContent = sponsor.name;
+            subSponsor.textContent = sponsor.foursomes > 0
+                ? sponsor.foursomes + ' complimentary foursome' + (sponsor.foursomes > 1 ? 's' : '') + ' included'
+                : '';
+            dispSponsor.textContent = '$' + sPrice.toLocaleString();
+        }
+
+        // Sponsor hint below the select
+        var hint = document.getElementById('sponsorFoursomeHint');
+        if (hint) {
+            if (sponsorKey === '9') {
+                hint.textContent = 'No sponsorship — foursomes below will be charged at $2,000 each';
+            } else if (sponsor.foursomes > 0) {
+                hint.textContent = '✦ Includes ' + sponsor.foursomes + ' complimentary foursome' + (sponsor.foursomes > 1 ? 's' : '') + ' (' + (sponsor.foursomes * 4) + ' golfers)';
+            } else {
+                hint.textContent = 'No complimentary foursomes at this level';
+            }
+        }
+
+        // Update label for foursomes input
+        var foursomeSuffix = document.getElementById('foursomeLabelSuffix');
+        if (foursomeSuffix) {
+            if (sponsor.foursomes > 0) {
+                foursomeSuffix.textContent = '(additional beyond the ' + sponsor.foursomes + ' included, 0 or more)';
+            } else {
+                foursomeSuffix.textContent = '(0 or more)';
+            }
+        }
+
+        // --- Foursomes line ---
+        var rowFoursome  = document.getElementById('rowFoursome');
+        var labelFoursome = document.getElementById('labelFoursome');
+        var subFoursome   = document.getElementById('subFoursome');
+        var dispFoursome  = document.getElementById('dispFoursome');
+
+        var totalFoursomes = sponsor.foursomes + addlFours;
+        if (addlFours > 0) {
+            rowFoursome.classList.remove('hidden');
+            labelFoursome.textContent = 'Additional Foursomes (' + addlFours + ')';
+            subFoursome.textContent = totalFoursomes + ' total · ' + (totalFoursomes * 4) + ' golfers';
+            dispFoursome.textContent = '$' + fPrice.toLocaleString();
+        } else if (sponsor.foursomes > 0 && sponsorKey !== '9') {
+            // Still show foursomes row to indicate complimentary ones
+            rowFoursome.classList.remove('hidden');
+            labelFoursome.textContent = 'Foursomes (' + sponsor.foursomes + ' complimentary)';
+            subFoursome.textContent = sponsor.foursomes * 4 + ' golfers — included with sponsorship';
+            dispFoursome.textContent = '$0';
+        } else {
+            rowFoursome.classList.add('hidden');
+        }
+
+        // --- Passports line ---
+        var rowPassport   = document.getElementById('rowPassport');
+        var labelPassport = document.getElementById('labelPassport');
+        var subPassport   = document.getElementById('subPassport');
+        var dispPassport  = document.getElementById('dispPassport');
+
+        if (passportCnt > 0) {
+            rowPassport.classList.remove('hidden');
+            labelPassport.textContent = "President's Passports (" + passportCnt + ')';
+            subPassport.textContent = '$100 × ' + passportCnt;
+            dispPassport.textContent = '$' + pPrice.toLocaleString();
+        } else {
+            rowPassport.classList.add('hidden');
+        }
+
+        // --- Total ---
+        document.getElementById('dispTotal').textContent =
+            '$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        // --- Sync hidden fields (for D365 / Power Automate) ---
+        syncHiddenField('shorttext3661', currentTotal);
+        syncHiddenField('shorttext9854', passportCnt);
+        syncHiddenField('new_complimentaryfoursomes', sponsor.foursomes);
+    }
+
+    function syncHiddenField(name, value) {
+        var el = document.querySelector('[name="' + name + '"]');
+        if (el) el.value = value;
+    }
+
+    // ══════════════════════════════════════════
+    // VALIDATION
+    // ══════════════════════════════════════════
+    function clearError(fieldId, errId) {
+        var field = document.getElementById(fieldId);
+        var err   = document.getElementById(errId);
+        if (field) field.classList.remove('error');
+        if (err)   err.classList.remove('visible');
+    }
+
+    function showError(fieldId, errId) {
+        var field = document.getElementById(fieldId);
+        var err   = document.getElementById(errId);
+        if (field) field.classList.add('error');
+        if (err)   err.classList.add('visible');
+        return false;
+    }
+
+    function validatePostalCode(val) {
+        return /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(val.trim());
+    }
+
+    function validateEmail(val) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+    }
+
+    function validatePhone(val) {
+        // Accept common Canadian formats
+        return /^[\d\s\(\)\-\+\.]{7,20}$/.test(val.trim());
+    }
+
+    function validateForm() {
+        var valid = true;
+
+        // Clear all errors first
+        ['firstname','lastname','emailaddress1','telephone1',
+         'companyname','address1_line1','address1_city','address1_postalcode'].forEach(function(id) {
+            clearError(id, 'err_' + id);
+        });
+        document.getElementById('err_payment').classList.remove('visible');
+        document.getElementById('formErrorBanner').classList.remove('visible');
+
+        // Required text fields
+        var required = [
+            { id: 'firstname',         err: 'err_firstname',         msg: true },
+            { id: 'lastname',          err: 'err_lastname',          msg: true },
+            { id: 'companyname',       err: 'err_companyname',       msg: true },
+            { id: 'address1_line1',    err: 'err_address1_line1',    msg: true },
+            { id: 'address1_city',     err: 'err_address1_city',     msg: true }
+        ];
+        required.forEach(function(f) {
+            var el = document.getElementById(f.id);
+            if (!el || !el.value.trim()) {
+                showError(f.id, f.err);
+                valid = false;
+            }
+        });
+
+        // Email
+        var emailEl = document.getElementById('emailaddress1');
+        if (!emailEl || !validateEmail(emailEl.value)) {
+            showError('emailaddress1', 'err_emailaddress1');
+            valid = false;
+        }
+
+        // Phone
+        var phoneEl = document.getElementById('telephone1');
+        if (!phoneEl || !validatePhone(phoneEl.value)) {
+            showError('telephone1', 'err_telephone1');
+            valid = false;
+        }
+
+        // Postal Code
+        var postalEl = document.getElementById('address1_postalcode');
+        if (!postalEl || !validatePostalCode(postalEl.value)) {
+            showError('address1_postalcode', 'err_address1_postalcode');
+            valid = false;
+        } else {
+            // Normalize to "A1A 1A1" format
+            postalEl.value = postalEl.value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+            if (postalEl.value.length === 6) {
+                postalEl.value = postalEl.value.slice(0,3) + ' ' + postalEl.value.slice(3);
+            }
+        }
+
+        // Number inputs
+        var foursomeVal = parseInt(document.getElementById('foursomeCount').value) || 0;
+        var passportVal = parseInt(document.getElementById('passportCount').value) || 0;
+        if (foursomeVal < 0 || foursomeVal > 20) {
+            document.getElementById('err_foursome').classList.add('visible');
+            valid = false;
+        }
+        if (passportVal < 0 || passportVal > 100) {
+            document.getElementById('err_passport').classList.add('visible');
+            valid = false;
+        }
+
+        if (!valid) {
+            document.getElementById('formErrorBanner').classList.add('visible');
+            // Scroll to first error
+            var firstError = document.querySelector('.field-error.visible');
+            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        return valid;
+    }
+
+    // ══════════════════════════════════════════
+    // SUBMIT HANDLER
+    // ══════════════════════════════════════════
     function handleSubmitClick(e) {
+        e.preventDefault();
+        if (!validateForm()) return;
+
         if (currentPaymentType === '2') {
-            e.preventDefault();
-            e.stopPropagation();
             launchMonerisPayment();
+        } else {
+            submitInvoiceRequest();
         }
-        // Invoice: let D365 submit normally
     }
 
+    // ══════════════════════════════════════════
+    // INVOICE SUBMISSION
+    // ══════════════════════════════════════════
+    function submitInvoiceRequest() {
+        var btn = document.getElementById('mainSubmitButton');
+        btn.textContent = '⏳ Submitting request...';
+        btn.disabled = true;
+
+        var email = document.getElementById('emailaddress1').value.trim();
+        var sponsorKey = document.getElementById('sponsorSelect').value;
+        var sponsor = SPONSORS[sponsorKey] || { name: 'Golf Only', price: 0, foursomes: 0 };
+        var addlFours = parseInt(document.getElementById('foursomeCount').value) || 0;
+        var passportCnt = parseInt(document.getElementById('passportCount').value) || 0;
+
+        // Build invoice summary for confirmation screen
+        buildInvoiceSummary(sponsor, addlFours, passportCnt);
+        document.getElementById('invoiceEmail').textContent = email;
+
+        // Show confirmation (D365 form handles the actual CRM record creation)
+        // In production, trigger Power Automate flow to email dgordon@chs.ca here
+        setTimeout(function() {
+            document.getElementById('invoiceConfirmScreen').classList.add('active');
+            btn.disabled = false;
+            btn.textContent = '📄 Submit Invoice Request';
+        }, 800);
+    }
+
+    function buildInvoiceSummary(sponsor, addlFours, passportCnt) {
+        var box = document.getElementById('invoiceSummaryBox');
+        var fPrice = addlFours * FOURSOME_PRICE;
+        var pPrice = passportCnt * PASSPORT_PRICE;
+        var name = (document.getElementById('firstname').value + ' ' + document.getElementById('lastname').value).trim();
+        var org  = document.getElementById('companyname').value.trim();
+
+        var rows = '';
+        rows += '<div class="cs-row"><span>' + name + (org ? ' · ' + org : '') + '</span></div>';
+        if (sponsor.price > 0) {
+            rows += '<div class="cs-row" style="margin-top:10px;"><span>' + sponsor.name + '</span><span>$' + sponsor.price.toLocaleString() + '</span></div>';
+        }
+        if (addlFours > 0) {
+            rows += '<div class="cs-row"><span>Additional Foursomes (' + addlFours + ')</span><span>$' + fPrice.toLocaleString() + '</span></div>';
+        }
+        if (passportCnt > 0) {
+            rows += '<div class="cs-row"><span>President\'s Passports (' + passportCnt + ')</span><span>$' + pPrice.toLocaleString() + '</span></div>';
+        }
+        rows += '<div class="cs-row cs-total"><span>Total (CAD)</span><span>$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</span></div>';
+        box.innerHTML = rows;
+    }
+
+    // ══════════════════════════════════════════
+    // MONERIS CREDIT CARD PAYMENT
+    // ══════════════════════════════════════════
     async function launchMonerisPayment() {
         var btn = document.getElementById('mainSubmitButton');
-        var originalText = btn.innerText;
-
-        btn.innerText = '⏳ Connecting to payment...';
+        var originalText = btn.textContent;
+        btn.textContent = '⏳ Connecting to payment...';
         btn.disabled = true;
 
         try {
-            var response = await fetch(flowUrl, {
+            var response = await fetch(FLOW_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ txn_total: currentTotal.toFixed(2) })
@@ -477,106 +1150,55 @@
             var ticket = data.ticket || (data.response && data.response.ticket);
 
             if (ticket) {
-                // Show Moneris full-page overlay
                 document.getElementById('monerisOverlay').classList.add('active');
 
                 var myCheckout = new monerisCheckout();
                 myCheckout.setMode("qa"); // Change to "prod" for live payments
-
                 myCheckout.setCheckoutDiv("monerisCheckoutDiv");
 
-                // ── All Moneris callbacks ──
-                myCheckout.setCallback("payment_complete", function(response) {
-                    showThankYou();
+                myCheckout.setCallback("payment_complete", function() { showThankYou(); });
+                myCheckout.setCallback("payment_receipt",  function() { showThankYou(); });
+                myCheckout.setCallback("page_loaded", function(res) {
+                    if (res && res.currentPage === 'receipt') showThankYou();
                 });
-
-                myCheckout.setCallback("payment_receipt", function(response) {
-                    // Fires when receipt page loads — also treat as complete
-                    showThankYou();
-                });
-
-                myCheckout.setCallback("page_loaded", function(response) {
-                    // Check if we're on the receipt page
-                    if (response && response.currentPage && response.currentPage === 'receipt') {
-                        showThankYou();
-                    }
-                });
-
                 myCheckout.setCallback("cancel_transaction", function() {
                     document.getElementById('monerisOverlay').classList.remove('active');
-                    btn.innerText = originalText;
+                    btn.textContent = originalText;
                     btn.disabled = false;
                 });
-
                 myCheckout.setCallback("error_event", function() {
                     document.getElementById('monerisOverlay').classList.remove('active');
-                    alert("A payment error occurred. Please try again.");
-                    btn.innerText = originalText;
+                    alert("A payment error occurred. Please try again or choose Invoice.");
+                    btn.textContent = originalText;
                     btn.disabled = false;
                 });
 
                 myCheckout.startCheckout(ticket);
-
             } else {
-                alert("Payment setup failed. Please try again.");
-                btn.innerText = originalText;
+                alert("Payment setup failed. Please try again or choose Invoice.");
+                btn.textContent = originalText;
                 btn.disabled = false;
             }
-
         } catch (err) {
-            alert("Error connecting to payment server. Please try again.");
-            btn.innerText = originalText;
+            alert("Error connecting to payment server. Please try again or choose Invoice.");
+            btn.textContent = originalText;
             btn.disabled = false;
         }
     }
 
     function showThankYou() {
-        // Hide Moneris overlay
         document.getElementById('monerisOverlay').classList.remove('active');
-        // Show thank you screen with the amount paid
-        document.getElementById('thankYouAmount').innerText = '$' + currentTotal.toLocaleString() + '.00';
+        document.getElementById('thankYouAmount').textContent =
+            '$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         document.getElementById('thankYouScreen').classList.add('active');
     }
 
-    function calculate() {
-        var sponsorEl  = document.querySelector('[name="optionset9110"]');
-        var foursomeEl = document.querySelector('[name="twooptions4993"]');
-        var passportEl = document.querySelector('[name="optionset4098"]');
-
-        if (!sponsorEl || !foursomeEl || !passportEl) return;
-
-        var sponsorshipValues = { "1":25000,"2":20000,"3":15000,"4":10000,"5":5000,"6":3500,"7":1500,"8":550 };
-        var passportMapping   = { "1":4,"2":8,"3":12,"4":0 };
-
-        var sPrice = sponsorshipValues[sponsorEl.value] || 0;
-        var fPrice = foursomeEl.checked ? 2000 : 0;
-        var pCount = passportMapping[passportEl.value] || 0;
-        var pPrice = pCount * 100;
-
-        currentTotal = sPrice + fPrice + pPrice;
-
-        document.getElementById('dispSponsor').innerText  = "$" + sPrice.toLocaleString();
-        document.getElementById('dispFoursome').innerText = "$" + fPrice.toLocaleString();
-        document.getElementById('dispPassport').innerText = "$" + pPrice.toLocaleString();
-        document.getElementById('dispTotal').innerText    = "$" + currentTotal.toLocaleString();
-
-        var hiddenTotal    = document.querySelector('[name="shorttext3661"]');
-        var hiddenPassport = document.querySelector('[name="shorttext9854"]');
-        if (hiddenTotal)    hiddenTotal.value    = currentTotal;
-        if (hiddenPassport) hiddenPassport.value = pCount;
-    }
-
-    // Cancel button closes Moneris overlay
+    // Cancel Moneris overlay
     document.getElementById('monerisCloseBtn').addEventListener('click', function() {
         document.getElementById('monerisOverlay').classList.remove('active');
         var btn = document.getElementById('mainSubmitButton');
-        if (btn) {
-            btn.innerText = '🔒 Pay Securely with Credit Card';
-            btn.disabled = false;
-        }
+        if (btn) { btn.textContent = '🔒 Pay Securely with Credit Card'; btn.disabled = false; }
     });
-
-    waitForForm();
 </script>
 
 </body>
