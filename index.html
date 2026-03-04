@@ -28,6 +28,7 @@
             box-shadow: 0 4px 32px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
         }
 
+        /* ── Header ── */
         .card-header {
             background: linear-gradient(150deg, #034a2c 0%, #056038 55%, #07774a 100%);
             padding: 44px 40px 36px;
@@ -96,142 +97,259 @@
         }
         .header-meta span:first-child::before { display: none; }
 
+        /* ── Card body ── */
         .card-body { padding: 36px 40px 40px; }
 
-        .section-label {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.4px;
-            color: #056038;
-            margin: 28px 0 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .section-label::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #e8ede8;
-        }
-        .section-label:first-child { margin-top: 0; }
-
-        .field-row { display: flex; gap: 16px; }
-        .field-row > .field { flex: 1; }
-        .field { margin-bottom: 16px; }
-        .field label {
-            display: block;
-            font-size: 12px;
-            font-weight: 700;
-            color: #2d4a2d;
-            margin-bottom: 6px;
-            letter-spacing: 0.3px;
-        }
-        .field input[type="text"],
-        .field input[type="email"],
-        .field input[type="tel"],
-        .field input[type="number"],
-        .field select {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1.5px solid #dde6dd;
-            border-radius: 6px;
-            background: #fafcfa;
-            font-family: 'Source Sans 3', sans-serif;
-            font-size: 14px;
-            color: #1a1a1a;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-        .field input[type="number"] {
-            -moz-appearance: textfield;
-            appearance: textfield;
-        }
-        .field select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23056038' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            padding-right: 36px;
-        }
-        .field input:focus, .field select:focus {
-            outline: none;
-            border-color: #056038;
-            box-shadow: 0 0 0 3px rgba(5,96,56,0.12);
-            background: #fff;
-        }
-        .field input::placeholder { color: #aab8aa; font-size: 13px; }
-        .field input.error, .field select.error {
-            border-color: #c0392b;
-            box-shadow: 0 0 0 3px rgba(192,57,43,0.10);
-            background: #fff9f9;
-        }
-        .field-error {
-            font-size: 12px;
-            color: #c0392b;
-            margin-top: 4px;
+        /* ── Form-level error banner ── */
+        #formErrorBanner {
             display: none;
+            background: #fff2f2;
+            border: 1.5px solid #e74c3c;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #c0392b;
+            font-weight: 600;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
-        .field-error.visible { display: flex; }
-        .field-error::before { content: '⚠'; font-size: 11px; }
+        #formErrorBanner.visible { display: flex; }
+
+        /* ════════════════════════════════════════
+           D365 FIELD OVERRIDES
+           These style the fields rendered by FormLoader from CRM.html
+        ════════════════════════════════════════ */
+        .marketingForm { font-family: 'Source Sans 3', sans-serif !important; }
+
+        /* Section labels */
+        .marketingForm .section-label {
+            font-size: 10px !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.4px !important;
+            color: #056038 !important;
+            margin: 28px 0 16px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            border-bottom: none !important;
+            padding-bottom: 0 !important;
+        }
+        .marketingForm .section-label::after {
+            content: '' !important;
+            flex: 1 !important;
+            height: 1px !important;
+            background: #e8ede8 !important;
+        }
+
+        /* Field blocks */
+        .marketingForm .textFormFieldBlock,
+        .marketingForm .optionSetFormFieldBlock,
+        .marketingForm .twoOptionFormFieldBlock,
+        .marketingForm .numberFormFieldBlock {
+            padding: 0 !important;
+            margin-bottom: 16px !important;
+            gap: 0 !important;
+        }
+
+        /* Labels */
+        .marketingForm label {
+            display: block !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            color: #2d4a2d !important;
+            margin-bottom: 6px !important;
+            letter-spacing: 0.3px !important;
+        }
+
+        /* All text/email/tel/number inputs and selects */
+        .marketingForm input[type="text"],
+        .marketingForm input[type="email"],
+        .marketingForm input[type="tel"],
+        .marketingForm input[type="number"],
+        .marketingForm select {
+            width: 100% !important;
+            padding: 11px 14px !important;
+            border: 1.5px solid #dde6dd !important;
+            border-radius: 6px !important;
+            background: #fafcfa !important;
+            font-family: 'Source Sans 3', sans-serif !important;
+            font-size: 14px !important;
+            color: #1a1a1a !important;
+            transition: border-color 0.2s, box-shadow 0.2s !important;
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            box-shadow: none !important;
+        }
+        .marketingForm input[type="number"] {
+            -moz-appearance: textfield !important;
+            text-align: center !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+        }
+        .marketingForm select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23056038' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 14px center !important;
+            padding-right: 36px !important;
+        }
+        .marketingForm input:focus,
+        .marketingForm select:focus {
+            outline: none !important;
+            border-color: #056038 !important;
+            box-shadow: 0 0 0 3px rgba(5,96,56,0.12) !important;
+            background: #fff !important;
+        }
+        .marketingForm input.input-error,
+        .marketingForm select.input-error {
+            border-color: #c0392b !important;
+            box-shadow: 0 0 0 3px rgba(192,57,43,0.10) !important;
+            background: #fff9f9 !important;
+        }
+        .marketingForm input::placeholder { color: #aab8aa !important; font-size: 13px !important; }
+
+        /* Hint text injected by JS */
         .field-hint {
             font-size: 11px;
             color: #7a9a7a;
             margin-top: 4px;
         }
 
-        /* Number stepper */
-        .number-stepper {
+        /* Inline validation errors injected by JS */
+        .inline-error {
+            display: none;
+            font-size: 12px;
+            color: #c0392b;
+            margin-top: 4px;
+            align-items: center;
+            gap: 5px;
+        }
+        .inline-error.visible { display: flex; }
+        .inline-error::before { content: '⚠'; font-size: 11px; }
+
+        /* Two-column field rows */
+        .marketingForm .field-row {
+            display: flex !important;
+            gap: 16px !important;
+        }
+        .marketingForm .field-row > div { flex: 1 !important; }
+
+        /* ── Number stepper (injected by JS around number inputs) ── */
+        .stepper-wrap {
             display: flex;
             align-items: center;
-            gap: 0;
             border: 1.5px solid #dde6dd;
             border-radius: 6px;
             overflow: hidden;
             background: #fafcfa;
         }
-        .number-stepper button {
-            width: 42px;
-            height: 42px;
+        .stepper-wrap:focus-within {
+            border-color: #056038;
+            box-shadow: 0 0 0 3px rgba(5,96,56,0.12);
+        }
+        .stepper-btn {
+            width: 44px;
+            height: 44px;
             border: none;
             background: #f0f5f0;
             color: #056038;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
             cursor: pointer;
             flex-shrink: 0;
             transition: background 0.15s;
             line-height: 1;
-        }
-        .number-stepper button:hover { background: #e0eee0; }
-        .number-stepper button:active { background: #d0e8d0; }
-        .number-stepper input[type="number"] {
-            flex: 1;
-            border: none;
-            background: transparent;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a1a1a;
-            padding: 8px 4px;
             font-family: 'Source Sans 3', sans-serif;
-            -moz-appearance: textfield;
-            appearance: textfield;
-            outline: none;
         }
-        .number-stepper input[type="number"]::-webkit-inner-spin-button,
-        .number-stepper input[type="number"]::-webkit-outer-spin-button { display: none; }
+        .stepper-btn:hover { background: #e0eee0; }
+        .stepper-btn:active { background: #d0e8d0; }
+        /* Input inside stepper - override the generic styles above */
+        .stepper-wrap input[type="number"] {
+            flex: 1 !important;
+            border: none !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            text-align: center !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            padding: 8px 4px !important;
+            box-shadow: none !important;
+        }
+        .stepper-wrap input[type="number"]::-webkit-inner-spin-button,
+        .stepper-wrap input[type="number"]::-webkit-outer-spin-button { display: none; }
 
-        /* Order summary */
+        /* ── Consent checkbox block ── */
+        .marketingForm .consent-flex {
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 12px !important;
+            padding: 14px 16px !important;
+            border: 1.5px solid #dde6dd !important;
+            border-radius: 8px !important;
+            background: #fafcfa !important;
+            cursor: pointer !important;
+            transition: border-color 0.2s, background 0.2s !important;
+        }
+        .marketingForm .consent-flex:has(input:checked) {
+            border-color: #056038 !important;
+            background: #f0f7f3 !important;
+        }
+        .marketingForm input[type="checkbox"] {
+            width: 18px !important;
+            height: 18px !important;
+            flex-shrink: 0 !important;
+            margin-top: 2px !important;
+            cursor: pointer !important;
+            accent-color: #056038 !important;
+        }
+        .marketingForm .twoOptionFormFieldBlock label {
+            font-size: 13px !important;
+            font-weight: 400 !important;
+            cursor: pointer !important;
+        }
+
+        /* ── Payment radio options ── */
+        .marketingForm .radio-group { display: flex; flex-direction: column; gap: 10px; }
+        .marketingForm .radio-option {
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 14px !important;
+            padding: 14px 16px !important;
+            border: 1.5px solid #dde6dd !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            background: #fafcfa !important;
+            transition: border-color 0.2s, background 0.2s !important;
+        }
+        .marketingForm .radio-option:has(input:checked) {
+            border-color: #056038 !important;
+            background: #f0f7f3 !important;
+        }
+        .marketingForm input[type="radio"] {
+            width: 18px !important;
+            height: 18px !important;
+            flex-shrink: 0 !important;
+            margin-top: 3px !important;
+            cursor: pointer !important;
+            accent-color: #056038 !important;
+        }
+        .marketingForm .radio-label { font-size: 14px !important; font-weight: 700 !important; color: #1a1a1a !important; }
+        .marketingForm .radio-desc  { font-size: 12px !important; color: #7a9a7a !important; margin-top: 3px !important; font-weight: 400 !important; }
+
+        /* ── HIDE D365's own submit button — we use our custom one ── */
+        .marketingForm .submitButton,
+        .marketingForm .submitButtonWrapper { display: none !important; }
+
+        /* ════════════════════════════════════════
+           ORDER SUMMARY (in index.html, updated by JS)
+        ════════════════════════════════════════ */
         #orderSummary {
             background: linear-gradient(135deg, #f0f7f0 0%, #e8f2e8 100%);
             border: 1.5px solid #c8ddc8;
             border-radius: 8px;
             padding: 20px 24px;
-            margin: 8px 0 20px;
+            margin: 8px 0 24px;
         }
         .summary-title {
             font-size: 12px;
@@ -245,7 +363,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            padding: 6px 0;
+            padding: 7px 0;
             font-size: 14px;
             color: #3a5a3a;
             border-bottom: 1px dashed #d0e4d0;
@@ -253,8 +371,9 @@
         .summary-row:last-of-type { border-bottom: none; }
         .summary-row.hidden { display: none; }
         .summary-row .row-label { flex: 1; padding-right: 12px; }
-        .summary-row .row-amt { font-weight: 700; white-space: nowrap; }
-        .summary-row .row-sub { font-size: 11px; color: #7a9a7a; margin-top: 2px; }
+        .summary-row .row-name  { font-weight: 500; }
+        .summary-row .row-sub   { font-size: 11px; color: #7a9a7a; margin-top: 2px; }
+        .summary-row .row-amt   { font-weight: 700; white-space: nowrap; }
         .summary-total {
             display: flex;
             justify-content: space-between;
@@ -276,77 +395,9 @@
             margin-right: 6px;
         }
 
-        /* Consent block */
-        .consent-block {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 14px 16px;
-            border: 1.5px solid #dde6dd;
-            border-radius: 8px;
-            background: #fafcfa;
-            margin-bottom: 20px;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-        .consent-block:has(input:checked) { border-color: #056038; background: #f0f7f3; }
-        .consent-block input[type="checkbox"] {
-            width: 18px; height: 18px;
-            flex-shrink: 0;
-            margin-top: 2px;
-            cursor: pointer;
-            accent-color: #056038;
-        }
-        .consent-block label {
-            font-size: 13px;
-            font-weight: 400;
-            color: #323130;
-            cursor: pointer;
-            line-height: 1.5;
-        }
-
-        /* Payment radio */
-        .payment-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-        .payment-option {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 14px 16px;
-            border: 1.5px solid #dde6dd;
-            border-radius: 8px;
-            cursor: pointer;
-            background: #fafcfa;
-            transition: border-color 0.2s, background 0.2s;
-        }
-        .payment-option:has(input:checked) { border-color: #056038; background: #f0f7f3; }
-        .payment-option input[type="radio"] {
-            width: 18px; height: 18px;
-            flex-shrink: 0;
-            margin-top: 3px;
-            cursor: pointer;
-            accent-color: #056038;
-        }
-        .payment-option-label { font-size: 14px; font-weight: 700; color: #1a1a1a; }
-        .payment-option-desc { font-size: 12px; color: #7a9a7a; margin-top: 3px; }
-
-        /* Form-level error banner */
-        #formErrorBanner {
-            display: none;
-            background: #fff2f2;
-            border: 1.5px solid #e74c3c;
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            font-size: 13px;
-            color: #c0392b;
-            font-weight: 600;
-            align-items: center;
-            gap: 8px;
-        }
-        #formErrorBanner.visible { display: flex; }
-
-        /* Submit button */
+        /* ── Custom Submit Button ── */
         #mainSubmitButton {
+            display: block;
             width: 100%;
             padding: 16px;
             background: linear-gradient(135deg, #034a2c, #056038);
@@ -374,132 +425,68 @@
             border-top: 1px solid #eef2ee;
         }
 
-        /* ── Moneris full-page overlay ── */
+        /* ── Moneris overlay ── */
         #monerisOverlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #fff;
-            z-index: 9999;
-            flex-direction: column;
+            display: none; position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; z-index: 9999; flex-direction: column;
         }
         #monerisOverlay.active { display: flex; }
         #monerisTopBar {
             background: linear-gradient(135deg, #034a2c, #056038);
             padding: 14px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
         }
         #monerisTopBar span { color: #fff; font-weight: 700; font-size: 15px; }
         #monerisCloseBtn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            border-radius: 6px;
-            color: #fff;
-            padding: 6px 14px;
-            font-size: 13px;
-            cursor: pointer;
+            background: rgba(255,255,255,0.2); border: none; border-radius: 6px;
+            color: #fff; padding: 6px 14px; font-size: 13px; cursor: pointer;
             font-family: 'Source Sans 3', sans-serif;
         }
         #monerisCloseBtn:hover { background: rgba(255,255,255,0.3); }
         #monerisCheckoutDiv { flex: 1; width: 100%; overflow-y: auto; }
 
-        /* ── Full-screen overlays (Thank You & Invoice) ── */
+        /* ── Full-screen confirmation overlays ── */
         .fs-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #eef2ee;
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
+            display: none; position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #eef2ee; z-index: 9999;
+            align-items: center; justify-content: center;
         }
         .fs-overlay.active { display: flex; }
         .confirm-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 48px 40px;
-            max-width: 520px;
-            width: 90%;
-            text-align: center;
+            background: #fff; border-radius: 12px; padding: 48px 40px;
+            max-width: 520px; width: 90%; text-align: center;
             box-shadow: 0 4px 32px rgba(0,0,0,0.10);
         }
         .confirm-icon {
-            width: 72px; height: 72px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 32px;
+            width: 72px; height: 72px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px; font-size: 32px;
         }
         .confirm-icon.success { background: #e8f5e8; }
-        .confirm-icon.invoice { background: #e8f0ff; }
-        .confirm-card h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 26px;
-            color: #034a2c;
-            margin-bottom: 12px;
-        }
-        .confirm-card p {
-            color: #5a7a5a;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 8px;
-        }
-        .confirm-amount {
-            font-size: 30px;
-            font-weight: 700;
-            color: #056038;
-            font-family: 'Playfair Display', serif;
-            margin: 20px 0 8px;
-        }
+        .confirm-icon.invoice { background: #e8f0f8; }
+        .confirm-card h2 { font-family: 'Playfair Display', serif; font-size: 26px; color: #034a2c; margin-bottom: 12px; }
+        .confirm-card p  { color: #5a7a5a; font-size: 15px; line-height: 1.6; margin-bottom: 8px; }
+        .confirm-amount  { font-size: 30px; font-weight: 700; color: #056038; font-family: 'Playfair Display', serif; margin: 20px 0 4px; }
         .confirm-amount-label { font-size: 12px; color: #8a9a8a; margin-bottom: 20px; }
         .confirm-summary-box {
-            background: #f0f7f3;
-            border: 1px solid #c8ddc8;
-            border-radius: 8px;
-            padding: 16px 20px;
-            text-align: left;
-            margin: 16px 0;
-            font-size: 13px;
-            color: #3a5a3a;
+            background: #f0f7f3; border: 1px solid #c8ddc8; border-radius: 8px;
+            padding: 16px 20px; text-align: left; margin: 16px 0;
+            font-size: 13px; color: #3a5a3a;
         }
-        .confirm-summary-box .cs-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
+        .cs-row { display: flex; justify-content: space-between; padding: 4px 0; }
+        .cs-row.cs-total {
+            margin-top: 10px; padding-top: 10px;
+            border-top: 1.5px solid #056038; font-weight: 700; font-size: 15px; color: #034a2c;
         }
-        .confirm-summary-box .cs-row.cs-total {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1.5px solid #056038;
-            font-weight: 700;
-            font-size: 15px;
-            color: #034a2c;
-        }
-        .confirm-contact {
-            font-size: 12px;
-            color: #8a9a8a;
-            margin-top: 12px;
-        }
+        .confirm-contact { font-size: 12px; color: #8a9a8a; margin-top: 12px; }
         .confirm-contact a { color: #056038; }
         .confirm-btn {
-            display: inline-block;
-            margin-top: 24px;
-            padding: 12px 32px;
-            background: linear-gradient(135deg, #034a2c, #056038);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-family: 'Source Sans 3', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
+            display: inline-block; margin-top: 24px; padding: 12px 32px;
+            background: linear-gradient(135deg, #034a2c, #056038); color: #fff;
+            border: none; border-radius: 8px; font-family: 'Source Sans 3', sans-serif;
+            font-size: 15px; font-weight: 700; cursor: pointer;
         }
 
         @media (max-width: 520px) {
@@ -508,7 +495,7 @@
             .card-header { padding: 32px 24px 28px; }
             .card-header h1 { font-size: 24px; }
             .card-body { padding: 28px 24px 32px; }
-            .field-row { flex-direction: column; gap: 0; }
+            .marketingForm .field-row { flex-direction: column !important; gap: 0 !important; }
         }
     </style>
 </head>
@@ -527,77 +514,49 @@
 
     <div class="card-body">
 
-        <!-- Form-level error banner -->
+        <!-- Form-level error banner (shown on failed validation) -->
         <div id="formErrorBanner">⚠ Please fix the highlighted fields before continuing.</div>
 
-        <!-- ── PURCHASE OPTIONS ── -->
-        <div class="section-label">Purchase Options</div>
-
-        <!-- Sponsorship Level -->
-        <div class="field">
-            <label for="sponsorSelect">Sponsorship Level (optional)</label>
-            <select id="sponsorSelect" name="optionset9110">
-                <option value="1" selected>Presenting Sponsorship — $25,000</option>
-                <option value="2">Titanium Sponsorship — $20,000</option>
-                <option value="3">Platinum Sponsorship — $15,000</option>
-                <option value="4">Gold Sponsorship — $10,000</option>
-                <option value="5">Silver Sponsorship — $5,000</option>
-                <option value="6">Bronze Sponsorship — $3,500</option>
-                <option value="7">Brass Sponsorship — $1,500</option>
-                <option value="8">Copper Sponsorship — $550</option>
-                <option value="9">Golf Only — Buy a Foursome(s)</option>
-            </select>
-            <div class="field-hint" id="sponsorFoursomeHint">✦ Includes 3 complimentary foursomes (12 golfers)</div>
+        <!-- ════════════════════════════════════════
+             D365 Marketing Form embed
+             FormLoader renders ALL fields from CRM.html here.
+             index.html contains zero duplicate form fields.
+        ════════════════════════════════════════ -->
+        <div
+            data-form-id='59a9d805-df14-f111-8342-70a8a50f30e1'
+            data-form-api-url='https://public-can.mkt.dynamics.com/api/v1.0/orgs/58c25681-1c41-4696-b5f7-a548aeb7e111/landingpageforms'
+            data-cached-form-url='https://assets-can.mkt.dynamics.com/58c25681-1c41-4696-b5f7-a548aeb7e111/digitalassets/forms/59a9d805-df14-f111-8342-70a8a50f30e1'>
         </div>
+        <script src='https://cxppusa1formui01cdnsa01-endpoint.azureedge.net/can/FormLoader/FormLoader.bundle.js'></script>
 
-        <!-- Additional Foursomes -->
-        <div class="field">
-            <label for="foursomeCount">Select or Add Foursomes <span id="foursomeLabelSuffix" style="font-weight:400; color:#7a9a7a;">(additional, 0 or more)</span></label>
-            <div class="number-stepper">
-                <button type="button" id="foursomeMinus" aria-label="Decrease foursomes">−</button>
-                <input type="number" id="foursomeCount" name="new_additionalfoursomes" min="0" max="20" value="0" step="1" aria-label="Number of additional foursomes">
-                <button type="button" id="foursomePlus" aria-label="Increase foursomes">+</button>
-            </div>
-            <div class="field-hint">$2,000 per additional foursome (4 golfers)</div>
-            <div class="field-error" id="err_foursome">Enter a whole number 0 or greater.</div>
-        </div>
-
-        <!-- President's Passports -->
-        <div class="field">
-            <label for="passportCount">President's Passports (0 or more)</label>
-            <div class="number-stepper">
-                <button type="button" id="passportMinus" aria-label="Decrease passports">−</button>
-                <input type="number" id="passportCount" name="new_passportcount" min="0" max="100" value="0" step="1" aria-label="Number of President's Passports">
-                <button type="button" id="passportPlus" aria-label="Increase passports">+</button>
-            </div>
-            <div class="field-hint">$100 per passport — exclusive event benefits per golfer</div>
-            <div class="field-error" id="err_passport">Enter a whole number 0 or greater.</div>
-        </div>
-
-        <!-- ── ORDER SUMMARY ── -->
+        <!-- ════════════════════════════════════════
+             Order Summary — read-only display block.
+             waitForForm() injects this AFTER the D365 form fields
+             by moving it into the DOM after the Payment section renders.
+        ════════════════════════════════════════ -->
         <div id="orderSummary">
             <div class="summary-title">Order Summary</div>
 
             <div class="summary-row" id="rowSponsor">
                 <div class="row-label">
-                    <div id="labelSponsor">Presenting Sponsorship</div>
-                    <div class="row-sub" id="subSponsor">3 complimentary foursomes included</div>
+                    <div class="row-name" id="labelSponsor">Presenting Sponsorship</div>
+                    <div class="row-sub"  id="subSponsor">3 complimentary foursomes included</div>
                 </div>
                 <div class="row-amt" id="dispSponsor">$25,000</div>
             </div>
 
             <div class="summary-row hidden" id="rowFoursome">
                 <div class="row-label">
-                    <div id="labelFoursome">Additional Foursomes</div>
-                    <div class="row-sub" id="subFoursome"></div>
+                    <div class="row-name" id="labelFoursome">Additional Foursomes</div>
+                    <div class="row-sub"  id="subFoursome"></div>
                 </div>
                 <div class="row-amt" id="dispFoursome">$0</div>
             </div>
 
             <div class="summary-row hidden" id="rowPassport">
                 <div class="row-label">
-                    <div id="labelPassport">President's Passports</div>
-                    <div class="row-sub" id="subPassport"></div>
+                    <div class="row-name" id="labelPassport">President's Passports</div>
+                    <div class="row-sub"  id="subPassport"></div>
                 </div>
                 <div class="row-amt" id="dispPassport">$0</div>
             </div>
@@ -608,102 +567,9 @@
             </div>
         </div>
 
-        <!-- ── BUYER INFORMATION ── -->
-        <div class="section-label">Buyer Information</div>
-
-        <div class="field-row">
-            <div class="field">
-                <label for="firstname">First Name *</label>
-                <input type="text" id="firstname" name="firstname" maxlength="100" autocomplete="given-name">
-                <div class="field-error" id="err_firstname">First name is required.</div>
-            </div>
-            <div class="field">
-                <label for="lastname">Last Name *</label>
-                <input type="text" id="lastname" name="lastname" maxlength="100" autocomplete="family-name">
-                <div class="field-error" id="err_lastname">Last name is required.</div>
-            </div>
-        </div>
-
-        <div class="field-row">
-            <div class="field">
-                <label for="emailaddress1">Email *</label>
-                <input type="email" id="emailaddress1" name="emailaddress1" autocomplete="email">
-                <div class="field-error" id="err_emailaddress1">Enter a valid email address.</div>
-            </div>
-            <div class="field">
-                <label for="telephone1">Phone Number *</label>
-                <input type="tel" id="telephone1" name="telephone1" placeholder="(416) 555-0100" autocomplete="tel">
-                <div class="field-error" id="err_telephone1">Enter a valid phone number.</div>
-            </div>
-        </div>
-
-        <div class="field">
-            <label for="companyname">Organization Name *</label>
-            <input type="text" id="companyname" name="companyname" maxlength="100"
-                   placeholder="Your company or organization" autocomplete="organization">
-            <div class="field-error" id="err_companyname">Enter a valid organization name.</div>
-        </div>
-
-        <div class="field">
-            <label for="address1_line1">Billing Address *</label>
-            <input type="text" id="address1_line1" name="address1_line1" placeholder="Street address"
-                   maxlength="200" autocomplete="street-address">
-            <div class="field-error" id="err_address1_line1">Billing address is required.</div>
-        </div>
-
-        <div class="field-row">
-            <div class="field">
-                <label for="address1_city">City *</label>
-                <input type="text" id="address1_city" name="address1_city" maxlength="100" autocomplete="address-level2">
-                <div class="field-error" id="err_address1_city">City is required.</div>
-            </div>
-            <div class="field">
-                <label for="address1_postalcode">Postal Code *</label>
-                <input type="text" id="address1_postalcode" name="address1_postalcode"
-                       placeholder="A1A 1A1" maxlength="7" autocomplete="postal-code">
-                <div class="field-error" id="err_address1_postalcode">Enter a valid Postal Code (e.g., A1A 1A1).</div>
-            </div>
-        </div>
-
-        <!-- ── COMMUNICATIONS CONSENT ── -->
-        <div class="section-label">Communications Consent</div>
-
-        <div class="consent-block">
-            <input type="checkbox" id="marketingConsent" name="new_marketingconsent" value="true">
-            <label for="marketingConsent">
-                I agree to receive future communications and notifications on Golf event news and updates.
-            </label>
-        </div>
-
-        <!-- ── PAYMENT METHOD ── -->
-        <div class="section-label">Payment Method</div>
-
-        <div class="payment-options">
-            <label class="payment-option">
-                <input type="radio" name="new_paymentoption" id="payInvoice" value="1" checked>
-                <div>
-                    <div class="payment-option-label">📄 Invoice Requested</div>
-                    <div class="payment-option-desc">We'll email the invoice to your address on file</div>
-                </div>
-            </label>
-            <label class="payment-option">
-                <input type="radio" name="new_paymentoption" id="payCard" value="2">
-                <div>
-                    <div class="payment-option-label">🔒 Credit Card via Moneris Checkout</div>
-                    <div class="payment-option-desc">Secure hosted payment — no card data stored on our servers</div>
-                </div>
-            </label>
-        </div>
-        <div class="field-error" id="err_payment" style="margin-bottom:10px;">Please select a payment method.</div>
-
-        <!-- D365 Form Embed (handles CRM submission) -->
-        <div
-            data-form-id='59a9d805-df14-f111-8342-70a8a50f30e1'
-            data-form-api-url='https://public-can.mkt.dynamics.com/api/v1.0/orgs/58c25681-1c41-4696-b5f7-a548aeb7e111/landingpageforms'
-            data-cached-form-url='https://assets-can.mkt.dynamics.com/58c25681-1c41-4696-b5f7-a548aeb7e111/digitalassets/forms/59a9d805-df14-f111-8342-70a8a50f30e1'>
-        </div>
-        <script src='https://cxppusa1formui01cdnsa01-endpoint.azureedge.net/can/FormLoader/FormLoader.bundle.js'></script>
-
+        <!-- ── Custom Submit Button ──
+             D365's own .submitButton is hidden via CSS above.
+             This single button handles both invoice and credit card flows. -->
         <button type="button" id="mainSubmitButton">📄 Submit Invoice Request</button>
 
         <div class="footer-note">
@@ -730,7 +596,7 @@
         <p><strong>10th Annual President's Scholarship Golf Tournament</strong></p>
         <div class="confirm-amount" id="thankYouAmount"></div>
         <div class="confirm-amount-label">CAD — Payment Confirmed</div>
-        <p style="font-size:13px; color:#8a9a8a;">A confirmation receipt will be sent to your email address.</p>
+        <p style="font-size:13px; color:#8a9a8a; margin-top:8px;">A confirmation receipt will be sent to your email address.</p>
         <button class="confirm-btn" onclick="window.location.reload()">Register Another</button>
     </div>
 </div>
@@ -741,11 +607,7 @@
         <div class="confirm-icon invoice">📄</div>
         <h2>Invoice Request Submitted!</h2>
         <p>Thank you! Your registration has been received.</p>
-
-        <div class="confirm-summary-box" id="invoiceSummaryBox">
-            <!-- populated by JS -->
-        </div>
-
+        <div class="confirm-summary-box" id="invoiceSummaryBox"></div>
         <p style="font-size:14px; color:#3a5a3a;">
             An invoice will be emailed to <strong id="invoiceEmail"></strong>.<br>
             Please allow 1–2 business days for processing.
@@ -758,447 +620,421 @@
 </div>
 
 <script>
-    // ══════════════════════════════════════════
-    // CONFIG
-    // ══════════════════════════════════════════
-    var FLOW_URL = 'https://c5420bc382c8418ea7f8b39138ce18.0f.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/3ac94b8f7b1c4d13a47288aaa5352aab/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CPBG-n9A99_pMYl5MQsDMLNAYd5n0ybmRd93h77iKLM';
+// ══════════════════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════════════════
+var FLOW_URL = 'https://c5420bc382c8418ea7f8b39138ce18.0f.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/3ac94b8f7b1c4d13a47288aaa5352aab/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CPBG-n9A99_pMYl5MQsDMLNAYd5n0ybmRd93h77iKLM';
 
-    var SPONSORS = {
-        "1": { name: "Presenting Sponsorship",  price: 25000, foursomes: 3 },
-        "2": { name: "Titanium Sponsorship",     price: 20000, foursomes: 2 },
-        "3": { name: "Platinum Sponsorship",     price: 15000, foursomes: 2 },
-        "4": { name: "Gold Sponsorship",         price: 10000, foursomes: 1 },
-        "5": { name: "Silver Sponsorship",       price:  5000, foursomes: 0 },
-        "6": { name: "Bronze Sponsorship",       price:  3500, foursomes: 0 },
-        "7": { name: "Brass Sponsorship",        price:  1500, foursomes: 0 },
-        "8": { name: "Copper Sponsorship",       price:   550, foursomes: 0 },
-        "9": { name: "Golf Only",                price:     0, foursomes: 0 }
-    };
-    var FOURSOME_PRICE = 2000;
-    var PASSPORT_PRICE = 100;
+var SPONSORS = {
+    "1": { name: "Presenting Sponsorship",  price: 25000, foursomes: 3 },
+    "2": { name: "Titanium Sponsorship",     price: 20000, foursomes: 2 },
+    "3": { name: "Platinum Sponsorship",     price: 15000, foursomes: 2 },
+    "4": { name: "Gold Sponsorship",         price: 10000, foursomes: 1 },
+    "5": { name: "Silver Sponsorship",       price:  5000, foursomes: 0 },
+    "6": { name: "Bronze Sponsorship",       price:  3500, foursomes: 0 },
+    "7": { name: "Brass Sponsorship",        price:  1500, foursomes: 0 },
+    "8": { name: "Copper Sponsorship",       price:   550, foursomes: 0 },
+    "9": { name: "Golf Only",                price:     0, foursomes: 0 }
+};
+var FOURSOME_PRICE  = 2000;
+var PASSPORT_PRICE  = 100;
+var currentTotal    = 0;
+var currentPayType  = '1'; // default: invoice
 
-    var currentTotal = 0;
-    var currentPaymentType = '1'; // default invoice
+// ══════════════════════════════════════════════════════════════
+// WAIT FOR D365 FORMLOADER TO FINISH RENDERING FIELDS
+// Polls every 300ms until all required fields are in the DOM.
+// ══════════════════════════════════════════════════════════════
+function waitForForm() {
+    var sponsorEl  = document.querySelector('[name="optionset9110"]');
+    var foursomeEl = document.querySelector('[name="new_additionalfoursomes"]');
+    var passportEl = document.querySelector('[name="new_passportcount"]');
+    var payRadios  = document.querySelectorAll('[name="new_paymentoption"]');
 
-    // ══════════════════════════════════════════
-    // INIT — wire up page-level controls
-    // (these exist in index.html, not the embedded form)
-    // ══════════════════════════════════════════
-    document.addEventListener('DOMContentLoaded', function() {
-        setupSteppers();
-        setupPaymentRadios();
-        document.getElementById('mainSubmitButton').addEventListener('click', handleSubmitClick);
+    if (!sponsorEl || !foursomeEl || !passportEl || payRadios.length < 2) {
+        setTimeout(waitForForm, 300);
+        return;
+    }
 
-        // Wire up sponsor select and number inputs
-        var sponsorEl   = document.getElementById('sponsorSelect');
-        var foursomeEl  = document.getElementById('foursomeCount');
-        var passportEl  = document.getElementById('passportCount');
+    // 1. Inject +/- stepper UI around number inputs
+    injectStepper(foursomeEl, 0, 20);
+    injectStepper(passportEl, 0, 100);
 
-        if (sponsorEl)  sponsorEl.addEventListener('change', calculate);
-        if (foursomeEl) foursomeEl.addEventListener('input', calculate);
-        if (passportEl) passportEl.addEventListener('input', calculate);
+    // 2. Inject hint text below stepper blocks
+    injectHint(foursomeEl, 'hintFoursome', '$2,000 per additional foursome (4 golfers)');
+    injectHint(passportEl, 'hintPassport', '$100 per passport — exclusive event benefits per golfer');
 
+    // 3. Wire calculate on sponsor / number field changes
+    sponsorEl.addEventListener('change', calculate);
+    foursomeEl.addEventListener('input',  calculate);
+    passportEl.addEventListener('input',  calculate);
+
+    // 4. Wire payment radio changes
+    payRadios.forEach(function(r) {
+        r.addEventListener('change', function() {
+            currentPayType = this.value;
+            updateSubmitLabel();
+        });
+        if (r.checked) currentPayType = r.value;
+    });
+
+    // 5. Wire the single custom submit button
+    document.getElementById('mainSubmitButton').addEventListener('click', handleSubmitClick);
+
+    // 6. Relocate Order Summary to appear BEFORE the Payment section in the form
+    //    (it starts inside card-body after the D365 embed; move it just before Payment)
+    var payBlock = document.querySelector('.optionSetFormFieldBlock[data-targetproperty="new_paymentoption"]');
+    var summary  = document.getElementById('orderSummary');
+    if (payBlock && summary && payBlock.parentNode) {
+        payBlock.parentNode.insertBefore(summary, payBlock);
+    }
+
+    // 7. Initial calculation
+    calculate();
+    updateSubmitLabel();
+}
+
+// ══════════════════════════════════════════════════════════════
+// STEPPER INJECTION
+// Wraps a number <input> in a div with − and + buttons.
+// ══════════════════════════════════════════════════════════════
+function injectStepper(input, min, max) {
+    var wrap = document.createElement('div');
+    wrap.className = 'stepper-wrap';
+
+    var btnMinus = document.createElement('button');
+    btnMinus.type = 'button';
+    btnMinus.className = 'stepper-btn';
+    btnMinus.textContent = '−';
+    btnMinus.setAttribute('aria-label', 'Decrease');
+    btnMinus.addEventListener('click', function() {
+        input.value = Math.max(min, (parseInt(input.value) || 0) - 1);
         calculate();
     });
 
-    // ══════════════════════════════════════════
-    // STEPPER BUTTONS
-    // ══════════════════════════════════════════
-    function setupSteppers() {
-        document.getElementById('foursomeMinus').addEventListener('click', function() {
-            var el = document.getElementById('foursomeCount');
-            el.value = Math.max(0, (parseInt(el.value) || 0) - 1);
-            calculate();
-        });
-        document.getElementById('foursomePlus').addEventListener('click', function() {
-            var el = document.getElementById('foursomeCount');
-            el.value = Math.min(20, (parseInt(el.value) || 0) + 1);
-            calculate();
-        });
-        document.getElementById('passportMinus').addEventListener('click', function() {
-            var el = document.getElementById('passportCount');
-            el.value = Math.max(0, (parseInt(el.value) || 0) - 1);
-            calculate();
-        });
-        document.getElementById('passportPlus').addEventListener('click', function() {
-            var el = document.getElementById('passportCount');
-            el.value = Math.min(100, (parseInt(el.value) || 0) + 1);
-            calculate();
-        });
-    }
-
-    // ══════════════════════════════════════════
-    // PAYMENT RADIO
-    // ══════════════════════════════════════════
-    function setupPaymentRadios() {
-        var radios = document.querySelectorAll('[name="new_paymentoption"]');
-        radios.forEach(function(r) {
-            r.addEventListener('change', function() {
-                currentPaymentType = this.value;
-                updateSubmitButton();
-            });
-        });
-        updateSubmitButton();
-    }
-
-    function updateSubmitButton() {
-        var btn = document.getElementById('mainSubmitButton');
-        if (currentPaymentType === '2') {
-            btn.textContent = '🔒 Pay Securely with Credit Card';
-        } else {
-            btn.textContent = '📄 Submit Invoice Request';
-        }
-    }
-
-    // ══════════════════════════════════════════
-    // CALCULATE ORDER SUMMARY
-    // ══════════════════════════════════════════
-    function calculate() {
-        var sponsorEl  = document.getElementById('sponsorSelect');
-        var foursomeEl = document.getElementById('foursomeCount');
-        var passportEl = document.getElementById('passportCount');
-        if (!sponsorEl || !foursomeEl || !passportEl) return;
-
-        var sponsorKey  = sponsorEl.value;
-        var sponsor     = SPONSORS[sponsorKey] || { name: "", price: 0, foursomes: 0 };
-        var addlFours   = Math.max(0, Math.min(20, parseInt(foursomeEl.value) || 0));
-        var passportCnt = Math.max(0, Math.min(100, parseInt(passportEl.value) || 0));
-
-        var sPrice = sponsor.price;
-        var fPrice = addlFours * FOURSOME_PRICE;
-        var pPrice = passportCnt * PASSPORT_PRICE;
-        currentTotal = sPrice + fPrice + pPrice;
-
-        // --- Sponsor line ---
-        var rowSponsor = document.getElementById('rowSponsor');
-        var labelSponsor = document.getElementById('labelSponsor');
-        var subSponsor   = document.getElementById('subSponsor');
-        var dispSponsor  = document.getElementById('dispSponsor');
-
-        if (sponsorKey === '9') {
-            rowSponsor.classList.add('hidden');
-        } else {
-            rowSponsor.classList.remove('hidden');
-            labelSponsor.textContent = sponsor.name;
-            subSponsor.textContent = sponsor.foursomes > 0
-                ? sponsor.foursomes + ' complimentary foursome' + (sponsor.foursomes > 1 ? 's' : '') + ' included'
-                : '';
-            dispSponsor.textContent = '$' + sPrice.toLocaleString();
-        }
-
-        // Sponsor hint below the select
-        var hint = document.getElementById('sponsorFoursomeHint');
-        if (hint) {
-            if (sponsorKey === '9') {
-                hint.textContent = 'No sponsorship — foursomes below will be charged at $2,000 each';
-            } else if (sponsor.foursomes > 0) {
-                hint.textContent = '✦ Includes ' + sponsor.foursomes + ' complimentary foursome' + (sponsor.foursomes > 1 ? 's' : '') + ' (' + (sponsor.foursomes * 4) + ' golfers)';
-            } else {
-                hint.textContent = 'No complimentary foursomes at this level';
-            }
-        }
-
-        // Update label for foursomes input
-        var foursomeSuffix = document.getElementById('foursomeLabelSuffix');
-        if (foursomeSuffix) {
-            if (sponsor.foursomes > 0) {
-                foursomeSuffix.textContent = '(additional beyond the ' + sponsor.foursomes + ' included, 0 or more)';
-            } else {
-                foursomeSuffix.textContent = '(0 or more)';
-            }
-        }
-
-        // --- Foursomes line ---
-        var rowFoursome  = document.getElementById('rowFoursome');
-        var labelFoursome = document.getElementById('labelFoursome');
-        var subFoursome   = document.getElementById('subFoursome');
-        var dispFoursome  = document.getElementById('dispFoursome');
-
-        var totalFoursomes = sponsor.foursomes + addlFours;
-        if (addlFours > 0) {
-            rowFoursome.classList.remove('hidden');
-            labelFoursome.textContent = 'Additional Foursomes (' + addlFours + ')';
-            subFoursome.textContent = totalFoursomes + ' total · ' + (totalFoursomes * 4) + ' golfers';
-            dispFoursome.textContent = '$' + fPrice.toLocaleString();
-        } else if (sponsor.foursomes > 0 && sponsorKey !== '9') {
-            // Still show foursomes row to indicate complimentary ones
-            rowFoursome.classList.remove('hidden');
-            labelFoursome.textContent = 'Foursomes (' + sponsor.foursomes + ' complimentary)';
-            subFoursome.textContent = sponsor.foursomes * 4 + ' golfers — included with sponsorship';
-            dispFoursome.textContent = '$0';
-        } else {
-            rowFoursome.classList.add('hidden');
-        }
-
-        // --- Passports line ---
-        var rowPassport   = document.getElementById('rowPassport');
-        var labelPassport = document.getElementById('labelPassport');
-        var subPassport   = document.getElementById('subPassport');
-        var dispPassport  = document.getElementById('dispPassport');
-
-        if (passportCnt > 0) {
-            rowPassport.classList.remove('hidden');
-            labelPassport.textContent = "President's Passports (" + passportCnt + ')';
-            subPassport.textContent = '$100 × ' + passportCnt;
-            dispPassport.textContent = '$' + pPrice.toLocaleString();
-        } else {
-            rowPassport.classList.add('hidden');
-        }
-
-        // --- Total ---
-        document.getElementById('dispTotal').textContent =
-            '$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-        // --- Sync hidden fields (for D365 / Power Automate) ---
-        syncHiddenField('shorttext3661', currentTotal);
-        syncHiddenField('shorttext9854', passportCnt);
-        syncHiddenField('new_complimentaryfoursomes', sponsor.foursomes);
-    }
-
-    function syncHiddenField(name, value) {
-        var el = document.querySelector('[name="' + name + '"]');
-        if (el) el.value = value;
-    }
-
-    // ══════════════════════════════════════════
-    // VALIDATION
-    // ══════════════════════════════════════════
-    function clearError(fieldId, errId) {
-        var field = document.getElementById(fieldId);
-        var err   = document.getElementById(errId);
-        if (field) field.classList.remove('error');
-        if (err)   err.classList.remove('visible');
-    }
-
-    function showError(fieldId, errId) {
-        var field = document.getElementById(fieldId);
-        var err   = document.getElementById(errId);
-        if (field) field.classList.add('error');
-        if (err)   err.classList.add('visible');
-        return false;
-    }
-
-    function validatePostalCode(val) {
-        return /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(val.trim());
-    }
-
-    function validateEmail(val) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
-    }
-
-    function validatePhone(val) {
-        // Accept common Canadian formats
-        return /^[\d\s\(\)\-\+\.]{7,20}$/.test(val.trim());
-    }
-
-    function validateForm() {
-        var valid = true;
-
-        // Clear all errors first
-        ['firstname','lastname','emailaddress1','telephone1',
-         'companyname','address1_line1','address1_city','address1_postalcode'].forEach(function(id) {
-            clearError(id, 'err_' + id);
-        });
-        document.getElementById('err_payment').classList.remove('visible');
-        document.getElementById('formErrorBanner').classList.remove('visible');
-
-        // Required text fields
-        var required = [
-            { id: 'firstname',         err: 'err_firstname',         msg: true },
-            { id: 'lastname',          err: 'err_lastname',          msg: true },
-            { id: 'companyname',       err: 'err_companyname',       msg: true },
-            { id: 'address1_line1',    err: 'err_address1_line1',    msg: true },
-            { id: 'address1_city',     err: 'err_address1_city',     msg: true }
-        ];
-        required.forEach(function(f) {
-            var el = document.getElementById(f.id);
-            if (!el || !el.value.trim()) {
-                showError(f.id, f.err);
-                valid = false;
-            }
-        });
-
-        // Email
-        var emailEl = document.getElementById('emailaddress1');
-        if (!emailEl || !validateEmail(emailEl.value)) {
-            showError('emailaddress1', 'err_emailaddress1');
-            valid = false;
-        }
-
-        // Phone
-        var phoneEl = document.getElementById('telephone1');
-        if (!phoneEl || !validatePhone(phoneEl.value)) {
-            showError('telephone1', 'err_telephone1');
-            valid = false;
-        }
-
-        // Postal Code
-        var postalEl = document.getElementById('address1_postalcode');
-        if (!postalEl || !validatePostalCode(postalEl.value)) {
-            showError('address1_postalcode', 'err_address1_postalcode');
-            valid = false;
-        } else {
-            // Normalize to "A1A 1A1" format
-            postalEl.value = postalEl.value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-            if (postalEl.value.length === 6) {
-                postalEl.value = postalEl.value.slice(0,3) + ' ' + postalEl.value.slice(3);
-            }
-        }
-
-        // Number inputs
-        var foursomeVal = parseInt(document.getElementById('foursomeCount').value) || 0;
-        var passportVal = parseInt(document.getElementById('passportCount').value) || 0;
-        if (foursomeVal < 0 || foursomeVal > 20) {
-            document.getElementById('err_foursome').classList.add('visible');
-            valid = false;
-        }
-        if (passportVal < 0 || passportVal > 100) {
-            document.getElementById('err_passport').classList.add('visible');
-            valid = false;
-        }
-
-        if (!valid) {
-            document.getElementById('formErrorBanner').classList.add('visible');
-            // Scroll to first error
-            var firstError = document.querySelector('.field-error.visible');
-            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        return valid;
-    }
-
-    // ══════════════════════════════════════════
-    // SUBMIT HANDLER
-    // ══════════════════════════════════════════
-    function handleSubmitClick(e) {
-        e.preventDefault();
-        if (!validateForm()) return;
-
-        if (currentPaymentType === '2') {
-            launchMonerisPayment();
-        } else {
-            submitInvoiceRequest();
-        }
-    }
-
-    // ══════════════════════════════════════════
-    // INVOICE SUBMISSION
-    // ══════════════════════════════════════════
-    function submitInvoiceRequest() {
-        var btn = document.getElementById('mainSubmitButton');
-        btn.textContent = '⏳ Submitting request...';
-        btn.disabled = true;
-
-        var email = document.getElementById('emailaddress1').value.trim();
-        var sponsorKey = document.getElementById('sponsorSelect').value;
-        var sponsor = SPONSORS[sponsorKey] || { name: 'Golf Only', price: 0, foursomes: 0 };
-        var addlFours = parseInt(document.getElementById('foursomeCount').value) || 0;
-        var passportCnt = parseInt(document.getElementById('passportCount').value) || 0;
-
-        // Build invoice summary for confirmation screen
-        buildInvoiceSummary(sponsor, addlFours, passportCnt);
-        document.getElementById('invoiceEmail').textContent = email;
-
-        // Show confirmation (D365 form handles the actual CRM record creation)
-        // In production, trigger Power Automate flow to email dgordon@chs.ca here
-        setTimeout(function() {
-            document.getElementById('invoiceConfirmScreen').classList.add('active');
-            btn.disabled = false;
-            btn.textContent = '📄 Submit Invoice Request';
-        }, 800);
-    }
-
-    function buildInvoiceSummary(sponsor, addlFours, passportCnt) {
-        var box = document.getElementById('invoiceSummaryBox');
-        var fPrice = addlFours * FOURSOME_PRICE;
-        var pPrice = passportCnt * PASSPORT_PRICE;
-        var name = (document.getElementById('firstname').value + ' ' + document.getElementById('lastname').value).trim();
-        var org  = document.getElementById('companyname').value.trim();
-
-        var rows = '';
-        rows += '<div class="cs-row"><span>' + name + (org ? ' · ' + org : '') + '</span></div>';
-        if (sponsor.price > 0) {
-            rows += '<div class="cs-row" style="margin-top:10px;"><span>' + sponsor.name + '</span><span>$' + sponsor.price.toLocaleString() + '</span></div>';
-        }
-        if (addlFours > 0) {
-            rows += '<div class="cs-row"><span>Additional Foursomes (' + addlFours + ')</span><span>$' + fPrice.toLocaleString() + '</span></div>';
-        }
-        if (passportCnt > 0) {
-            rows += '<div class="cs-row"><span>President\'s Passports (' + passportCnt + ')</span><span>$' + pPrice.toLocaleString() + '</span></div>';
-        }
-        rows += '<div class="cs-row cs-total"><span>Total (CAD)</span><span>$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</span></div>';
-        box.innerHTML = rows;
-    }
-
-    // ══════════════════════════════════════════
-    // MONERIS CREDIT CARD PAYMENT
-    // ══════════════════════════════════════════
-    async function launchMonerisPayment() {
-        var btn = document.getElementById('mainSubmitButton');
-        var originalText = btn.textContent;
-        btn.textContent = '⏳ Connecting to payment...';
-        btn.disabled = true;
-
-        try {
-            var response = await fetch(FLOW_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ txn_total: currentTotal.toFixed(2) })
-            });
-
-            var data = await response.json();
-            var ticket = data.ticket || (data.response && data.response.ticket);
-
-            if (ticket) {
-                document.getElementById('monerisOverlay').classList.add('active');
-
-                var myCheckout = new monerisCheckout();
-                myCheckout.setMode("qa"); // Change to "prod" for live payments
-                myCheckout.setCheckoutDiv("monerisCheckoutDiv");
-
-                myCheckout.setCallback("payment_complete", function() { showThankYou(); });
-                myCheckout.setCallback("payment_receipt",  function() { showThankYou(); });
-                myCheckout.setCallback("page_loaded", function(res) {
-                    if (res && res.currentPage === 'receipt') showThankYou();
-                });
-                myCheckout.setCallback("cancel_transaction", function() {
-                    document.getElementById('monerisOverlay').classList.remove('active');
-                    btn.textContent = originalText;
-                    btn.disabled = false;
-                });
-                myCheckout.setCallback("error_event", function() {
-                    document.getElementById('monerisOverlay').classList.remove('active');
-                    alert("A payment error occurred. Please try again or choose Invoice.");
-                    btn.textContent = originalText;
-                    btn.disabled = false;
-                });
-
-                myCheckout.startCheckout(ticket);
-            } else {
-                alert("Payment setup failed. Please try again or choose Invoice.");
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }
-        } catch (err) {
-            alert("Error connecting to payment server. Please try again or choose Invoice.");
-            btn.textContent = originalText;
-            btn.disabled = false;
-        }
-    }
-
-    function showThankYou() {
-        document.getElementById('monerisOverlay').classList.remove('active');
-        document.getElementById('thankYouAmount').textContent =
-            '$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        document.getElementById('thankYouScreen').classList.add('active');
-    }
-
-    // Cancel Moneris overlay
-    document.getElementById('monerisCloseBtn').addEventListener('click', function() {
-        document.getElementById('monerisOverlay').classList.remove('active');
-        var btn = document.getElementById('mainSubmitButton');
-        if (btn) { btn.textContent = '🔒 Pay Securely with Credit Card'; btn.disabled = false; }
+    var btnPlus = document.createElement('button');
+    btnPlus.type = 'button';
+    btnPlus.className = 'stepper-btn';
+    btnPlus.textContent = '+';
+    btnPlus.setAttribute('aria-label', 'Increase');
+    btnPlus.addEventListener('click', function() {
+        input.value = Math.min(max, (parseInt(input.value) || 0) + 1);
+        calculate();
     });
+
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(btnMinus);
+    wrap.appendChild(input);
+    wrap.appendChild(btnPlus);
+}
+
+function injectHint(input, id, text) {
+    var hint = document.createElement('div');
+    hint.id = id;
+    hint.className = 'field-hint';
+    hint.textContent = text;
+    var block = input.closest('.numberFormFieldBlock') || input.parentNode;
+    block.appendChild(hint);
+}
+
+// ══════════════════════════════════════════════════════════════
+// CALCULATE — reads D365-rendered fields, updates summary display
+// ══════════════════════════════════════════════════════════════
+function calculate() {
+    var sponsorEl  = document.querySelector('[name="optionset9110"]');
+    var foursomeEl = document.querySelector('[name="new_additionalfoursomes"]');
+    var passportEl = document.querySelector('[name="new_passportcount"]');
+    if (!sponsorEl || !foursomeEl || !passportEl) return;
+
+    var key         = sponsorEl.value;
+    var sponsor     = SPONSORS[key] || { name: '', price: 0, foursomes: 0 };
+    var addlFours   = Math.max(0, Math.min(20,  parseInt(foursomeEl.value) || 0));
+    var passportCnt = Math.max(0, Math.min(100, parseInt(passportEl.value) || 0));
+
+    var sPrice = sponsor.price;
+    var fPrice = addlFours * FOURSOME_PRICE;
+    var pPrice = passportCnt * PASSPORT_PRICE;
+    currentTotal = sPrice + fPrice + pPrice;
+
+    // ── Sponsor hint below dropdown ──
+    var sponsorHint = document.getElementById('sponsorFoursomeHint');
+    if (!sponsorHint) {
+        sponsorHint = document.createElement('div');
+        sponsorHint.id = 'sponsorFoursomeHint';
+        sponsorHint.className = 'field-hint';
+        var sb = sponsorEl.closest('.optionSetFormFieldBlock');
+        if (sb) sb.appendChild(sponsorHint);
+    }
+    sponsorHint.textContent = key === '9'
+        ? 'No sponsorship — foursomes charged at $2,000 each'
+        : sponsor.foursomes > 0
+            ? '✦ Includes ' + sponsor.foursomes + ' complimentary foursome' + (sponsor.foursomes > 1 ? 's' : '') + ' (' + (sponsor.foursomes * 4) + ' golfers)'
+            : 'No complimentary foursomes at this level';
+
+    // ── Foursome label suffix ──
+    var suffix = document.getElementById('foursomeLabelSuffix');
+    if (!suffix) {
+        var lblBlock = foursomeEl.closest('.numberFormFieldBlock');
+        var lbl = lblBlock && lblBlock.querySelector('label');
+        if (lbl) {
+            suffix = document.createElement('span');
+            suffix.id = 'foursomeLabelSuffix';
+            suffix.style.cssText = 'font-weight:400;color:#7a9a7a;font-size:11px;';
+            lbl.appendChild(suffix);
+        }
+    }
+    if (suffix) {
+        suffix.textContent = sponsor.foursomes > 0
+            ? ' (additional beyond ' + sponsor.foursomes + ' included)'
+            : ' (0 or more)';
+    }
+
+    // ── Order Summary rows ──
+    // Sponsor row
+    if (key === '9') {
+        document.getElementById('rowSponsor').classList.add('hidden');
+    } else {
+        document.getElementById('rowSponsor').classList.remove('hidden');
+        document.getElementById('labelSponsor').textContent = sponsor.name;
+        document.getElementById('subSponsor').textContent = sponsor.foursomes > 0
+            ? sponsor.foursomes + ' complimentary foursome' + (sponsor.foursomes > 1 ? 's' : '') + ' included'
+            : '';
+        document.getElementById('dispSponsor').textContent = '$' + sPrice.toLocaleString();
+    }
+
+    // Foursomes row
+    var totalF = sponsor.foursomes + addlFours;
+    if (addlFours > 0) {
+        document.getElementById('rowFoursome').classList.remove('hidden');
+        document.getElementById('labelFoursome').textContent = 'Additional Foursomes (' + addlFours + ')';
+        document.getElementById('subFoursome').textContent   = totalF + ' total · ' + (totalF * 4) + ' golfers';
+        document.getElementById('dispFoursome').textContent  = '$' + fPrice.toLocaleString();
+    } else if (sponsor.foursomes > 0 && key !== '9') {
+        document.getElementById('rowFoursome').classList.remove('hidden');
+        document.getElementById('labelFoursome').textContent = 'Foursomes (' + sponsor.foursomes + ' complimentary)';
+        document.getElementById('subFoursome').textContent   = (sponsor.foursomes * 4) + ' golfers — included with sponsorship';
+        document.getElementById('dispFoursome').textContent  = '$0';
+    } else {
+        document.getElementById('rowFoursome').classList.add('hidden');
+    }
+
+    // Passports row
+    if (passportCnt > 0) {
+        document.getElementById('rowPassport').classList.remove('hidden');
+        document.getElementById('labelPassport').textContent = "President's Passports (" + passportCnt + ')';
+        document.getElementById('subPassport').textContent   = '$100 × ' + passportCnt;
+        document.getElementById('dispPassport').textContent  = '$' + pPrice.toLocaleString();
+    } else {
+        document.getElementById('rowPassport').classList.add('hidden');
+    }
+
+    // Total
+    document.getElementById('dispTotal').textContent =
+        '$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Sync hidden fields → Power Automate / CRM
+    syncField('shorttext3661',            currentTotal);
+    syncField('shorttext9854',            passportCnt);
+    syncField('new_complimentaryfoursomes', sponsor.foursomes);
+}
+
+function syncField(name, value) {
+    var el = document.querySelector('[name="' + name + '"]');
+    if (el) el.value = value;
+}
+
+// ══════════════════════════════════════════════════════════════
+// SUBMIT BUTTON LABEL
+// ══════════════════════════════════════════════════════════════
+function updateSubmitLabel() {
+    var btn = document.getElementById('mainSubmitButton');
+    btn.textContent = currentPayType === '2'
+        ? '🔒 Pay Securely with Credit Card'
+        : '📄 Submit Invoice Request';
+}
+
+// ══════════════════════════════════════════════════════════════
+// VALIDATION
+// ══════════════════════════════════════════════════════════════
+function getF(name) { return document.querySelector('[name="' + name + '"]'); }
+
+function clearAllErrors() {
+    document.querySelectorAll('.input-error').forEach(function(el) { el.classList.remove('input-error'); });
+    document.querySelectorAll('.inline-error.visible').forEach(function(el) { el.classList.remove('visible'); });
+    document.getElementById('formErrorBanner').classList.remove('visible');
+}
+
+function markError(name, msg) {
+    var el = getF(name);
+    if (!el) return;
+    el.classList.add('input-error');
+    var errId = 'ierr_' + name.replace(/[^a-zA-Z0-9]/g, '_');
+    var errEl = document.getElementById(errId);
+    if (!errEl) {
+        errEl = document.createElement('div');
+        errEl.id = errId;
+        errEl.className = 'inline-error';
+        errEl.textContent = msg;
+        var block = el.closest('.textFormFieldBlock, .optionSetFormFieldBlock, .numberFormFieldBlock') || el.parentNode;
+        block.appendChild(errEl);
+    }
+    errEl.classList.add('visible');
+}
+
+function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+function isValidPhone(v) { return /^[\d\s\(\)\-\+\.]{7,20}$/.test(v.trim()); }
+function isValidPostal(v){ return /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(v.trim()); }
+
+function validateForm() {
+    clearAllErrors();
+    var ok = true;
+
+    [
+        { name: 'firstname',      msg: 'First name is required.' },
+        { name: 'lastname',       msg: 'Last name is required.' },
+        { name: 'companyname',    msg: 'Enter a valid organization name.' },
+        { name: 'address1_line1', msg: 'Billing address is required.' },
+        { name: 'address1_city',  msg: 'City is required.' }
+    ].forEach(function(c) {
+        var el = getF(c.name);
+        if (!el || !el.value.trim()) { markError(c.name, c.msg); ok = false; }
+    });
+
+    var emailEl = getF('emailaddress1');
+    if (!emailEl || !isValidEmail(emailEl.value)) {
+        markError('emailaddress1', 'Enter a valid email address.'); ok = false;
+    }
+
+    var phoneEl = getF('telephone1');
+    if (!phoneEl || !isValidPhone(phoneEl.value)) {
+        markError('telephone1', 'Enter a valid phone number.'); ok = false;
+    }
+
+    var postalEl = getF('address1_postalcode');
+    if (!postalEl || !isValidPostal(postalEl.value)) {
+        markError('address1_postalcode', 'Enter a valid Postal Code (e.g., A1A 1A1).'); ok = false;
+    } else {
+        // Normalize: A1A1A1 → A1A 1A1
+        var raw = postalEl.value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+        if (raw.length === 6) postalEl.value = raw.slice(0, 3) + ' ' + raw.slice(3);
+    }
+
+    var fv = parseInt((getF('new_additionalfoursomes') || {}).value) || 0;
+    if (fv < 0 || fv > 20) { markError('new_additionalfoursomes', 'Enter a whole number 0 or greater.'); ok = false; }
+
+    var pv = parseInt((getF('new_passportcount') || {}).value) || 0;
+    if (pv < 0 || pv > 100) { markError('new_passportcount', 'Enter a whole number 0 or greater.'); ok = false; }
+
+    if (!ok) {
+        document.getElementById('formErrorBanner').classList.add('visible');
+        var first = document.querySelector('.inline-error.visible');
+        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return ok;
+}
+
+// ══════════════════════════════════════════════════════════════
+// SUBMIT HANDLER
+// ══════════════════════════════════════════════════════════════
+function handleSubmitClick(e) {
+    e.preventDefault();
+    if (!validateForm()) return;
+    if (currentPayType === '2') {
+        launchMonerisPayment();
+    } else {
+        submitInvoiceRequest();
+    }
+}
+
+// ══════════════════════════════════════════════════════════════
+// INVOICE FLOW
+// ══════════════════════════════════════════════════════════════
+function submitInvoiceRequest() {
+    var btn = document.getElementById('mainSubmitButton');
+    btn.textContent = '⏳ Submitting request...';
+    btn.disabled = true;
+
+    var key         = (getF('optionset9110') || {}).value || '1';
+    var sponsor     = SPONSORS[key] || { name: 'Golf Only', price: 0, foursomes: 0 };
+    var addlFours   = parseInt((getF('new_additionalfoursomes') || {}).value) || 0;
+    var passportCnt = parseInt((getF('new_passportcount') || {}).value) || 0;
+    var email       = ((getF('emailaddress1') || {}).value || '').trim();
+    var fname       = ((getF('firstname') || {}).value || '').trim();
+    var lname       = ((getF('lastname') || {}).value || '').trim();
+    var org         = ((getF('companyname') || {}).value || '').trim();
+
+    var fPrice = addlFours * FOURSOME_PRICE;
+    var pPrice = passportCnt * PASSPORT_PRICE;
+    var rows = '<div class="cs-row"><span><strong>' + (fname + ' ' + lname).trim() + '</strong>' + (org ? ' · ' + org : '') + '</span></div>';
+    if (sponsor.price > 0) rows += '<div class="cs-row" style="margin-top:8px;"><span>' + sponsor.name + '</span><span>$' + sponsor.price.toLocaleString() + '</span></div>';
+    if (addlFours > 0)     rows += '<div class="cs-row"><span>Additional Foursomes (' + addlFours + ')</span><span>$' + fPrice.toLocaleString() + '</span></div>';
+    if (passportCnt > 0)   rows += '<div class="cs-row"><span>President\'s Passports (' + passportCnt + ')</span><span>$' + pPrice.toLocaleString() + '</span></div>';
+    rows += '<div class="cs-row cs-total"><span>Total (CAD)</span><span>$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</span></div>';
+
+    document.getElementById('invoiceSummaryBox').innerHTML = rows;
+    document.getElementById('invoiceEmail').textContent = email;
+
+    setTimeout(function() {
+        document.getElementById('invoiceConfirmScreen').classList.add('active');
+        btn.disabled = false;
+        btn.textContent = '📄 Submit Invoice Request';
+    }, 800);
+}
+
+// ══════════════════════════════════════════════════════════════
+// MONERIS CREDIT CARD FLOW
+// ══════════════════════════════════════════════════════════════
+async function launchMonerisPayment() {
+    var btn = document.getElementById('mainSubmitButton');
+    var orig = btn.textContent;
+    btn.textContent = '⏳ Connecting to payment...';
+    btn.disabled = true;
+
+    try {
+        var res  = await fetch(FLOW_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ txn_total: currentTotal.toFixed(2) })
+        });
+        var data   = await res.json();
+        var ticket = data.ticket || (data.response && data.response.ticket);
+
+        if (ticket) {
+            document.getElementById('monerisOverlay').classList.add('active');
+            var mc = new monerisCheckout();
+            mc.setMode("qa"); // → "prod" for live
+            mc.setCheckoutDiv("monerisCheckoutDiv");
+            mc.setCallback("payment_complete",    function()    { showThankYou(); });
+            mc.setCallback("payment_receipt",     function()    { showThankYou(); });
+            mc.setCallback("page_loaded",         function(r)   { if (r && r.currentPage === 'receipt') showThankYou(); });
+            mc.setCallback("cancel_transaction",  function()    { document.getElementById('monerisOverlay').classList.remove('active'); btn.textContent = orig; btn.disabled = false; });
+            mc.setCallback("error_event",         function()    { document.getElementById('monerisOverlay').classList.remove('active'); alert("A payment error occurred. Please try again or choose Invoice."); btn.textContent = orig; btn.disabled = false; });
+            mc.startCheckout(ticket);
+        } else {
+            alert("Payment setup failed. Please try again or choose Invoice.");
+            btn.textContent = orig; btn.disabled = false;
+        }
+    } catch (err) {
+        alert("Error connecting to payment server. Please try again or choose Invoice.");
+        btn.textContent = orig; btn.disabled = false;
+    }
+}
+
+function showThankYou() {
+    document.getElementById('monerisOverlay').classList.remove('active');
+    document.getElementById('thankYouAmount').textContent =
+        '$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('thankYouScreen').classList.add('active');
+}
+
+document.getElementById('monerisCloseBtn').addEventListener('click', function() {
+    document.getElementById('monerisOverlay').classList.remove('active');
+    var btn = document.getElementById('mainSubmitButton');
+    if (btn) { btn.textContent = '🔒 Pay Securely with Credit Card'; btn.disabled = false; }
+});
+
+// Kick off
+waitForForm();
 </script>
 
 </body>
