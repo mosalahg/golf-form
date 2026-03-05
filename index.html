@@ -8,13 +8,13 @@
     <!-- Moneris Hosted Checkout SDK -->
     <script src="https://gatewayt.moneris.com/chktv2/js/chkt_v2.00.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Source Sans 3', sans-serif;
             background: #eef2ee;
             min-height: 100vh;
             padding: 40px 16px 60px;
@@ -33,7 +33,7 @@
         /* ── Header ── */
         .card-header {
             background: linear-gradient(150deg, #034a2c 0%, #056038 55%, #07774a 100%);
-            padding: 26px 40px 22px;
+            padding: 44px 40px 36px;
             position: relative;
             overflow: hidden;
             text-align: center;
@@ -50,31 +50,28 @@
         }
         .header-badge {
             display: inline-block;
-            background: rgba(255,255,255,0.12);
-            color: rgba(255,255,255,0.88);
-            font-size: 10px; font-weight: 600; letter-spacing: 2.2px;
-            text-transform: uppercase; padding: 4px 12px; border-radius: 20px;
-            margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.18);
-            font-family: 'DM Sans', sans-serif;
+            background: rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.9);
+            font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
+            text-transform: uppercase; padding: 5px 14px; border-radius: 20px;
+            margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.2);
         }
         .card-header h1 {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 26px; font-weight: 700; color: #fff;
-            line-height: 1.2; margin-bottom: 10px; position: relative;
-            letter-spacing: 0.2px;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 30px; font-weight: 700; color: #fff;
+            line-height: 1.25; margin-bottom: 14px; position: relative;
         }
         .header-meta {
             display: flex; align-items: center; justify-content: center;
             gap: 20px; flex-wrap: wrap;
         }
         .header-meta span {
-            color: rgba(255,255,255,0.78); font-size: 12px;
+            color: rgba(255,255,255,0.85); font-size: 13px;
             display: flex; align-items: center; gap: 6px;
-            font-family: 'DM Sans', sans-serif; font-weight: 400; letter-spacing: 0.2px;
         }
         .header-meta span::before {
-            content: ''; display: inline-block; width: 3px; height: 3px;
-            border-radius: 50%; background: rgba(255,255,255,0.45);
+            content: ''; display: inline-block; width: 5px; height: 5px;
+            border-radius: 50%; background: rgba(255,255,255,0.5);
         }
         .header-meta span:first-child::before { display: none; }
 
@@ -94,7 +91,7 @@
            D365 FIELD OVERRIDES
            Styles fields rendered by FormLoader from CRM.html
         ════════════════════════════════════════════════ */
-        .marketingForm { font-family: 'DM Sans', sans-serif !important; }
+        .marketingForm { font-family: 'Source Sans 3', sans-serif !important; }
 
         .marketingForm .section-label {
             font-size: 10px !important; font-weight: 700 !important;
@@ -129,7 +126,7 @@
             width: 100% !important; padding: 11px 14px !important;
             border: 1.5px solid #dde6dd !important; border-radius: 6px !important;
             background: #fafcfa !important;
-            font-family: 'DM Sans', sans-serif !important;
+            font-family: 'Source Sans 3', sans-serif !important;
             font-size: 14px !important; color: #1a1a1a !important;
             transition: border-color 0.2s, box-shadow 0.2s !important;
             appearance: none !important; -webkit-appearance: none !important;
@@ -188,7 +185,7 @@
             background: #f0f5f0; color: #056038;
             font-size: 22px; font-weight: 700; cursor: pointer;
             flex-shrink: 0; transition: background 0.15s; line-height: 1;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Source Sans 3', sans-serif;
         }
         .stepper-btn:hover  { background: #e0eee0; }
         .stepper-btn:active { background: #d0e8d0; }
@@ -277,11 +274,11 @@
             display: flex; justify-content: space-between; align-items: center;
             margin-top: 14px; padding-top: 14px; border-top: 2px solid #056038;
             font-size: 20px; font-weight: 700; color: #034a2c;
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Playfair Display', serif;
         }
         .summary-cad {
             font-size: 11px; font-weight: 600; color: #7a9a7a;
-            letter-spacing: 0.5px; font-family: 'DM Sans', sans-serif;
+            letter-spacing: 0.5px; font-family: 'Source Sans 3', sans-serif;
             margin-right: 6px;
         }
 
@@ -290,7 +287,7 @@
             display: block; width: 100%; padding: 16px;
             background: linear-gradient(135deg, #034a2c, #056038);
             color: #fff; border: none; border-radius: 8px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Source Sans 3', sans-serif;
             font-size: 16px; font-weight: 700; cursor: pointer;
             letter-spacing: 0.3px; transition: opacity 0.2s, transform 0.1s;
             box-shadow: 0 4px 16px rgba(5,96,56,0.3);
@@ -320,7 +317,7 @@
         #monerisCloseBtn {
             background: rgba(255,255,255,0.2); border: none; border-radius: 6px;
             color: #fff; padding: 6px 14px; font-size: 13px; cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Source Sans 3', sans-serif;
         }
         #monerisCloseBtn:hover { background: rgba(255,255,255,0.3); }
         #monerisCheckoutDiv { flex: 1; width: 100%; overflow-y: auto; }
@@ -345,13 +342,13 @@
         .confirm-icon.success { background: #e8f5e8; }
         .confirm-icon.invoice { background: #e8f0f8; }
         .confirm-card h2 {
-            font-family: 'Cormorant Garamond', serif; font-size: 26px;
+            font-family: 'Playfair Display', serif; font-size: 26px;
             color: #034a2c; margin-bottom: 12px;
         }
         .confirm-card p { color: #5a7a5a; font-size: 15px; line-height: 1.6; margin-bottom: 8px; }
         .confirm-amount {
             font-size: 30px; font-weight: 700; color: #056038;
-            font-family: 'Cormorant Garamond', serif; margin: 20px 0 4px;
+            font-family: 'Playfair Display', serif; margin: 20px 0 4px;
         }
         .confirm-amount-label { font-size: 12px; color: #8a9a8a; margin-bottom: 20px; }
         .confirm-summary-box {
@@ -371,15 +368,15 @@
             display: inline-block; margin-top: 24px; padding: 12px 32px;
             background: linear-gradient(135deg, #034a2c, #056038); color: #fff;
             border: none; border-radius: 8px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Source Sans 3', sans-serif;
             font-size: 15px; font-weight: 700; cursor: pointer;
         }
 
         @media (max-width: 520px) {
             body { padding: 0 0 40px; }
             .card { border-radius: 0; }
-            .card-header { padding: 20px 20px 18px; }
-            .card-header h1 { font-size: 21px; }
+            .card-header { padding: 32px 24px 28px; }
+            .card-header h1 { font-size: 24px; }
             .card-body { padding: 28px 24px 32px; }
             .marketingForm .field-row { flex-direction: column !important; gap: 0 !important; }
         }
@@ -498,13 +495,13 @@
         </p>
         <div class="confirm-contact">
             Questions? Contact Dawne Gordon at
-            <a href="/cdn-cgi/l/email-protection#a6c2c1c9d4c2c9c8e6c5ced588c5c7"><span class="__cf_email__" data-cfemail="a6c2c1c9d4c2c9c8e6c5ced588c5c7">[email&#160;protected]</span></a>
+            <a href="mailto:dgordon@chs.ca">dgordon@chs.ca</a>
         </div>
         <button class="confirm-btn" onclick="window.location.reload()">Submit Another Registration</button>
     </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ══════════════════════════════════════════════════════════════
 // CONFIG
 // ✅ SECURE: No Flow URL here. Browser calls the PHP proxy on
@@ -968,4 +965,13 @@ function showThankYou() {
 }
 
 document.getElementById('monerisCloseBtn').addEventListener('click', function() {
-    document.getElementById('monerisOverla
+    document.getElementById('monerisOverlay').classList.remove('active');
+    var btn = document.getElementById('mainSubmitButton');
+    if (btn) { btn.textContent = '🔒 Pay Securely with Credit Card'; btn.disabled = false; }
+});
+
+waitForForm();
+</script>
+
+</body>
+</html>
