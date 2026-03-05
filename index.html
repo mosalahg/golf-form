@@ -591,7 +591,59 @@ var T = {
         errPhone:       'Enter a valid phone number.',
         errPostal:      'Enter a valid Postal Code (e.g., A1A 1A1).',
         errFoursomes:   'Enter a whole number 0 or greater.',
-        errPassports:   'Enter a whole number 0 or greater.'
+        errPassports:   'Enter a whole number 0 or greater.',
+        crm: {
+            sections: {
+                'Contact Information':      'Contact Information',
+                'Billing Information':      'Billing Information',
+                'Sponsorship Selection':    'Sponsorship Selection',
+                'Additional Items':         'Additional Items',
+                'Payment Method':           'Payment Method'
+            },
+            labels: {
+                'firstname':               'First Name',
+                'lastname':                'Last Name',
+                'emailaddress1':           'Email Address',
+                'telephone1':              'Phone Number',
+                'companyname':             'Organization',
+                'address1_line1':          'Billing Address',
+                'address1_city':           'City',
+                'address1_stateorprovince':'Province',
+                'address1_postalcode':     'Postal Code',
+                'optionset9110':           'Sponsorship Package',
+                'new_additionalfoursomes': 'Additional Foursomes',
+                'new_passportcount':       "President's Passports",
+                'new_paymentoption':       'Payment Method'
+            },
+            placeholders: {
+                'firstname':               'John',
+                'lastname':                'Smith',
+                'emailaddress1':           'john.smith@example.com',
+                'telephone1':              '(416) 555-0123',
+                'companyname':             'Company / Organization',
+                'address1_line1':          '123 Main Street',
+                'address1_city':           'Toronto',
+                'address1_stateorprovince':'Ontario',
+                'address1_postalcode':     'A1A 1A1'
+            },
+            radioLabels: { '1': 'Invoice', '2': 'Credit Card' },
+            radioDescs:  {
+                '1': 'We will send you an invoice to pay by cheque or bank transfer.',
+                '2': 'Pay securely now with Visa, Mastercard, or Amex.'
+            },
+            consentText: 'I agree to receive communications about this event and future CHS events. You may unsubscribe at any time.',
+            sponsorOptions: {
+                'Presenting Sponsorship': 'Presenting Sponsorship',
+                'Titanium Sponsorship':   'Titanium Sponsorship',
+                'Platinum Sponsorship':   'Platinum Sponsorship',
+                'Gold Sponsorship':       'Gold Sponsorship',
+                'Silver Sponsorship':     'Silver Sponsorship',
+                'Bronze Sponsorship':     'Bronze Sponsorship',
+                'Brass Sponsorship':      'Brass Sponsorship',
+                'Copper Sponsorship':     'Copper Sponsorship',
+                'Golf Only':              'Golf Only'
+            }
+        }
     },
     fr: {
         badge:              'Inscription ouverte',
@@ -651,7 +703,59 @@ var T = {
         errPhone:       'Entrez un numéro de téléphone valide.',
         errPostal:      'Entrez un code postal valide (ex. : A1A 1A1).',
         errFoursomes:   'Entrez un nombre entier égal ou supérieur à 0.',
-        errPassports:   'Entrez un nombre entier égal ou supérieur à 0.'
+        errPassports:   'Entrez un nombre entier égal ou supérieur à 0.',
+        crm: {
+            sections: {
+                'Contact Information':      'Coordonnées',
+                'Billing Information':      'Informations de facturation',
+                'Sponsorship Selection':    'Sélection de commandite',
+                'Additional Items':         'Articles supplémentaires',
+                'Payment Method':           'Mode de paiement'
+            },
+            labels: {
+                'firstname':               'Prénom',
+                'lastname':                'Nom de famille',
+                'emailaddress1':           'Adresse courriel',
+                'telephone1':              'Numéro de téléphone',
+                'companyname':             'Organisation',
+                'address1_line1':          'Adresse de facturation',
+                'address1_city':           'Ville',
+                'address1_stateorprovince':'Province',
+                'address1_postalcode':     'Code postal',
+                'optionset9110':           'Forfait de commandite',
+                'new_additionalfoursomes': 'Quatuors supplémentaires',
+                'new_passportcount':       'Passeports du président',
+                'new_paymentoption':       'Mode de paiement'
+            },
+            placeholders: {
+                'firstname':               'Jean',
+                'lastname':                'Tremblay',
+                'emailaddress1':           'jean.tremblay@exemple.com',
+                'telephone1':              '(416) 555-0123',
+                'companyname':             'Entreprise / Organisation',
+                'address1_line1':          '123, rue Principale',
+                'address1_city':           'Toronto',
+                'address1_stateorprovince':'Ontario',
+                'address1_postalcode':     'A1A 1A1'
+            },
+            radioLabels: { '1': 'Facture', '2': 'Carte de crédit' },
+            radioDescs:  {
+                '1': 'Nous vous enverrons une facture à payer par chèque ou virement bancaire.',
+                '2': 'Payez en toute sécurité avec Visa, Mastercard ou Amex.'
+            },
+            consentText: "J'accepte de recevoir des communications sur cet événement et les futurs événements de la SCS. Vous pouvez vous désabonner à tout moment.",
+            sponsorOptions: {
+                'Presenting Sponsorship': 'Commandite principale',
+                'Titanium Sponsorship':   'Commandite titane',
+                'Platinum Sponsorship':   'Commandite platine',
+                'Gold Sponsorship':       'Commandite or',
+                'Silver Sponsorship':     'Commandite argent',
+                'Bronze Sponsorship':     'Commandite bronze',
+                'Brass Sponsorship':      'Commandite laiton',
+                'Copper Sponsorship':     'Commandite cuivre',
+                'Golf Only':              'Golf seulement'
+            }
+        }
     }
 };
 
@@ -684,6 +788,9 @@ function setLang(lang) {
 
     // Clear any shown validation errors (they will re-appear in new language on next submit)
     clearAllErrors();
+
+    // Translate CRM form fields
+    translateCrmForm();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -772,6 +879,7 @@ function waitForForm() {
     // 7. Initial render
     calculate();
     updateSubmitLabel();
+    translateCrmForm();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1153,6 +1261,69 @@ function showThankYou() {
 document.getElementById('monerisCloseBtn').addEventListener('click', function() {
     document.getElementById('monerisOverlay').classList.remove('active');
 });
+
+
+// ══════════════════════════════════════════════════════════════
+// TRANSLATE CRM FORM (D365 FormLoader fields)
+// Runs after form renders AND whenever language is switched.
+// ══════════════════════════════════════════════════════════════
+function translateCrmForm() {
+    var c = T[LANG].crm;
+
+    // ── Section headings ──
+    document.querySelectorAll('.marketingForm .section-label').forEach(function(el) {
+        var txt = el.getAttribute('data-orig') || el.textContent.trim();
+        el.setAttribute('data-orig', txt);
+        if (c.sections[txt]) el.childNodes[0].textContent = c.sections[txt];
+    });
+
+    // ── Field labels ──
+    document.querySelectorAll('.marketingForm [data-targetproperty]').forEach(function(block) {
+        var field = block.getAttribute('data-targetproperty');
+        var lbl = block.querySelector('label');
+        if (!lbl || !c.labels[field]) return;
+        // Preserve any injected suffix span inside label
+        var suffix = lbl.querySelector('#foursomeLabelSuffix');
+        lbl.childNodes[0].textContent = c.labels[field];
+        if (suffix && !lbl.contains(suffix)) lbl.appendChild(suffix);
+    });
+
+    // ── Input placeholders ──
+    Object.keys(c.placeholders).forEach(function(name) {
+        var el = document.querySelector('[name="' + name + '"]');
+        if (el) el.setAttribute('placeholder', c.placeholders[name]);
+    });
+
+    // ── Radio option labels & descriptions ──
+    document.querySelectorAll('[name="new_paymentoption"]').forEach(function(radio) {
+        var val = radio.value;
+        var wrap = radio.closest('.radio-option');
+        if (!wrap) return;
+        var labelEl = wrap.querySelector('.radio-label');
+        var descEl  = wrap.querySelector('.radio-desc');
+        if (labelEl && c.radioLabels[val]) labelEl.textContent = c.radioLabels[val];
+        if (descEl  && c.radioDescs[val])  descEl.textContent  = c.radioDescs[val];
+    });
+
+    // ── Consent checkbox text ──
+    var consentLabel = document.querySelector('.marketingForm .twoOptionFormFieldBlock label');
+    if (consentLabel && c.consentText) {
+        // Only replace the text node, not the checkbox input
+        var textNode = Array.from(consentLabel.childNodes)
+            .find(function(n) { return n.nodeType === 3 && n.textContent.trim().length > 5; });
+        if (textNode) textNode.textContent = ' ' + c.consentText;
+    }
+
+    // ── Sponsor dropdown options ──
+    var sponsorSel = document.querySelector('[name="optionset9110"]');
+    if (sponsorSel) {
+        Array.from(sponsorSel.options).forEach(function(opt) {
+            var orig = opt.getAttribute('data-orig') || opt.textContent.trim();
+            opt.setAttribute('data-orig', orig);
+            if (c.sponsorOptions[orig]) opt.textContent = c.sponsorOptions[orig];
+        });
+    }
+}
 
 waitForForm();
 </script>
