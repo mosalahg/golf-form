@@ -380,24 +380,49 @@
             .card-body { padding: 28px 24px 32px; }
             .marketingForm .field-row { flex-direction: column !important; gap: 0 !important; }
         }
+
+        /* ── Language Toggle Bar ── */
+        #langBar {
+            max-width: 660px; margin: 0 auto 10px;
+            display: flex; justify-content: flex-end; align-items: center; gap: 2px;
+        }
+        .lang-btn {
+            background: none; border: 1.5px solid transparent;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 12px; font-weight: 700; letter-spacing: 0.8px;
+            color: #7a9a7a; cursor: pointer; padding: 4px 10px; border-radius: 4px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .lang-btn.active {
+            color: #034a2c; border-color: #034a2c;
+        }
+        .lang-btn:hover:not(.active) { color: #056038; }
+        .lang-sep { color: #ccc; font-size: 13px; margin: 0 2px; }
     </style>
 </head>
 <body>
 
+<!-- ── Language Toggle ── -->
+<div id="langBar">
+    <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" id="btnFR" onclick="setLang('fr')">FR</button>
+</div>
+
 <!-- ── Registration Card ── -->
 <div class="card" id="registrationCard">
     <div class="card-header">
-        <div class="header-badge">Registration Open</div>
-        <h1>10th Annual President's<br>Scholarship Golf Tournament</h1>
+        <div class="header-badge" data-i18n="badge">Registration Open</div>
+        <h1 data-i18n-html="h1">10th Annual President's<br>Scholarship Golf Tournament</h1>
         <div class="header-meta">
             <span>June 22, 2026</span>
-            <span>100% of proceeds fund scholarships for Deaf and hard of hearing students</span>
+            <span data-i18n="meta2">100% of proceeds fund scholarships for Deaf and hard of hearing students</span>
         </div>
     </div>
 
     <div class="card-body">
 
-        <div id="formErrorBanner">⚠ Please fix the highlighted fields before continuing.</div>
+        <div id="formErrorBanner" data-i18n="formError">⚠ Please fix the highlighted fields before continuing.</div>
 
         <!-- ════════════════════════════════════════════════
              D365 Marketing Form embed.
@@ -416,7 +441,7 @@
              JS moves it to just before the Payment section.
         ════════════════════════════════════════════════ -->
         <div id="orderSummary">
-            <div class="summary-title">Order Summary</div>
+            <div class="summary-title" data-i18n="summaryTitle">Order Summary</div>
 
             <div class="summary-row" id="rowSponsor">
                 <div class="row-label">
@@ -443,7 +468,7 @@
             </div>
 
             <div class="summary-total">
-                <span>Total Amount</span>
+                <span data-i18n="totalAmount">Total Amount</span>
                 <span><span class="summary-cad">CAD</span><span id="dispTotal">$25,000.00</span></span>
             </div>
         </div>
@@ -451,7 +476,7 @@
         <!-- Single custom submit button — D365's own button hidden via CSS -->
         <button type="button" id="mainSubmitButton">📄 Submit Invoice Request</button>
 
-        <div class="footer-note">
+        <div class="footer-note" data-i18n="footerNote">
             🔒 Your information is secure and will only be used for tournament registration.
         </div>
     </div>
@@ -460,8 +485,8 @@
 <!-- ── Moneris Full Page Overlay ── -->
 <div id="monerisOverlay">
     <div id="monerisTopBar">
-        <span>🔒 Secure Payment — Golf Tournament Registration</span>
-        <button id="monerisCloseBtn">✕ Cancel</button>
+        <span data-i18n="monerisTitle">🔒 Secure Payment — Golf Tournament Registration</span>
+        <button id="monerisCloseBtn" data-i18n="monerisCancel">✕ Cancel</button>
     </div>
     <div id="monerisCheckoutDiv"></div>
 </div>
@@ -470,15 +495,15 @@
 <div id="thankYouScreen" class="fs-overlay">
     <div class="confirm-card">
         <div class="confirm-icon success">✅</div>
-        <h2>Payment Successful!</h2>
-        <p>Thank you for supporting the</p>
-        <p><strong>10th Annual President's Scholarship Golf Tournament</strong></p>
+        <h2 data-i18n="tyTitle">Payment Successful!</h2>
+        <p data-i18n="tyP1">Thank you for supporting the</p>
+        <p><strong data-i18n="tournamentName">10th Annual President's Scholarship Golf Tournament</strong></p>
         <div class="confirm-amount" id="thankYouAmount"></div>
-        <div class="confirm-amount-label">CAD — Payment Confirmed</div>
-        <p style="font-size:13px;color:#8a9a8a;margin-top:8px;">
+        <div class="confirm-amount-label" data-i18n="tyAmountLabel">CAD — Payment Confirmed</div>
+        <p style="font-size:13px;color:#8a9a8a;margin-top:8px;" data-i18n="tyReceiptNote">
             A confirmation receipt will be sent to your email address.
         </p>
-        <button class="confirm-btn" onclick="window.location.reload()">Register Another</button>
+        <button class="confirm-btn" onclick="window.location.reload()" data-i18n="tyRegisterAnother">Register Another</button>
     </div>
 </div>
 
@@ -486,22 +511,181 @@
 <div id="invoiceConfirmScreen" class="fs-overlay">
     <div class="confirm-card">
         <div class="confirm-icon invoice">📄</div>
-        <h2>Invoice Request Submitted!</h2>
-        <p>Thank you! Your registration has been received.</p>
+        <h2 data-i18n="invTitle">Invoice Request Submitted!</h2>
+        <p data-i18n="invP1">Thank you! Your registration has been received.</p>
         <div class="confirm-summary-box" id="invoiceSummaryBox"></div>
         <p style="font-size:14px;color:#3a5a3a;">
-            An invoice will be emailed to <strong id="invoiceEmail"></strong>.<br>
-            Please allow 1–2 business days for processing.
+            <span data-i18n="invEmailNote1">An invoice will be emailed to</span> <strong id="invoiceEmail"></strong>.<br>
+            <span data-i18n="invEmailNote2">Please allow 1–2 business days for processing.</span>
         </p>
         <div class="confirm-contact">
-            Questions? Contact Dawne Gordon at
-            <a href="mailto:dgordon@chs.ca">dgordon@chs.ca</a>
+            <span data-i18n="invQuestions">Questions? Contact Dawne Gordon at</span>
+            <a href="/cdn-cgi/l/email-protection#7f1b18100d1b10113f1c170c511c1e"><span class="__cf_email__" data-cfemail="80e4e7eff2e4efeec0e3e8f3aee3e1">[email&#160;protected]</span></a>
         </div>
-        <button class="confirm-btn" onclick="window.location.reload()">Submit Another Registration</button>
+        <button class="confirm-btn" onclick="window.location.reload()" data-i18n="invSubmitAnother">Submit Another Registration</button>
     </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ══════════════════════════════════════════════════════════════
+// TRANSLATIONS
+// ══════════════════════════════════════════════════════════════
+var LANG = 'en';
+
+var T = {
+    en: {
+        badge:              'Registration Open',
+        h1:                 '10th Annual President\'s<br>Scholarship Golf Tournament',
+        meta2:              '100% of proceeds fund scholarships for Deaf and hard of hearing students',
+        formError:          '⚠ Please fix the highlighted fields before continuing.',
+        summaryTitle:       'Order Summary',
+        totalAmount:        'Total Amount',
+        footerNote:         '🔒 Your information is secure and will only be used for tournament registration.',
+        monerisTitle:       '🔒 Secure Payment — Golf Tournament Registration',
+        monerisCancel:      '✕ Cancel',
+        tournamentName:     '10th Annual President\'s Scholarship Golf Tournament',
+        tyTitle:            'Payment Successful!',
+        tyP1:               'Thank you for supporting the',
+        tyAmountLabel:      'CAD — Payment Confirmed',
+        tyReceiptNote:      'A confirmation receipt will be sent to your email address.',
+        tyRegisterAnother:  'Register Another',
+        invTitle:           'Invoice Request Submitted!',
+        invP1:              'Thank you! Your registration has been received.',
+        invEmailNote1:      'An invoice will be emailed to',
+        invEmailNote2:      'Please allow 1–2 business days for processing.',
+        invQuestions:       'Questions? Contact Dawne Gordon at',
+        invSubmitAnother:   'Submit Another Registration',
+        submitInvoice:      '📄 Submit Invoice Request',
+        submitCC:           '🔒 Pay Securely with Credit Card',
+        hintFoursome:       '$2,000 per additional foursome · 4 golfers per foursome',
+        hintPassport:       '$100 per passport · Includes exclusive event benefits',
+        siSubmitting:       '⏳ Submitting request...',
+        siConnecting:       '⏳ Connecting to payment...',
+        siAdditionalFoursomes: 'Additional Foursomes',
+        siPassports:        "President's Passports",
+        siTotal:            'Total (CAD)',
+        sponsorHintGolfOnly:      'No sponsorship — foursomes charged at $2,000 each',
+        sponsorHintIncludes:      '✦ Includes',
+        sponsorHintSingular:      'complimentary foursome',
+        sponsorHintPlural:        'complimentary foursomes',
+        sponsorHintGolfers:       'golfers',
+        sponsorHintNone:          'No complimentary foursomes at this level',
+        suffixAdditionalBeyond:   'additional beyond',
+        suffixIncluded:           'included',
+        suffixZeroOrMore:         '(0 or more)',
+        subSponsorSingular:       'complimentary foursome',
+        subSponsorPlural:         'complimentary foursomes',
+        subSponsorIncluded:       'included',
+        labelFoursomeAdditional:  'Additional Foursomes',
+        subFoursomeTotal:         'total',
+        subFoursomeGolfers:       'golfers',
+        labelFoursomeComplimentary: 'Foursomes',
+        subFoursomeIncludedWith:  'golfers — included with sponsorship',
+        labelPassportRow:         "President's Passports",
+        errFirstname:   'First name is required.',
+        errLastname:    'Last name is required.',
+        errCompany:     'Enter a valid organization name.',
+        errAddress:     'Billing address is required.',
+        errCity:        'City is required.',
+        errEmail:       'Enter a valid email address.',
+        errPhone:       'Enter a valid phone number.',
+        errPostal:      'Enter a valid Postal Code (e.g., A1A 1A1).',
+        errFoursomes:   'Enter a whole number 0 or greater.',
+        errPassports:   'Enter a whole number 0 or greater.'
+    },
+    fr: {
+        badge:              'Inscription ouverte',
+        h1:                 '10e Tournoi de golf annuel de la<br>bourse du président',
+        meta2:              '100 % des recettes financent des bourses pour les étudiants sourds et malentendants',
+        formError:          '⚠ Veuillez corriger les champs en surbrillance avant de continuer.',
+        summaryTitle:       'Sommaire de la commande',
+        totalAmount:        'Montant total',
+        footerNote:         '🔒 Vos informations sont sécurisées et ne seront utilisées que pour l\'inscription au tournoi.',
+        monerisTitle:       '🔒 Paiement sécurisé — Inscription au tournoi de golf',
+        monerisCancel:      '✕ Annuler',
+        tournamentName:     '10e Tournoi de golf annuel de la bourse du président',
+        tyTitle:            'Paiement réussi!',
+        tyP1:               'Merci de soutenir le',
+        tyAmountLabel:      'CAD — Paiement confirmé',
+        tyReceiptNote:      'Un reçu de confirmation vous sera envoyé par courriel.',
+        tyRegisterAnother:  'Inscrire un autre participant',
+        invTitle:           'Demande de facture soumise!',
+        invP1:              'Merci! Votre inscription a été reçue.',
+        invEmailNote1:      'Une facture sera envoyée par courriel à',
+        invEmailNote2:      'Veuillez prévoir 1 à 2 jours ouvrables pour le traitement.',
+        invQuestions:       'Questions? Contactez Dawne Gordon à',
+        invSubmitAnother:   'Soumettre une autre inscription',
+        submitInvoice:      '📄 Soumettre une demande de facture',
+        submitCC:           '🔒 Payer par carte de crédit',
+        hintFoursome:       '2 000 $ par quatuor supplémentaire · 4 golfeurs par quatuor',
+        hintPassport:       '100 $ par passeport · Comprend des avantages exclusifs',
+        siSubmitting:       '⏳ Envoi en cours...',
+        siConnecting:       '⏳ Connexion au paiement...',
+        siAdditionalFoursomes: 'Quatuors supplémentaires',
+        siPassports:        'Passeports du président',
+        siTotal:            'Total (CAD)',
+        sponsorHintGolfOnly:      'Aucune commandite — quatuors facturés à 2 000 $ chacun',
+        sponsorHintIncludes:      '✦ Comprend',
+        sponsorHintSingular:      'quatuor gratuit',
+        sponsorHintPlural:        'quatuors gratuits',
+        sponsorHintGolfers:       'golfeurs',
+        sponsorHintNone:          'Aucun quatuor gratuit à ce niveau',
+        suffixAdditionalBeyond:   'supplémentaire au-delà de',
+        suffixIncluded:           'inclus',
+        suffixZeroOrMore:         '(0 ou plus)',
+        subSponsorSingular:       'quatuor gratuit',
+        subSponsorPlural:         'quatuors gratuits',
+        subSponsorIncluded:       'inclus',
+        labelFoursomeAdditional:  'Quatuors supplémentaires',
+        subFoursomeTotal:         'total',
+        subFoursomeGolfers:       'golfeurs',
+        labelFoursomeComplimentary: 'Quatuors',
+        subFoursomeIncludedWith:  'golfeurs — inclus avec la commandite',
+        labelPassportRow:         'Passeports du président',
+        errFirstname:   'Le prénom est requis.',
+        errLastname:    'Le nom de famille est requis.',
+        errCompany:     'Entrez un nom d\'organisation valide.',
+        errAddress:     'L\'adresse de facturation est requise.',
+        errCity:        'La ville est requise.',
+        errEmail:       'Entrez une adresse courriel valide.',
+        errPhone:       'Entrez un numéro de téléphone valide.',
+        errPostal:      'Entrez un code postal valide (ex. : A1A 1A1).',
+        errFoursomes:   'Entrez un nombre entier égal ou supérieur à 0.',
+        errPassports:   'Entrez un nombre entier égal ou supérieur à 0.'
+    }
+};
+
+function setLang(lang) {
+    LANG = lang;
+    document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+    document.getElementById('btnFR').classList.toggle('active', lang === 'fr');
+
+    // Update all static [data-i18n] elements
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (T[lang][key] !== undefined) el.textContent = T[lang][key];
+    });
+
+    // Update elements using innerHTML (for <br> tags)
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n-html');
+        if (T[lang][key] !== undefined) el.innerHTML = T[lang][key];
+    });
+
+    // Update hints (injected by JS, so update by ID)
+    var hf = document.getElementById('hintFoursome');
+    if (hf) hf.textContent = T[lang].hintFoursome;
+    var hp = document.getElementById('hintPassport');
+    if (hp) hp.textContent = T[lang].hintPassport;
+
+    // Re-run dynamic label generators
+    calculate();
+    updateSubmitLabel();
+
+    // Clear any shown validation errors (they will re-appear in new language on next submit)
+    clearAllErrors();
+}
+
 // ══════════════════════════════════════════════════════════════
 // CONFIG
 // ✅ SECURE: No Flow URL here. Browser calls the PHP proxy on
@@ -550,8 +734,8 @@ function waitForForm() {
     injectStepper(passportEl, 0, 100);
 
     // 2. Inject hint text (guarded — will never run twice)
-    injectHint(foursomeEl, 'hintFoursome', '$2,000 per additional foursome · 4 golfers per foursome');
-    injectHint(passportEl, 'hintPassport', '$100 per passport · Includes exclusive event benefits');
+    injectHint(foursomeEl, 'hintFoursome', T[LANG].hintFoursome);
+    injectHint(passportEl, 'hintPassport', T[LANG].hintPassport);
 
     // 3. Wire calculate on sponsor / number inputs
     sponsorEl.addEventListener('change', calculate);
@@ -658,12 +842,12 @@ function calculate() {
         if (sb) sb.appendChild(sponsorHint);
     }
     sponsorHint.textContent = key === '9'
-        ? 'No sponsorship — foursomes charged at $2,000 each'
+        ? T[LANG].sponsorHintGolfOnly
         : sponsor.foursomes > 0
-            ? '✦ Includes ' + sponsor.foursomes
-              + ' complimentary foursome' + (sponsor.foursomes > 1 ? 's' : '')
-              + ' (' + (sponsor.foursomes * 4) + ' golfers)'
-            : 'No complimentary foursomes at this level';
+            ? T[LANG].sponsorHintIncludes + ' ' + sponsor.foursomes
+              + ' ' + (sponsor.foursomes > 1 ? T[LANG].sponsorHintPlural : T[LANG].sponsorHintSingular)
+              + ' (' + (sponsor.foursomes * 4) + ' ' + T[LANG].sponsorHintGolfers + ')'
+            : T[LANG].sponsorHintNone;
 
     // Foursome label suffix
     var suffix = document.getElementById('foursomeLabelSuffix');
@@ -679,8 +863,8 @@ function calculate() {
     }
     if (suffix) {
         suffix.textContent = sponsor.foursomes > 0
-            ? '(additional beyond ' + sponsor.foursomes + ' included)'
-            : '(0 or more)';
+            ? '(' + T[LANG].suffixAdditionalBeyond + ' ' + sponsor.foursomes + ' ' + T[LANG].suffixIncluded + ')'
+            : T[LANG].suffixZeroOrMore;
     }
 
     // ── Summary: Sponsor row ──
@@ -690,8 +874,8 @@ function calculate() {
         document.getElementById('rowSponsor').classList.remove('hidden');
         document.getElementById('labelSponsor').textContent = sponsor.name;
         document.getElementById('subSponsor').textContent   = sponsor.foursomes > 0
-            ? sponsor.foursomes + ' complimentary foursome'
-              + (sponsor.foursomes > 1 ? 's' : '') + ' included'
+            ? sponsor.foursomes + ' ' + (sponsor.foursomes > 1 ? T[LANG].subSponsorPlural : T[LANG].subSponsorSingular)
+              + ' ' + T[LANG].subSponsorIncluded
             : '';
         document.getElementById('dispSponsor').textContent = '$' + sPrice.toLocaleString();
     }
@@ -700,13 +884,13 @@ function calculate() {
     var totalF = sponsor.foursomes + addlFours;
     if (addlFours > 0) {
         document.getElementById('rowFoursome').classList.remove('hidden');
-        document.getElementById('labelFoursome').textContent = 'Additional Foursomes (' + addlFours + ')';
-        document.getElementById('subFoursome').textContent   = totalF + ' total · ' + (totalF * 4) + ' golfers';
+        document.getElementById('labelFoursome').textContent = T[LANG].labelFoursomeAdditional + ' (' + addlFours + ')';
+        document.getElementById('subFoursome').textContent   = totalF + ' ' + T[LANG].subFoursomeTotal + ' · ' + (totalF * 4) + ' ' + T[LANG].subFoursomeGolfers;
         document.getElementById('dispFoursome').textContent  = '$' + fPrice.toLocaleString();
     } else if (sponsor.foursomes > 0 && key !== '9') {
         document.getElementById('rowFoursome').classList.remove('hidden');
-        document.getElementById('labelFoursome').textContent = 'Foursomes (' + sponsor.foursomes + ' complimentary)';
-        document.getElementById('subFoursome').textContent   = (sponsor.foursomes * 4) + ' golfers — included with sponsorship';
+        document.getElementById('labelFoursome').textContent = T[LANG].labelFoursomeComplimentary + ' (' + sponsor.foursomes + ' ' + T[LANG].subSponsorSingular + (sponsor.foursomes > 1 ? 's' : '') + ')';
+        document.getElementById('subFoursome').textContent   = (sponsor.foursomes * 4) + ' ' + T[LANG].subFoursomeIncludedWith;
         document.getElementById('dispFoursome').textContent  = '$0';
     } else {
         document.getElementById('rowFoursome').classList.add('hidden');
@@ -715,7 +899,7 @@ function calculate() {
     // ── Summary: Passports row ──
     if (passportCnt > 0) {
         document.getElementById('rowPassport').classList.remove('hidden');
-        document.getElementById('labelPassport').textContent = "President's Passports (" + passportCnt + ')';
+        document.getElementById('labelPassport').textContent = T[LANG].labelPassportRow + ' (' + passportCnt + ')';
         document.getElementById('subPassport').textContent   = '$100 × ' + passportCnt;
         document.getElementById('dispPassport').textContent  = '$' + pPrice.toLocaleString();
     } else {
@@ -746,8 +930,8 @@ function updateSubmitLabel() {
     var btn = document.getElementById('mainSubmitButton');
     if (!btn) return;
     btn.textContent = getPaymentType() === '2'
-        ? '🔒 Pay Securely with Credit Card'
-        : '📄 Submit Invoice Request';
+        ? T[LANG].submitCC
+        : T[LANG].submitInvoice;
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -791,11 +975,11 @@ function validateForm() {
     var ok = true;
 
     [
-        { name: 'firstname',      msg: 'First name is required.' },
-        { name: 'lastname',       msg: 'Last name is required.' },
-        { name: 'companyname',    msg: 'Enter a valid organization name.' },
-        { name: 'address1_line1', msg: 'Billing address is required.' },
-        { name: 'address1_city',  msg: 'City is required.' }
+        { name: 'firstname',      msg: T[LANG].errFirstname },
+        { name: 'lastname',       msg: T[LANG].errLastname },
+        { name: 'companyname',    msg: T[LANG].errCompany },
+        { name: 'address1_line1', msg: T[LANG].errAddress },
+        { name: 'address1_city',  msg: T[LANG].errCity }
     ].forEach(function(c) {
         var el = getF(c.name);
         if (!el || !el.value.trim()) { markError(c.name, c.msg); ok = false; }
@@ -803,17 +987,17 @@ function validateForm() {
 
     var emailEl = getF('emailaddress1');
     if (!emailEl || !isValidEmail(emailEl.value)) {
-        markError('emailaddress1', 'Enter a valid email address.'); ok = false;
+        markError('emailaddress1', T[LANG].errEmail); ok = false;
     }
 
     var phoneEl = getF('telephone1');
     if (!phoneEl || !isValidPhone(phoneEl.value)) {
-        markError('telephone1', 'Enter a valid phone number.'); ok = false;
+        markError('telephone1', T[LANG].errPhone); ok = false;
     }
 
     var postalEl = getF('address1_postalcode');
     if (!postalEl || !isValidPostal(postalEl.value)) {
-        markError('address1_postalcode', 'Enter a valid Postal Code (e.g., A1A 1A1).'); ok = false;
+        markError('address1_postalcode', T[LANG].errPostal); ok = false;
     } else {
         // Normalize: A1A1A1 → A1A 1A1
         var raw = postalEl.value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
@@ -822,16 +1006,18 @@ function validateForm() {
 
     var fv = parseInt((getF('new_additionalfoursomes') || {}).value) || 0;
     if (fv < 0 || fv > 20) {
-        markError('new_additionalfoursomes', 'Enter a whole number 0 or greater.'); ok = false;
+        markError('new_additionalfoursomes', T[LANG].errFoursomes); ok = false;
     }
 
     var pv = parseInt((getF('new_passportcount') || {}).value) || 0;
     if (pv < 0 || pv > 100) {
-        markError('new_passportcount', 'Enter a whole number 0 or greater.'); ok = false;
+        markError('new_passportcount', T[LANG].errPassports); ok = false;
     }
 
     if (!ok) {
-        document.getElementById('formErrorBanner').classList.add('visible');
+        var banner = document.getElementById('formErrorBanner');
+        banner.textContent = T[LANG].formError;
+        banner.classList.add('visible');
         var first = document.querySelector('.inline-error.visible');
         if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -856,7 +1042,7 @@ function handleSubmitClick(e) {
 // ══════════════════════════════════════════════════════════════
 function submitInvoiceRequest() {
     var btn = document.getElementById('mainSubmitButton');
-    btn.textContent = '⏳ Submitting request...';
+    btn.textContent = T[LANG].siSubmitting;
     btn.disabled = true;
 
     var key         = (getF('optionset9110')              || {}).value || '1';
@@ -878,12 +1064,12 @@ function submitInvoiceRequest() {
         rows += '<div class="cs-row" style="margin-top:8px;"><span>'
               + sponsor.name + '</span><span>$' + sponsor.price.toLocaleString() + '</span></div>';
     if (addlFours > 0)
-        rows += '<div class="cs-row"><span>Additional Foursomes (' + addlFours + ')</span>'
+        rows += '<div class="cs-row"><span>' + T[LANG].siAdditionalFoursomes + ' (' + addlFours + ')</span>'
               + '<span>$' + fPrice.toLocaleString() + '</span></div>';
     if (passportCnt > 0)
-        rows += '<div class="cs-row"><span>President\'s Passports (' + passportCnt + ')</span>'
+        rows += '<div class="cs-row"><span>' + T[LANG].siPassports + ' (' + passportCnt + ')</span>'
               + '<span>$' + pPrice.toLocaleString() + '</span></div>';
-    rows += '<div class="cs-row cs-total"><span>Total (CAD)</span><span>$'
+    rows += '<div class="cs-row cs-total"><span>' + T[LANG].siTotal + '</span><span>$'
           + currentTotal.toLocaleString('en-CA', {
                 minimumFractionDigits: 2, maximumFractionDigits: 2
             }) + '</span></div>';
@@ -894,7 +1080,7 @@ function submitInvoiceRequest() {
     setTimeout(function() {
         document.getElementById('invoiceConfirmScreen').classList.add('active');
         btn.disabled = false;
-        btn.textContent = '📄 Submit Invoice Request';
+        btn.textContent = T[LANG].submitInvoice;
     }, 800);
 }
 
@@ -907,7 +1093,7 @@ function submitInvoiceRequest() {
 async function launchMonerisPayment() {
     var btn = document.getElementById('mainSubmitButton');
     var orig = btn.textContent;
-    btn.textContent = '⏳ Connecting to payment...';
+    btn.textContent = T[LANG].siConnecting;
     btn.disabled = true;
 
     try {
@@ -965,13 +1151,4 @@ function showThankYou() {
 }
 
 document.getElementById('monerisCloseBtn').addEventListener('click', function() {
-    document.getElementById('monerisOverlay').classList.remove('active');
-    var btn = document.getElementById('mainSubmitButton');
-    if (btn) { btn.textContent = '🔒 Pay Securely with Credit Card'; btn.disabled = false; }
-});
-
-waitForForm();
-</script>
-
-</body>
-</html>
+    document.getElementById('monerisOverla
