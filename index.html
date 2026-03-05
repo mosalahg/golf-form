@@ -8,17 +8,19 @@
     <!-- Moneris Hosted Checkout SDK -->
     <script src="https://gatewayt.moneris.com/chktv2/js/chkt_v2.00.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Source Sans 3', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             background: #eef2ee;
             min-height: 100vh;
             padding: 40px 16px 60px;
         }
 
+        /* ── Card shell ── */
         .card {
             max-width: 660px;
             margin: 0 auto;
@@ -31,7 +33,7 @@
         /* ── Header ── */
         .card-header {
             background: linear-gradient(150deg, #034a2c 0%, #056038 55%, #07774a 100%);
-            padding: 44px 40px 36px;
+            padding: 26px 40px 22px;
             position: relative;
             overflow: hidden;
             text-align: center;
@@ -48,28 +50,31 @@
         }
         .header-badge {
             display: inline-block;
-            background: rgba(255,255,255,0.15);
-            color: rgba(255,255,255,0.9);
-            font-size: 11px; font-weight: 700; letter-spacing: 1.8px;
-            text-transform: uppercase; padding: 5px 14px; border-radius: 20px;
-            margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.88);
+            font-size: 10px; font-weight: 600; letter-spacing: 2.2px;
+            text-transform: uppercase; padding: 4px 12px; border-radius: 20px;
+            margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.18);
+            font-family: 'DM Sans', sans-serif;
         }
         .card-header h1 {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 30px; font-weight: 700; color: #fff;
-            line-height: 1.25; margin-bottom: 14px; position: relative;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 26px; font-weight: 700; color: #fff;
+            line-height: 1.2; margin-bottom: 10px; position: relative;
+            letter-spacing: 0.2px;
         }
         .header-meta {
             display: flex; align-items: center; justify-content: center;
             gap: 20px; flex-wrap: wrap;
         }
         .header-meta span {
-            color: rgba(255,255,255,0.85); font-size: 13px;
+            color: rgba(255,255,255,0.78); font-size: 12px;
             display: flex; align-items: center; gap: 6px;
+            font-family: 'DM Sans', sans-serif; font-weight: 400; letter-spacing: 0.2px;
         }
         .header-meta span::before {
-            content: ''; display: inline-block; width: 5px; height: 5px;
-            border-radius: 50%; background: rgba(255,255,255,0.5);
+            content: ''; display: inline-block; width: 3px; height: 3px;
+            border-radius: 50%; background: rgba(255,255,255,0.45);
         }
         .header-meta span:first-child::before { display: none; }
 
@@ -85,11 +90,11 @@
         }
         #formErrorBanner.visible { display: flex; }
 
-        /* ════════════════════════════════════════════
+        /* ════════════════════════════════════════════════
            D365 FIELD OVERRIDES
-           Styles the fields rendered by FormLoader / CRM.html
-        ════════════════════════════════════════════ */
-        .marketingForm { font-family: 'Source Sans 3', sans-serif !important; }
+           Styles fields rendered by FormLoader from CRM.html
+        ════════════════════════════════════════════════ */
+        .marketingForm { font-family: 'DM Sans', sans-serif !important; }
 
         .marketingForm .section-label {
             font-size: 10px !important; font-weight: 700 !important;
@@ -123,7 +128,8 @@
         .marketingForm select {
             width: 100% !important; padding: 11px 14px !important;
             border: 1.5px solid #dde6dd !important; border-radius: 6px !important;
-            background: #fafcfa !important; font-family: 'Source Sans 3', sans-serif !important;
+            background: #fafcfa !important;
+            font-family: 'DM Sans', sans-serif !important;
             font-size: 14px !important; color: #1a1a1a !important;
             transition: border-color 0.2s, box-shadow 0.2s !important;
             appearance: none !important; -webkit-appearance: none !important;
@@ -164,13 +170,11 @@
         .inline-error.visible { display: flex; }
         .inline-error::before { content: '⚠'; font-size: 11px; }
 
-        /* Two-column rows */
-        .marketingForm .field-row {
-            display: flex !important; gap: 16px !important;
-        }
+        /* Two-column field rows */
+        .marketingForm .field-row { display: flex !important; gap: 16px !important; }
         .marketingForm .field-row > div { flex: 1 !important; }
 
-        /* ── Number stepper (injected around number inputs by JS) ── */
+        /* ── Number stepper (injected by JS around number inputs) ── */
         .stepper-wrap {
             display: flex; align-items: center;
             border: 1.5px solid #dde6dd; border-radius: 6px;
@@ -184,7 +188,7 @@
             background: #f0f5f0; color: #056038;
             font-size: 22px; font-weight: 700; cursor: pointer;
             flex-shrink: 0; transition: background 0.15s; line-height: 1;
-            font-family: 'Source Sans 3', sans-serif;
+            font-family: 'DM Sans', sans-serif;
         }
         .stepper-btn:hover  { background: #e0eee0; }
         .stepper-btn:active { background: #d0e8d0; }
@@ -242,13 +246,13 @@
             margin-top: 3px !important; font-weight: 400 !important;
         }
 
-        /* ── Hide D365's own submit button — we have one custom button ── */
+        /* ── Hide D365's own submit button ── */
         .marketingForm .submitButton,
         .marketingForm .submitButtonWrapper { display: none !important; }
 
-        /* ════════════════════════════════════════════
-           ORDER SUMMARY (index.html only — no copy in CRM.html)
-        ════════════════════════════════════════════ */
+        /* ════════════════════════════════════════════════
+           ORDER SUMMARY (lives only in index.html)
+        ════════════════════════════════════════════════ */
         #orderSummary {
             background: linear-gradient(135deg, #f0f7f0 0%, #e8f2e8 100%);
             border: 1.5px solid #c8ddc8; border-radius: 8px;
@@ -273,20 +277,20 @@
             display: flex; justify-content: space-between; align-items: center;
             margin-top: 14px; padding-top: 14px; border-top: 2px solid #056038;
             font-size: 20px; font-weight: 700; color: #034a2c;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cormorant Garamond', serif;
         }
         .summary-cad {
             font-size: 11px; font-weight: 600; color: #7a9a7a;
-            letter-spacing: 0.5px; font-family: 'Source Sans 3', sans-serif;
+            letter-spacing: 0.5px; font-family: 'DM Sans', sans-serif;
             margin-right: 6px;
         }
 
-        /* ── Custom Submit Button ── */
+        /* ── Custom submit button ── */
         #mainSubmitButton {
             display: block; width: 100%; padding: 16px;
             background: linear-gradient(135deg, #034a2c, #056038);
             color: #fff; border: none; border-radius: 8px;
-            font-family: 'Source Sans 3', sans-serif;
+            font-family: 'DM Sans', sans-serif;
             font-size: 16px; font-weight: 700; cursor: pointer;
             letter-spacing: 0.3px; transition: opacity 0.2s, transform 0.1s;
             box-shadow: 0 4px 16px rgba(5,96,56,0.3);
@@ -297,15 +301,14 @@
 
         .footer-note {
             text-align: center; font-size: 12px; color: #8a9a8a;
-            margin-top: 20px; padding-top: 20px;
-            border-top: 1px solid #eef2ee;
+            margin-top: 20px; padding-top: 20px; border-top: 1px solid #eef2ee;
         }
 
-        /* ── Moneris overlay ── */
+        /* ── Moneris full-page overlay ── */
         #monerisOverlay {
             display: none; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background: #fff; z-index: 9999;
-            flex-direction: column;
+            width: 100%; height: 100%; background: #fff;
+            z-index: 9999; flex-direction: column;
         }
         #monerisOverlay.active { display: flex; }
         #monerisTopBar {
@@ -317,7 +320,7 @@
         #monerisCloseBtn {
             background: rgba(255,255,255,0.2); border: none; border-radius: 6px;
             color: #fff; padding: 6px 14px; font-size: 13px; cursor: pointer;
-            font-family: 'Source Sans 3', sans-serif;
+            font-family: 'DM Sans', sans-serif;
         }
         #monerisCloseBtn:hover { background: rgba(255,255,255,0.3); }
         #monerisCheckoutDiv { flex: 1; width: 100%; overflow-y: auto; }
@@ -342,13 +345,13 @@
         .confirm-icon.success { background: #e8f5e8; }
         .confirm-icon.invoice { background: #e8f0f8; }
         .confirm-card h2 {
-            font-family: 'Playfair Display', serif; font-size: 26px;
+            font-family: 'Cormorant Garamond', serif; font-size: 26px;
             color: #034a2c; margin-bottom: 12px;
         }
         .confirm-card p { color: #5a7a5a; font-size: 15px; line-height: 1.6; margin-bottom: 8px; }
         .confirm-amount {
             font-size: 30px; font-weight: 700; color: #056038;
-            font-family: 'Playfair Display', serif; margin: 20px 0 4px;
+            font-family: 'Cormorant Garamond', serif; margin: 20px 0 4px;
         }
         .confirm-amount-label { font-size: 12px; color: #8a9a8a; margin-bottom: 20px; }
         .confirm-summary-box {
@@ -367,15 +370,16 @@
         .confirm-btn {
             display: inline-block; margin-top: 24px; padding: 12px 32px;
             background: linear-gradient(135deg, #034a2c, #056038); color: #fff;
-            border: none; border-radius: 8px; font-family: 'Source Sans 3', sans-serif;
+            border: none; border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
             font-size: 15px; font-weight: 700; cursor: pointer;
         }
 
         @media (max-width: 520px) {
             body { padding: 0 0 40px; }
             .card { border-radius: 0; }
-            .card-header { padding: 32px 24px 28px; }
-            .card-header h1 { font-size: 24px; }
+            .card-header { padding: 20px 20px 18px; }
+            .card-header h1 { font-size: 21px; }
             .card-body { padding: 28px 24px 32px; }
             .marketingForm .field-row { flex-direction: column !important; gap: 0 !important; }
         }
@@ -383,6 +387,7 @@
 </head>
 <body>
 
+<!-- ── Registration Card ── -->
 <div class="card" id="registrationCard">
     <div class="card-header">
         <div class="header-badge">Registration Open</div>
@@ -397,11 +402,11 @@
 
         <div id="formErrorBanner">⚠ Please fix the highlighted fields before continuing.</div>
 
-        <!-- ════════════════════════════════════════════
+        <!-- ════════════════════════════════════════════════
              D365 Marketing Form embed.
-             FormLoader renders ALL form fields from CRM.html.
+             FormLoader renders ALL fields from CRM.html.
              index.html has zero duplicate form fields.
-        ════════════════════════════════════════════ -->
+        ════════════════════════════════════════════════ -->
         <div
             data-form-id='59a9d805-df14-f111-8342-70a8a50f30e1'
             data-form-api-url='https://public-can.mkt.dynamics.com/api/v1.0/orgs/58c25681-1c41-4696-b5f7-a548aeb7e111/landingpageforms'
@@ -409,10 +414,10 @@
         </div>
         <script src='https://cxppusa1formui01cdnsa01-endpoint.azureedge.net/can/FormLoader/FormLoader.bundle.js'></script>
 
-        <!-- ════════════════════════════════════════════
-             Order Summary — lives ONLY here in index.html.
-             JS repositions it to appear between Buyer Info and Payment.
-        ════════════════════════════════════════════ -->
+        <!-- ════════════════════════════════════════════════
+             Order Summary — ONLY defined here, never in CRM.html.
+             JS moves it to just before the Payment section.
+        ════════════════════════════════════════════════ -->
         <div id="orderSummary">
             <div class="summary-title">Order Summary</div>
 
@@ -473,7 +478,9 @@
         <p><strong>10th Annual President's Scholarship Golf Tournament</strong></p>
         <div class="confirm-amount" id="thankYouAmount"></div>
         <div class="confirm-amount-label">CAD — Payment Confirmed</div>
-        <p style="font-size:13px;color:#8a9a8a;margin-top:8px;">A confirmation receipt will be sent to your email address.</p>
+        <p style="font-size:13px;color:#8a9a8a;margin-top:8px;">
+            A confirmation receipt will be sent to your email address.
+        </p>
         <button class="confirm-btn" onclick="window.location.reload()">Register Another</button>
     </div>
 </div>
@@ -490,17 +497,21 @@
             Please allow 1–2 business days for processing.
         </p>
         <div class="confirm-contact">
-            Questions? Contact Dawne Gordon at <a href="mailto:dgordon@chs.ca">dgordon@chs.ca</a>
+            Questions? Contact Dawne Gordon at
+            <a href="/cdn-cgi/l/email-protection#5a3e3d35283e35341a39322974393b"><span class="__cf_email__" data-cfemail="cda9aaa2bfa9a2a38daea5bee3aeac">[email&#160;protected]</span></a>
         </div>
         <button class="confirm-btn" onclick="window.location.reload()">Submit Another Registration</button>
     </div>
 </div>
 
-<script>
-// ══════════════════════════════════════════════════
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ══════════════════════════════════════════════════════════════
 // CONFIG
-// ══════════════════════════════════════════════════
-var FLOW_URL = 'https://c5420bc382c8418ea7f8b39138ce18.0f.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/3ac94b8f7b1c4d13a47288aaa5352aab/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CPBG-n9A99_pMYl5MQsDMLNAYd5n0ybmRd93h77iKLM';
+// ✅ SECURE: No Flow URL here. Browser calls the PHP proxy on
+//    the CHS web server. The real URL lives only in proxy.php
+//    which runs server-side and is never sent to any browser.
+// ══════════════════════════════════════════════════════════════
+var PROXY_URL = 'https://chs.ca/golf/proxy.php';
 
 var SPONSORS = {
     "1": { name: "Presenting Sponsorship",  price: 25000, foursomes: 3 },
@@ -517,16 +528,15 @@ var FOURSOME_PRICE = 2000;
 var PASSPORT_PRICE = 100;
 var currentTotal   = 0;
 
-// ── Helper: read the currently checked payment radio ──────────
-// Always reads live from the DOM — no stale cached variable.
+// Always reads live from the DOM — never a stale cached value
 function getPaymentType() {
     var checked = document.querySelector('[name="new_paymentoption"]:checked');
     return checked ? checked.value : '1';
 }
 
-// ══════════════════════════════════════════════════
-// WAIT FOR D365 FORMLOADER TO FINISH
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+// WAIT FOR D365 FORMLOADER TO FINISH RENDERING
+// ══════════════════════════════════════════════════════════════
 function waitForForm() {
     var sponsorEl  = document.querySelector('[name="optionset9110"]');
     var foursomeEl = document.querySelector('[name="new_additionalfoursomes"]');
@@ -538,56 +548,55 @@ function waitForForm() {
         return;
     }
 
-    // ── 1. Inject +/- steppers ──
+    // 1. Inject +/- steppers around number inputs
     injectStepper(foursomeEl, 0, 20);
     injectStepper(passportEl, 0, 100);
 
-    // ── 2. Inject hint text (only once, no duplicates) ──
-    injectHintAfterBlock(foursomeEl, 'hintFoursome', '$2,000 per additional foursome · 4 golfers per foursome');
-    injectHintAfterBlock(passportEl, 'hintPassport', '$100 per passport · Includes exclusive event benefits');
+    // 2. Inject hint text (guarded — will never run twice)
+    injectHint(foursomeEl, 'hintFoursome', '$2,000 per additional foursome · 4 golfers per foursome');
+    injectHint(passportEl, 'hintPassport', '$100 per passport · Includes exclusive event benefits');
 
-    // ── 3. Wire calculate on sponsor / steppers ──
+    // 3. Wire calculate on sponsor / number inputs
     sponsorEl.addEventListener('change', calculate);
     foursomeEl.addEventListener('input',  calculate);
     passportEl.addEventListener('input',  calculate);
 
-    // ── 4. CRITICAL FIX: wire button label via event delegation on document ──
-    //    This catches radio clicks even if D365 re-renders the option blocks.
+    // 4. Wire button label via event delegation — survives any D365 re-renders
     document.addEventListener('change', function(e) {
         if (e.target && e.target.name === 'new_paymentoption') {
             updateSubmitLabel();
         }
     });
-
-    // Also catch click events on the radio-option labels as a fallback
+    // Belt-and-suspenders: catch clicks on radio-option labels too
     document.addEventListener('click', function(e) {
-        var option = e.target.closest('.radio-option');
-        if (option) {
-            // Small delay to let the radio state update before reading it
+        if (e.target.closest('.radio-option')) {
             setTimeout(updateSubmitLabel, 10);
         }
     });
 
-    // ── 5. Wire the custom submit button ──
-    document.getElementById('mainSubmitButton').addEventListener('click', handleSubmitClick);
+    // 5. Wire the custom submit button
+    document.getElementById('mainSubmitButton')
+            .addEventListener('click', handleSubmitClick);
 
-    // ── 6. Move Order Summary just before the Payment section ──
-    var payBlock = document.querySelector('.optionSetFormFieldBlock[data-targetproperty="new_paymentoption"]');
-    var summary  = document.getElementById('orderSummary');
-    if (payBlock && summary && payBlock.parentNode && !payBlock.parentNode.contains(summary)) {
+    // 6. Move Order Summary to just before the Payment section
+    var payBlock = document.querySelector(
+        '.optionSetFormFieldBlock[data-targetproperty="new_paymentoption"]'
+    );
+    var summary = document.getElementById('orderSummary');
+    if (payBlock && summary && payBlock.parentNode
+            && !payBlock.parentNode.contains(summary)) {
         payBlock.parentNode.insertBefore(summary, payBlock);
     }
 
-    // ── 7. Initial render ──
+    // 7. Initial render
     calculate();
     updateSubmitLabel();
 }
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 // STEPPER INJECTION
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 function injectStepper(input, min, max) {
-    // Guard: don't inject twice
     if (input.parentNode && input.parentNode.classList.contains('stepper-wrap')) return;
 
     var wrap = document.createElement('div');
@@ -615,17 +624,17 @@ function injectStepper(input, min, max) {
     wrap.appendChild(btnPlus);
 }
 
-function injectHintAfterBlock(input, id, text) {
-    if (document.getElementById(id)) return; // guard against duplicates
+function injectHint(input, id, text) {
+    if (document.getElementById(id)) return; // never duplicate
     var hint = document.createElement('div');
     hint.id = id; hint.className = 'field-hint'; hint.textContent = text;
     var block = input.closest('.numberFormFieldBlock') || input.parentNode;
     block.appendChild(hint);
 }
 
-// ══════════════════════════════════════════════════
-// CALCULATE — reads D365-rendered fields, updates summary
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+// CALCULATE — reads D365 fields, updates Order Summary display
+// ══════════════════════════════════════════════════════════════
 function calculate() {
     var sponsorEl  = document.querySelector('[name="optionset9110"]');
     var foursomeEl = document.querySelector('[name="new_additionalfoursomes"]');
@@ -642,7 +651,7 @@ function calculate() {
     var pPrice = passportCnt * PASSPORT_PRICE;
     currentTotal = sPrice + fPrice + pPrice;
 
-    // ── Sponsor hint below dropdown ──
+    // Sponsor hint below dropdown
     var sponsorHint = document.getElementById('sponsorFoursomeHint');
     if (!sponsorHint) {
         sponsorHint = document.createElement('div');
@@ -654,11 +663,12 @@ function calculate() {
     sponsorHint.textContent = key === '9'
         ? 'No sponsorship — foursomes charged at $2,000 each'
         : sponsor.foursomes > 0
-            ? '✦ Includes ' + sponsor.foursomes + ' complimentary foursome'
-              + (sponsor.foursomes > 1 ? 's' : '') + ' (' + (sponsor.foursomes * 4) + ' golfers)'
+            ? '✦ Includes ' + sponsor.foursomes
+              + ' complimentary foursome' + (sponsor.foursomes > 1 ? 's' : '')
+              + ' (' + (sponsor.foursomes * 4) + ' golfers)'
             : 'No complimentary foursomes at this level';
 
-    // ── Foursome label suffix ──
+    // Foursome label suffix
     var suffix = document.getElementById('foursomeLabelSuffix');
     if (!suffix) {
         var lblBlock = foursomeEl.closest('.numberFormFieldBlock');
@@ -682,8 +692,9 @@ function calculate() {
     } else {
         document.getElementById('rowSponsor').classList.remove('hidden');
         document.getElementById('labelSponsor').textContent = sponsor.name;
-        document.getElementById('subSponsor').textContent = sponsor.foursomes > 0
-            ? sponsor.foursomes + ' complimentary foursome' + (sponsor.foursomes > 1 ? 's' : '') + ' included'
+        document.getElementById('subSponsor').textContent   = sponsor.foursomes > 0
+            ? sponsor.foursomes + ' complimentary foursome'
+              + (sponsor.foursomes > 1 ? 's' : '') + ' included'
             : '';
         document.getElementById('dispSponsor').textContent = '$' + sPrice.toLocaleString();
     }
@@ -716,11 +727,13 @@ function calculate() {
 
     // ── Total ──
     document.getElementById('dispTotal').textContent =
-        '$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        '$' + currentTotal.toLocaleString('en-CA', {
+            minimumFractionDigits: 2, maximumFractionDigits: 2
+        });
 
-    // ── Sync CRM hidden fields ──
-    syncField('shorttext3661',             currentTotal);
-    syncField('shorttext9854',             passportCnt);
+    // ── Sync hidden CRM fields (submitted with D365 form to Power Automate) ──
+    syncField('shorttext3661',              currentTotal);
+    syncField('shorttext9854',              passportCnt);
     syncField('new_complimentaryfoursomes', sponsor.foursomes);
 }
 
@@ -729,26 +742,29 @@ function syncField(name, value) {
     if (el) el.value = value;
 }
 
-// ══════════════════════════════════════════════════
-// SUBMIT BUTTON LABEL — always reads live radio state
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+// SUBMIT BUTTON LABEL — always reads live radio state from DOM
+// ══════════════════════════════════════════════════════════════
 function updateSubmitLabel() {
     var btn = document.getElementById('mainSubmitButton');
     if (!btn) return;
-    var payType = getPaymentType();
-    btn.textContent = payType === '2'
+    btn.textContent = getPaymentType() === '2'
         ? '🔒 Pay Securely with Credit Card'
         : '📄 Submit Invoice Request';
 }
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 // VALIDATION
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 function getF(name) { return document.querySelector('[name="' + name + '"]'); }
 
 function clearAllErrors() {
-    document.querySelectorAll('.input-error').forEach(function(el) { el.classList.remove('input-error'); });
-    document.querySelectorAll('.inline-error.visible').forEach(function(el) { el.classList.remove('visible'); });
+    document.querySelectorAll('.input-error').forEach(function(el) {
+        el.classList.remove('input-error');
+    });
+    document.querySelectorAll('.inline-error.visible').forEach(function(el) {
+        el.classList.remove('visible');
+    });
     document.getElementById('formErrorBanner').classList.remove('visible');
 }
 
@@ -761,7 +777,9 @@ function markError(name, msg) {
     if (!errEl) {
         errEl = document.createElement('div');
         errEl.id = errId; errEl.className = 'inline-error'; errEl.textContent = msg;
-        var block = el.closest('.textFormFieldBlock, .optionSetFormFieldBlock, .numberFormFieldBlock') || el.parentNode;
+        var block = el.closest(
+            '.textFormFieldBlock, .optionSetFormFieldBlock, .numberFormFieldBlock'
+        ) || el.parentNode;
         block.appendChild(errEl);
     }
     errEl.classList.add('visible');
@@ -790,23 +808,30 @@ function validateForm() {
     if (!emailEl || !isValidEmail(emailEl.value)) {
         markError('emailaddress1', 'Enter a valid email address.'); ok = false;
     }
+
     var phoneEl = getF('telephone1');
     if (!phoneEl || !isValidPhone(phoneEl.value)) {
         markError('telephone1', 'Enter a valid phone number.'); ok = false;
     }
+
     var postalEl = getF('address1_postalcode');
     if (!postalEl || !isValidPostal(postalEl.value)) {
         markError('address1_postalcode', 'Enter a valid Postal Code (e.g., A1A 1A1).'); ok = false;
     } else {
+        // Normalize: A1A1A1 → A1A 1A1
         var raw = postalEl.value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-        if (raw.length === 6) postalEl.value = raw.slice(0,3) + ' ' + raw.slice(3);
+        if (raw.length === 6) postalEl.value = raw.slice(0, 3) + ' ' + raw.slice(3);
     }
 
     var fv = parseInt((getF('new_additionalfoursomes') || {}).value) || 0;
-    if (fv < 0 || fv > 20) { markError('new_additionalfoursomes', 'Enter a whole number 0 or greater.'); ok = false; }
+    if (fv < 0 || fv > 20) {
+        markError('new_additionalfoursomes', 'Enter a whole number 0 or greater.'); ok = false;
+    }
 
     var pv = parseInt((getF('new_passportcount') || {}).value) || 0;
-    if (pv < 0 || pv > 100) { markError('new_passportcount', 'Enter a whole number 0 or greater.'); ok = false; }
+    if (pv < 0 || pv > 100) {
+        markError('new_passportcount', 'Enter a whole number 0 or greater.'); ok = false;
+    }
 
     if (!ok) {
         document.getElementById('formErrorBanner').classList.add('visible');
@@ -816,9 +841,9 @@ function validateForm() {
     return ok;
 }
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 // SUBMIT HANDLER
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 function handleSubmitClick(e) {
     e.preventDefault();
     if (!validateForm()) return;
@@ -829,32 +854,42 @@ function handleSubmitClick(e) {
     }
 }
 
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 // INVOICE FLOW
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 function submitInvoiceRequest() {
     var btn = document.getElementById('mainSubmitButton');
     btn.textContent = '⏳ Submitting request...';
     btn.disabled = true;
 
-    var key         = (getF('optionset9110') || {}).value || '1';
+    var key         = (getF('optionset9110')              || {}).value || '1';
     var sponsor     = SPONSORS[key] || { name: 'Golf Only', price: 0, foursomes: 0 };
     var addlFours   = parseInt((getF('new_additionalfoursomes') || {}).value) || 0;
-    var passportCnt = parseInt((getF('new_passportcount') || {}).value) || 0;
+    var passportCnt = parseInt((getF('new_passportcount')       || {}).value) || 0;
     var email       = ((getF('emailaddress1') || {}).value || '').trim();
-    var fname       = ((getF('firstname') || {}).value || '').trim();
-    var lname       = ((getF('lastname') || {}).value || '').trim();
-    var org         = ((getF('companyname') || {}).value || '').trim();
+    var fname       = ((getF('firstname')     || {}).value || '').trim();
+    var lname       = ((getF('lastname')      || {}).value || '').trim();
+    var org         = ((getF('companyname')   || {}).value || '').trim();
 
-    var fPrice = addlFours * FOURSOME_PRICE;
+    var fPrice = addlFours   * FOURSOME_PRICE;
     var pPrice = passportCnt * PASSPORT_PRICE;
-    var rows = '<div class="cs-row"><span><strong>' + (fname + ' ' + lname).trim() + '</strong>'
+
+    var rows = '<div class="cs-row"><span><strong>'
+             + (fname + ' ' + lname).trim() + '</strong>'
              + (org ? ' · ' + org : '') + '</span></div>';
-    if (sponsor.price > 0) rows += '<div class="cs-row" style="margin-top:8px;"><span>' + sponsor.name + '</span><span>$' + sponsor.price.toLocaleString() + '</span></div>';
-    if (addlFours > 0)     rows += '<div class="cs-row"><span>Additional Foursomes (' + addlFours + ')</span><span>$' + fPrice.toLocaleString() + '</span></div>';
-    if (passportCnt > 0)   rows += '<div class="cs-row"><span>President\'s Passports (' + passportCnt + ')</span><span>$' + pPrice.toLocaleString() + '</span></div>';
+    if (sponsor.price > 0)
+        rows += '<div class="cs-row" style="margin-top:8px;"><span>'
+              + sponsor.name + '</span><span>$' + sponsor.price.toLocaleString() + '</span></div>';
+    if (addlFours > 0)
+        rows += '<div class="cs-row"><span>Additional Foursomes (' + addlFours + ')</span>'
+              + '<span>$' + fPrice.toLocaleString() + '</span></div>';
+    if (passportCnt > 0)
+        rows += '<div class="cs-row"><span>President\'s Passports (' + passportCnt + ')</span>'
+              + '<span>$' + pPrice.toLocaleString() + '</span></div>';
     rows += '<div class="cs-row cs-total"><span>Total (CAD)</span><span>$'
-          + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</span></div>';
+          + currentTotal.toLocaleString('en-CA', {
+                minimumFractionDigits: 2, maximumFractionDigits: 2
+            }) + '</span></div>';
 
     document.getElementById('invoiceSummaryBox').innerHTML = rows;
     document.getElementById('invoiceEmail').textContent = email;
@@ -866,9 +901,12 @@ function submitInvoiceRequest() {
     }, 800);
 }
 
-// ══════════════════════════════════════════════════
-// MONERIS FLOW
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+// MONERIS CREDIT CARD FLOW
+// ✅ Calls https://chs.ca/golf/proxy.php — NOT the raw Flow URL.
+//    proxy.php runs server-side on the CHS web server and holds
+//    the real Power Automate URL. It is never visible in the browser.
+// ══════════════════════════════════════════════════════════════
 async function launchMonerisPayment() {
     var btn = document.getElementById('mainSubmitButton');
     var orig = btn.textContent;
@@ -876,23 +914,28 @@ async function launchMonerisPayment() {
     btn.disabled = true;
 
     try {
-        var res    = await fetch(FLOW_URL, {
+        var res = await fetch(PROXY_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ txn_total: currentTotal.toFixed(2) })
         });
+
         var data   = await res.json();
         var ticket = data.ticket || (data.response && data.response.ticket);
 
         if (ticket) {
             document.getElementById('monerisOverlay').classList.add('active');
+
             var mc = new monerisCheckout();
-            mc.setMode("qa"); // → "prod" for live
+            mc.setMode("qa"); // ← change to "prod" before go-live
             mc.setCheckoutDiv("monerisCheckoutDiv");
+
             mc.setCallback("payment_complete",   function()  { showThankYou(); });
             mc.setCallback("payment_receipt",    function()  { showThankYou(); });
-            mc.setCallback("page_loaded",        function(r) { if (r && r.currentPage === 'receipt') showThankYou(); });
-            mc.setCallback("cancel_transaction", function()  {
+            mc.setCallback("page_loaded",        function(r) {
+                if (r && r.currentPage === 'receipt') showThankYou();
+            });
+            mc.setCallback("cancel_transaction", function() {
                 document.getElementById('monerisOverlay').classList.remove('active');
                 btn.textContent = orig; btn.disabled = false;
             });
@@ -901,11 +944,14 @@ async function launchMonerisPayment() {
                 alert("A payment error occurred. Please try again or choose Invoice.");
                 btn.textContent = orig; btn.disabled = false;
             });
+
             mc.startCheckout(ticket);
+
         } else {
             alert("Payment setup failed. Please try again or choose Invoice.");
             btn.textContent = orig; btn.disabled = false;
         }
+
     } catch (err) {
         alert("Error connecting to payment server. Please try again or choose Invoice.");
         btn.textContent = orig; btn.disabled = false;
@@ -915,18 +961,11 @@ async function launchMonerisPayment() {
 function showThankYou() {
     document.getElementById('monerisOverlay').classList.remove('active');
     document.getElementById('thankYouAmount').textContent =
-        '$' + currentTotal.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        '$' + currentTotal.toLocaleString('en-CA', {
+            minimumFractionDigits: 2, maximumFractionDigits: 2
+        });
     document.getElementById('thankYouScreen').classList.add('active');
 }
 
 document.getElementById('monerisCloseBtn').addEventListener('click', function() {
-    document.getElementById('monerisOverlay').classList.remove('active');
-    var btn = document.getElementById('mainSubmitButton');
-    if (btn) { btn.textContent = '🔒 Pay Securely with Credit Card'; btn.disabled = false; }
-});
-
-waitForForm();
-</script>
-
-</body>
-</html>
+    document.getElementById('monerisOverla
