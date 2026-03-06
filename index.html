@@ -513,6 +513,21 @@
     </div>
 </div>
 
+<!-- ── Payment Declined Screen ── -->
+<div id="declinedScreen" class="fs-overlay">
+    <div class="confirm-card">
+        <div class="confirm-icon" style="background:#fdecea;">❌</div>
+        <h2 style="color:#c0392b;" data-i18n="decTitle">Payment Declined</h2>
+        <p data-i18n="decP1">Your payment was not approved.</p>
+        <div id="declinedDetail" style="margin:14px 0;padding:12px 16px;background:#fff2f2;border:1.5px solid #e74c3c;border-radius:8px;font-size:13px;color:#c0392b;"></div>
+        <p style="font-size:13px;color:#5a7a5a;margin-top:8px;" data-i18n="decP2">Please try again with a different card, or choose the Invoice option.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
+            <button class="confirm-btn" style="background:linear-gradient(135deg,#c0392b,#e74c3c);" onclick="retryPayment()" data-i18n="decRetry">Try Again</button>
+            <button class="confirm-btn" style="background:linear-gradient(135deg,#034a2c,#056038);" onclick="switchToInvoice()" data-i18n="decInvoice">Switch to Invoice</button>
+        </div>
+    </div>
+</div>
+
 <!-- ── Invoice Confirmation Screen ── -->
 <div id="invoiceConfirmScreen" class="fs-overlay">
     <div class="confirm-card">
@@ -598,6 +613,11 @@ var T = {
         errPostal:      'Enter a valid Postal Code (e.g., A1A 1A1).',
         errFoursomes:   'Enter a whole number 0 or greater.',
         errPassports:   'Enter a whole number 0 or greater.',
+        decTitle:       'Payment Declined',
+        decP1:          'Your payment was not approved.',
+        decP2:          'Please try again with a different card, or choose the Invoice option.',
+        decRetry:       'Try Again',
+        decInvoice:     'Switch to Invoice',
         crm: {
             sections: {
                 'Contact Information':      'Contact Information',
@@ -710,6 +730,11 @@ var T = {
         errPostal:      'Entrez un code postal valide (ex. : A1A 1A1).',
         errFoursomes:   'Entrez un nombre entier égal ou supérieur à 0.',
         errPassports:   'Entrez un nombre entier égal ou supérieur à 0.',
+        decTitle:       'Paiement refusé',
+        decP1:          'Votre paiement n\'a pas été approuvé.',
+        decP2:          'Veuillez réessayer avec une autre carte ou choisir l\'option Facture.',
+        decRetry:       'Réessayer',
+        decInvoice:     'Passer à la facture',
         crm: {
             sections: {
                 'Contact Information':      'Coordonnées',
@@ -1227,18 +1252,34 @@ async function launchMonerisPayment() {
             mc.setMode("qa"); // ← change to "prod" before go-live
             mc.setCheckoutDiv("monerisCheckoutDiv");
 
-            mc.setCallback("payment_complete",   function()  { showThankYou(); });
-            mc.setCallback("payment_receipt",    function()  { showThankYou(); });
-            mc.setCallback("page_loaded",        function(r) {
-                if (r && r.currentPage === 'receipt') showThankYou();
+            mc.setCallback("payment_complete", function(r) {
+                // r.result: 'a' = approved, 'd' = declined/other
+                if (r && r.result === 'a') {
+                    showThankYou();
+                } else {
+                    showDeclined(r);
+                }
             });
-            mc.setCallback("cancel_transaction", function() {
+            mc.setCallback("payment_receipt", function(r) {
+                // Only treat as success if result is explicitly approved
+                if (r && r.result === 'a') {
+                    showThankYou();
+                }
+                // If result is missing or declined, payment_complete will have already handled it
+            });
+            mc.setCallback("page_loaded", function(r) {
+                // Do NOT auto-trigger success on receipt page load —
+                // receipt page fires for both approvals and declines.
+                // payment_complete is the authoritative callback.
+                console.log('[Moneris] page_loaded:', r);
+            });
+            mc.setCallback("cancel_transaction", function(r) {
                 document.getElementById('monerisOverlay').classList.remove('active');
                 btn.textContent = orig; btn.disabled = false;
             });
-            mc.setCallback("error_event", function() {
+            mc.setCallback("error_event", function(r) {
                 document.getElementById('monerisOverlay').classList.remove('active');
-                alert("A payment error occurred. Please try again or choose Invoice.");
+                showDeclined(r);
                 btn.textContent = orig; btn.disabled = false;
             });
 
@@ -1262,6 +1303,51 @@ function showThankYou() {
             minimumFractionDigits: 2, maximumFractionDigits: 2
         });
     document.getElementById('thankYouScreen').classList.add('active');
+}
+
+function showDeclined(r) {
+    document.getElementById('monerisOverlay').classList.remove('active');
+
+    // Build a human-readable detail message from the response
+    var detail = '';
+    if (r) {
+        var code = r.response_code || r.responseCode || '';
+        var msg  = r.message || r.msg || r.error || '';
+        if (code) detail += T[LANG].decTitle + ' — ' + T[LANG].decP1;
+        if (code) detail += (detail ? '  ·  ' : '') + 'Code: ' + code;
+        if (msg && msg !== code) detail += (detail ? '  ·  ' : '') + msg;
+    }
+    if (!detail) detail = T[LANG].decP1;
+
+    document.getElementById('declinedDetail').textContent = detail;
+
+    // Re-apply translations to the new screen
+    document.querySelectorAll('#declinedScreen [data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (T[LANG][key]) el.textContent = T[LANG][key];
+    });
+
+    document.getElementById('declinedScreen').classList.add('active');
+}
+
+function retryPayment() {
+    document.getElementById('declinedScreen').classList.remove('active');
+    // Re-enable submit button so user can try again
+    var btn = document.getElementById('mainSubmitButton');
+    if (btn) { btn.disabled = false; updateSubmitLabel(); }
+}
+
+function switchToInvoice() {
+    document.getElementById('declinedScreen').classList.remove('active');
+    // Switch the payment radio to Invoice (value "1") and update button
+    var invoiceRadio = document.querySelector('[name="new_paymentoption"][value="1"]');
+    if (invoiceRadio) {
+        invoiceRadio.checked = true;
+        invoiceRadio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    updateSubmitLabel();
+    var btn = document.getElementById('mainSubmitButton');
+    if (btn) btn.disabled = false;
 }
 
 document.getElementById('monerisCloseBtn').addEventListener('click', function() {
