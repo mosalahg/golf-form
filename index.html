@@ -158,6 +158,12 @@
 
         /* Hints injected by JS */
         .field-hint { font-size: 11px; color: #7a9a7a; margin-top: 5px; }
+        .sponsor-hint {
+            font-size: 12px; font-weight: 600; color: #034a2c;
+            background: #e8f5ee; border-left: 3px solid #056038;
+            padding: 7px 12px; border-radius: 0 6px 6px 0;
+            margin-top: 8px; line-height: 1.4;
+        }
 
         /* Inline validation errors injected by JS */
         .inline-error {
@@ -945,7 +951,7 @@ function calculate() {
     if (!sponsorHint) {
         sponsorHint = document.createElement('div');
         sponsorHint.id = 'sponsorFoursomeHint';
-        sponsorHint.className = 'field-hint';
+        sponsorHint.className = 'sponsor-hint';
         var sb = sponsorEl.closest('.optionSetFormFieldBlock');
         if (sb) sb.appendChild(sponsorHint);
     }
